@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mysto.tablayoutdemo.Episode_Details_Activity">
+    tools:context="com.example.mysto.rickmortybuddyapp.Episode_Details_Activity">
 
     <ImageView
         android:id="@+id/episode_details_img_fullsize"
@@ -16,20 +16,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/background10" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/episode_details_img"
+        app:layout_constraintBottom_toBottomOf="@+id/episode_details_img_fullsize"
+        app:layout_constraintTop_toBottomOf="@+id/episode_details_img_fullsize"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="30dp"
         android:layout_width="112dp"
         android:layout_height="112dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/episode_details_img_fullsize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/episode_details_img_fullsize"
-        app:layout_constraintVertical_bias="0.45"
-        app:srcCompat="@drawable/background10" />
+        android:src="@drawable/background10"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FFFFFF"/>
 
     <TextView
         android:id="@+id/episode_details_season"
@@ -59,16 +57,13 @@
 
     <TextView
         android:id="@+id/episode_details_air_date"
-        android:layout_width="130dp"
+        android:layout_width="wrap_content"
         android:layout_height="17dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="8dp"
-        android:text="Janvier 2018"
+        android:text="December 2, 2013"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.937"
-        app:layout_constraintStart_toEndOf="@+id/episode_details_img"
         app:layout_constraintTop_toBottomOf="@+id/episode_details_img_fullsize" />
 
     <TextView

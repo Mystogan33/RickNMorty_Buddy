@@ -34,7 +34,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
         extras = getIntent().getExtras();
 
         personnage_details_img = findViewById(R.id.personnage_details_img);
-        personnage_details_name = findViewById(R.id.personnage_details_name);
+        personnage_details_name = findViewById(R.id.personnage_details__name);
         personnage_details_status = findViewById(R.id.personnage_details_status);
         personnage_details_species = findViewById(R.id.personnage_details_species);
         personnage_details_gender = findViewById(R.id.personnage_details_gender);
