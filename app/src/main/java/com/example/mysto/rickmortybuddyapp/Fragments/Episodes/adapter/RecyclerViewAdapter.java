@@ -18,6 +18,7 @@ import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episodes;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Result;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -56,7 +57,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //For Production
         Picasso.Builder builder = new Picasso.Builder(mContext);
         builder.downloader(new OkHttp3Downloader(mContext));
-        builder.build().load(listEpisodes.get(position).getImage())
+        builder.build()
+                .load(listEpisodes.get(position).getImage())
+                .networkPolicy(NetworkPolicy.OFFLINE)
                 .placeholder((R.drawable.ic_launcher_background))
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.episode_fragment_item__img);

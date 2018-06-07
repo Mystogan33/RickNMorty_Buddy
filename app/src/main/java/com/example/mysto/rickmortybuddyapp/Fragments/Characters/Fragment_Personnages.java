@@ -12,15 +12,9 @@ import android.widget.Toast;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.adapter.RecyclerViewAdapter;
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Characters;
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Location;
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Origin;
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Result;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.network.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RetrofitClientInstance;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,10 +48,10 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
                 listPersonnages = response.body();
 
-                RecyclerView rv_episodes = view.findViewById(R.id.personnagesRecyclerView);
+                RecyclerView rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
                 RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
-                rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),2));
-                rv_episodes.setAdapter(adapter);
+                rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
+                rv_personnages.setAdapter(adapter);
 
             }
 
@@ -71,5 +65,13 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+
     }
 }

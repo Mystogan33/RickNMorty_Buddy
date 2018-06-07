@@ -16,6 +16,7 @@ import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Result;
 import com.example.mysto.rickmortybuddyapp.Location_Details_Activity;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -54,7 +55,9 @@ import java.util.List;
             //For Production
             Picasso.Builder builder = new Picasso.Builder(mContext);
             builder.downloader(new OkHttp3Downloader(mContext));
-            builder.build().load(listLocations.get(position).getImage())
+            builder.build()
+                    .load(listLocations.get(position).getImage())
+                    .networkPolicy(NetworkPolicy.OFFLINE)
                     .placeholder((R.drawable.ic_launcher_background))
                     .error(R.drawable.ic_launcher_background)
                     .into(holder.location_fragment_item__img);
