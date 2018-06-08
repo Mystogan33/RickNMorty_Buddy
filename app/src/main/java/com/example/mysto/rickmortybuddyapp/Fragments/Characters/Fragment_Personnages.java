@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.adapter.RecyclerViewAdapter;
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Characters;
+import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.RawCharactersServerResponse;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.network.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RetrofitClientInstance;
@@ -23,7 +23,7 @@ import retrofit2.Response;
 public class Fragment_Personnages extends android.support.v4.app.Fragment {
 
     View view;
-    Characters listPersonnages;
+    RawCharactersServerResponse listPersonnages;
     ProgressBar progressBar;
 
     public Fragment_Personnages() {
@@ -39,11 +39,11 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
-        Call<Characters> call = service.getAllPersonnages();
+        Call<RawCharactersServerResponse> call = service.getAllPersonnages();
 
-        call.enqueue(new Callback<Characters>() {
+        call.enqueue(new Callback<RawCharactersServerResponse>() {
             @Override
-            public void onResponse(Call<Characters> call, Response<Characters> response) {
+            public void onResponse(Call<RawCharactersServerResponse> call, Response<RawCharactersServerResponse> response) {
 
                 progressBar.setVisibility(View.INVISIBLE);
                 listPersonnages = response.body();
@@ -56,7 +56,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment {
             }
 
             @Override
-            public void onFailure(Call<Characters> call, Throwable t) {
+            public void onFailure(Call<RawCharactersServerResponse> call, Throwable t) {
 
                 progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(view.getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Characters;
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Result;
+import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
+import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.RawCharactersServerResponse;
 import com.example.mysto.rickmortybuddyapp.Personnage_Details_Activity;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.jakewharton.picasso.OkHttp3Downloader;
@@ -26,9 +26,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     private Context mContext;
-    private Characters mData;
+    private RawCharactersServerResponse mData;
 
-    public RecyclerViewAdapter(Context mContext, Characters mData) {
+    public RecyclerViewAdapter(Context mContext, RawCharactersServerResponse mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -48,7 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
-        final List<Result> listCharacters = mData.getResults();
+        final List<Character> listCharacters = mData.getResults();
 
         holder.personnage_fragment_item_name.setText(listCharacters.get(position).getName());
 

@@ -1,33 +1,33 @@
-
 package com.example.mysto.rickmortybuddyapp.Fragments.Locations.models;
+
 
 import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Locations implements Serializable {
+public class RawLocationsServerResponse implements Serializable {
 
     @SerializedName("info")
     @Expose
     private Info info;
     @SerializedName("results")
     @Expose
-    private List<Result> results = null;
+    private List<Location> results = null;
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
-    public Locations() {
+    public RawLocationsServerResponse() {
     }
 
     /**
-     * 
+     *
      * @param results
      * @param info
      */
-    public Locations(Info info, List<Result> results) {
+    public RawLocationsServerResponse(Info info, List<Location> results) {
         super();
         this.info = info;
         this.results = results;
@@ -41,12 +41,13 @@ public class Locations implements Serializable {
         this.info = info;
     }
 
-    public List<Result> getResults() {
+    public List<Location> getResults() {
         return results;
     }
 
-    public void setResults(List<Result> results) {
+    public void setResults(List<Location> results) {
         this.results = results;
     }
 
 }
+

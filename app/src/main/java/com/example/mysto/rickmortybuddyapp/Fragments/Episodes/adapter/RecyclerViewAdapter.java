@@ -2,7 +2,6 @@ package com.example.mysto.rickmortybuddyapp.Fragments.Episodes.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mysto.rickmortybuddyapp.Episode_Details_Activity;
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Characters;
-import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episodes;
-import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Result;
+import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
+import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.RawEpisodesServerResponse;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.NetworkPolicy;
@@ -27,9 +25,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     private Context mContext;
-    private Episodes mData;
+    private RawEpisodesServerResponse mData;
 
-    public RecyclerViewAdapter(Context mContext, Episodes mData) {
+    public RecyclerViewAdapter(Context mContext, RawEpisodesServerResponse mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -49,7 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
-        final List<Result> listEpisodes = mData.getResults();
+        final List<Episode> listEpisodes = mData.getResults();
 
         holder.episode_fragment_item_name.setText(listEpisodes.get(position).getName());
         holder.episode_fragment_item_season.setText(listEpisodes.get(position).getEpisode());

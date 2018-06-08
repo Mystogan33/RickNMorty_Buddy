@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Result;
+import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Location;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 public class Location_Details_Activity extends AppCompatActivity {
 
-    Result location_details;
+    Location location_details;
 
     ImageView location_details_img_fullsize;
     ImageView location_details_img;
@@ -37,7 +37,7 @@ public class Location_Details_Activity extends AppCompatActivity {
 
 
         if(extras != null) {
-            location_details = (Result) extras.getSerializable("location_details");
+            location_details = (Location) extras.getSerializable("location_details");
 
             Picasso.Builder builder = new Picasso.Builder(this);
             builder.downloader(new OkHttp3Downloader(this));

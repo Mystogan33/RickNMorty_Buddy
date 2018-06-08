@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Result;
+import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 public class Personnage_Details_Activity extends AppCompatActivity {
 
-    Result personnage_details;
+    Character personnage_details;
 
     ImageView personnage_details_img;
     TextView personnage_details_name;
@@ -44,7 +44,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
 
 
         if(extras != null) {
-            personnage_details = (Result) extras.getSerializable("personnage_details");
+            personnage_details = (Character) extras.getSerializable("personnage_details");
 
             Picasso.Builder builder = new Picasso.Builder(this);
             builder.downloader(new OkHttp3Downloader(this));

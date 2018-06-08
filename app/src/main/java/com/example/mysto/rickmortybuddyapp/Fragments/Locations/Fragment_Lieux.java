@@ -11,14 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.adapter.RecyclerViewAdapter;
-import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Locations;
-import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Result;
+import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.RawLocationsServerResponse;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.network.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RetrofitClientInstance;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +23,7 @@ import retrofit2.Response;
 public class Fragment_Lieux extends android.support.v4.app.Fragment {
 
     View view;
-    Locations listLocations;
+    RawLocationsServerResponse listLocations;
 
     ProgressBar progressBar;
 
@@ -44,11 +40,11 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
-        Call<Locations> call = service.getAllLocations();
+        Call<RawLocationsServerResponse> call = service.getAllLocations();
 
-        call.enqueue(new Callback<Locations>() {
+        call.enqueue(new Callback<RawLocationsServerResponse>() {
             @Override
-            public void onResponse(Call<Locations> call, Response<Locations> response) {
+            public void onResponse(Call<RawLocationsServerResponse> call, Response<RawLocationsServerResponse> response) {
 
                 progressBar.setVisibility(View.INVISIBLE);
                 listLocations = response.body();
@@ -61,7 +57,7 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment {
             }
 
             @Override
-            public void onFailure(Call<Locations> call, Throwable t) {
+            public void onFailure(Call<RawLocationsServerResponse> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(view.getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }

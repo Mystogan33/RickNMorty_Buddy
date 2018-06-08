@@ -11,14 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.adapter.RecyclerViewAdapter;
-import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episodes;
-import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Result;
+import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.RawEpisodesServerResponse;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.network.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RetrofitClientInstance;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +23,7 @@ import retrofit2.Response;
 public class Fragment_Episodes extends android.support.v4.app.Fragment {
 
     View view;
-    Episodes listEpisodes;
+    RawEpisodesServerResponse listEpisodes;
     ProgressBar progressBar;
 
     /*private List<String> characters = null;*/
@@ -45,11 +41,11 @@ public class Fragment_Episodes extends android.support.v4.app.Fragment {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
-        Call<Episodes> call = service.getAllEpisodes();
+        Call<RawEpisodesServerResponse> call = service.getAllEpisodes();
 
-        call.enqueue(new Callback<Episodes>() {
+        call.enqueue(new Callback<RawEpisodesServerResponse>() {
             @Override
-            public void onResponse(Call<Episodes> call, Response<Episodes> response) {
+            public void onResponse(Call<RawEpisodesServerResponse> call, Response<RawEpisodesServerResponse> response) {
 
                 progressBar.setVisibility(View.INVISIBLE);
                 listEpisodes = response.body();
@@ -81,7 +77,7 @@ public class Fragment_Episodes extends android.support.v4.app.Fragment {
             }
 
             @Override
-            public void onFailure(Call<Episodes> call, Throwable t) {
+            public void onFailure(Call<RawEpisodesServerResponse> call, Throwable t) {
 
                 progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(view.getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

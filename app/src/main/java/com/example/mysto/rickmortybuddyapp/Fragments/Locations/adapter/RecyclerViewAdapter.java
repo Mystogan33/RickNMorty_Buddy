@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Locations;
-import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Result;
+import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Location;
+import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.RawLocationsServerResponse;
 import com.example.mysto.rickmortybuddyapp.Location_Details_Activity;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.jakewharton.picasso.OkHttp3Downloader;
@@ -25,10 +25,10 @@ import java.util.List;
 
 
         private Context mContext;
-        private Locations mData;
-        private List<Result> listLocations;
+        private RawLocationsServerResponse mData;
+        private List<Location> listLocations;
 
-        public RecyclerViewAdapter(Context mContext, Locations mData) {
+        public RecyclerViewAdapter(Context mContext, RawLocationsServerResponse mData) {
             this.mContext = mContext;
             this.mData = mData;
             this.listLocations = mData.getResults();

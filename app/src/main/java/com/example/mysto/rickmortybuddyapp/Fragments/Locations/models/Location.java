@@ -1,4 +1,3 @@
-
 package com.example.mysto.rickmortybuddyapp.Fragments.Locations.models;
 
 import java.io.Serializable;
@@ -6,7 +5,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result implements Serializable {
+public class Location implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -35,13 +34,13 @@ public class Result implements Serializable {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
-    public Result() {
+    public Location() {
     }
 
     /**
-     * 
+     *
      * @param id
      * @param dimension
      * @param created
@@ -51,7 +50,7 @@ public class Result implements Serializable {
      * @param url
      * @param residents
      */
-    public Result(Integer id, String name, String type, String dimension, List<String> residents, String url, String image, String created) {
+    public Location(Integer id, String name, String type, String dimension, List<String> residents, String url, String image, String created) {
         super();
         this.id = id;
         this.name = name;
@@ -128,3 +127,4 @@ public class Result implements Serializable {
     }
 
 }
+

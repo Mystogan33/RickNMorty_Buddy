@@ -1,4 +1,3 @@
-
 package com.example.mysto.rickmortybuddyapp.Fragments.Characters.models;
 
 import java.io.Serializable;
@@ -6,7 +5,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result implements Serializable {
+public class Character implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -47,13 +46,13 @@ public class Result implements Serializable {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
-    public Result() {
+    public Character() {
     }
 
     /**
-     * 
+     *
      * @param id
      * @param episode
      * @param species
@@ -67,7 +66,7 @@ public class Result implements Serializable {
      * @param type
      * @param url
      */
-    public Result(Integer id, String name, String status, String species, String type, String gender, Origin origin, Location location, String image, List<String> episode, String url, String created) {
+    public Character(Integer id, String name, String status, String species, String type, String gender, Origin origin, Location location, String image, List<String> episode, String url, String created) {
         super();
         this.id = id;
         this.name = name;
@@ -180,3 +179,4 @@ public class Result implements Serializable {
     }
 
 }
+
