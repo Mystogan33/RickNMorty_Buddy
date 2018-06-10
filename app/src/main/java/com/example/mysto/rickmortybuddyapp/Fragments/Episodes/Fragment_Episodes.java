@@ -1,5 +1,7 @@
 package com.example.mysto.rickmortybuddyapp.Fragments.Episodes;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,6 +17,7 @@ import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.RawEpisodes
 import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.network.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RetrofitClientInstance;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,8 +28,7 @@ public class Fragment_Episodes extends android.support.v4.app.Fragment {
     View view;
     RawEpisodesServerResponse listEpisodes;
     ProgressBar progressBar;
-
-    /*private List<String> characters = null;*/
+    Gson gson = new Gson();
 
     public Fragment_Episodes() {
     }
@@ -34,56 +36,59 @@ public class Fragment_Episodes extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.episodes_fragment, container, false);
-
         progressBar = view.findViewById(R.id.progressbar);
-        progressBar.setVisibility(View.VISIBLE);
 
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
+        String json = sharedPreferences.getString("Episodes_List", null);
+        progressBar.setVisibility(View.INVISIBLE);
 
-        Call<RawEpisodesServerResponse> call = service.getAllEpisodes();
+        if(json != null) {
 
-        call.enqueue(new Callback<RawEpisodesServerResponse>() {
-            @Override
-            public void onResponse(Call<RawEpisodesServerResponse> call, Response<RawEpisodesServerResponse> response) {
+            listEpisodes = gson.fromJson(json, RawEpisodesServerResponse.class);
 
-                progressBar.setVisibility(View.INVISIBLE);
-                listEpisodes = response.body();
+            RecyclerView rv_episodes = view.findViewById(R.id.episodesRecyclerView);
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listEpisodes);
+            rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),3));
+            rv_episodes.setAdapter(adapter);
 
-                RecyclerView rv_episodes = view.findViewById(R.id.episodesRecyclerView);
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listEpisodes);
-                rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),3));
-                rv_episodes.setAdapter(adapter);
+        } else {
 
-                /* For Dev Purpose
-                listEpisodes = new ArrayList<>();
+            progressBar.setVisibility(View.VISIBLE);
 
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1));
-                listEpisodes.add(new Result("7 days ago","https://www.ecranlarge.com/uploads/image/001/016/rick-et-morty-photo-rick-et-morty-1016132.jpg","URL_image",characters,"S01EP01","23 janvier 2018","Un episode de fou",1)); */
+            GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
-            }
+            Call<RawEpisodesServerResponse> call = service.getAllEpisodes();
 
-            @Override
-            public void onFailure(Call<RawEpisodesServerResponse> call, Throwable t) {
+            call.enqueue(new Callback<RawEpisodesServerResponse>() {
+                @Override
+                public void onResponse(Call<RawEpisodesServerResponse> call, Response<RawEpisodesServerResponse> response) {
 
-                progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(view.getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    listEpisodes = response.body();
 
-            }
-        });
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
+                    sharedPreferences.edit()
+                            .putString("Episodes_List", gson.toJson(listEpisodes))
+                            .apply();
+
+                    RecyclerView rv_episodes = view.findViewById(R.id.episodesRecyclerView);
+                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listEpisodes);
+                    rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),3));
+                    rv_episodes.setAdapter(adapter);
+
+                }
+
+                @Override
+                public void onFailure(Call<RawEpisodesServerResponse> call, Throwable t) {
+
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(view.getContext(), "Impossible de joindre le serveur, réessayer ultérieurement", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
 
         return view;
     }
