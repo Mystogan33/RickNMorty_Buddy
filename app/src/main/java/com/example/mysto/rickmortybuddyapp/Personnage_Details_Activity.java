@@ -62,7 +62,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
                     .load(personnage_details.getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .placeholder((R.drawable.ic_launcher_background))
-                    .error(R.drawable.no_data)
+                    .error(R.drawable.no_image)
                     .into(personnage_details_img, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -74,7 +74,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
                             Picasso.with(getParent())
                                     .load(personnage_details.getImage())
                                     .placeholder((R.drawable.ic_launcher_background))
-                                    .error(R.drawable.no_data)
+                                    .error(R.drawable.no_image)
                                     .into(personnage_details_img, new Callback() {
                                         @Override
                                         public void onSuccess() {

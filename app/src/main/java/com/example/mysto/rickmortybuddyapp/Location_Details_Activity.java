@@ -49,7 +49,7 @@ public class Location_Details_Activity extends AppCompatActivity {
                     .load(location_details.getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .placeholder((R.drawable.ic_launcher_background))
-                    .error(R.drawable.no_data)
+                    .error(R.drawable.no_image)
                     .into(location_details_img_fullsize, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -61,7 +61,7 @@ public class Location_Details_Activity extends AppCompatActivity {
                             Picasso.with(getParent())
                                     .load(location_details.getImage())
                                     .placeholder((R.drawable.ic_launcher_background))
-                                    .error(R.drawable.no_data)
+                                    .error(R.drawable.no_image)
                                     .into(location_details_img_fullsize, new Callback() {
                                         @Override
                                         public void onSuccess() {
@@ -79,7 +79,7 @@ public class Location_Details_Activity extends AppCompatActivity {
                     .load(location_details.getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .placeholder((R.drawable.ic_launcher_background))
-                    .error(R.drawable.no_data)
+                    .error(R.drawable.no_image)
                     .into(location_details_img, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -91,7 +91,7 @@ public class Location_Details_Activity extends AppCompatActivity {
                             Picasso.with(getParent())
                                     .load(location_details.getImage())
                                     .placeholder((R.drawable.ic_launcher_background))
-                                    .error(R.drawable.no_data)
+                                    .error(R.drawable.no_image)
                                     .into(location_details_img, new Callback() {
                                         @Override
                                         public void onSuccess() {

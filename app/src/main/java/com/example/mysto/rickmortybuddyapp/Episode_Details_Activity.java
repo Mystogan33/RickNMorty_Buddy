@@ -83,7 +83,7 @@ public class Episode_Details_Activity extends AppCompatActivity {
                     .load(episode_details.getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .placeholder((R.drawable.ic_launcher_background))
-                    .error(R.drawable.no_data)
+                    .error(R.drawable.no_image)
                     .into(episode_details_img, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -95,7 +95,7 @@ public class Episode_Details_Activity extends AppCompatActivity {
                             Picasso.with(getParent())
                                     .load(episode_details.getImage())
                                     .placeholder((R.drawable.ic_launcher_background))
-                                    .error(R.drawable.no_data)
+                                    .error(R.drawable.no_image)
                                     .into(episode_details_img, new Callback() {
                                         @Override
                                         public void onSuccess() {

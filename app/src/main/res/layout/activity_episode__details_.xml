@@ -8,13 +8,14 @@
 
     <ImageView
         android:id="@+id/episode_details_img_fullsize"
+        android:background="@color/tabindicatorcolor"
         android:layout_width="0dp"
         android:layout_height="350dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background10" />
+        app:srcCompat="@drawable/no_image" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,7 +26,7 @@
         android:layout_marginStart="30dp"
         android:layout_width="112dp"
         android:layout_height="112dp"
-        android:src="@drawable/background10"
+        android:src="@drawable/no_image"
         app:civ_border_width="2dp"
         app:civ_border_color="#FFFFFF"/>
 

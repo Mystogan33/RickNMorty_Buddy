@@ -69,7 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         final ImageView imageView = holder.personnage_fragment_item__img;
 
-        Picasso.with(mContext)
+        Picasso.with(mContext.getApplicationContext())
                 .load(listCharacters.get(position).getImage())
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .placeholder((R.drawable.ic_launcher_background))
@@ -82,10 +82,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     @Override
                     public void onError() {
-                        Picasso.with(mContext)
+                        Picasso.with(mContext.getApplicationContext())
                                 .load(listCharacters.get(position).getImage())
                                 .placeholder((R.drawable.ic_launcher_background))
-                                .error(R.drawable.no_data)
+                                .error(R.drawable.no_image)
                                 .into(imageView, new Callback() {
                                     @Override
                                     public void onSuccess() {
