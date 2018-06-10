@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Location;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 public class Location_Details_Activity extends AppCompatActivity {
@@ -39,22 +41,69 @@ public class Location_Details_Activity extends AppCompatActivity {
         if(extras != null) {
             location_details = (Location) extras.getSerializable("location_details");
 
-            Picasso.Builder builder = new Picasso.Builder(this);
-            builder.downloader(new OkHttp3Downloader(this));
-
-            builder.build().load(location_details.getImage())
-                    .placeholder((R.drawable.ic_launcher_background))
-                    .error(R.drawable.ic_launcher_background)
-                    .into(location_details_img_fullsize);
-
-            builder.build().load(location_details.getImage())
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_background)
-                    .into(location_details_img);
-
             location_details_name.setText(location_details.getName());
             location_details_dimension.setText(location_details.getDimension());
             location_details_type.setText(location_details.getType());
+
+            Picasso.with(this)
+                    .load(location_details.getImage())
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .placeholder((R.drawable.ic_launcher_background))
+                    .error(R.drawable.no_data)
+                    .into(location_details_img_fullsize, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(getParent())
+                                    .load(location_details.getImage())
+                                    .placeholder((R.drawable.ic_launcher_background))
+                                    .error(R.drawable.no_data)
+                                    .into(location_details_img_fullsize, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onError() {
+                                        }
+                                    });
+                        }
+                    });
+
+            Picasso.with(this)
+                    .load(location_details.getImage())
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .placeholder((R.drawable.ic_launcher_background))
+                    .error(R.drawable.no_data)
+                    .into(location_details_img, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(getParent())
+                                    .load(location_details.getImage())
+                                    .placeholder((R.drawable.ic_launcher_background))
+                                    .error(R.drawable.no_data)
+                                    .into(location_details_img, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onError() {
+                                        }
+                                    });
+                        }
+                    });
 
         }
     }

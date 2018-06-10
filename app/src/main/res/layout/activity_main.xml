@@ -8,27 +8,22 @@
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarid"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:elevation="0dp"
-        android:id="@+id/appbarid"
-        android:background="@drawable/background3">
+        android:background="@drawable/background3"
+        android:elevation="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rick &amp; Morty Buddy"
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
-                android:textSize="20dp"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:layout_margin="5dp"
-
-                />
+                android:src="@drawable/title"
+                android:layout_alignParentStart="true"/>
 
         </RelativeLayout>
 
@@ -44,7 +39,7 @@
         app:tabIndicatorColor="@color/colorAccent"
         app:tabBackground="@color/tabindicatorcolor"
         android:id="@+id/tablayout_id" />
-    
+
     <android.support.v4.view.ViewPager
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

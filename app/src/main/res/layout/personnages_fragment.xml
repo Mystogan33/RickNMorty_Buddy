@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_container"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/background10">
-
-    <ProgressBar
-        android:id="@+id/progressbar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:max="100"
-        android:layout_below="@+id/lieuxRecyclerView"
-        android:indeterminateTint="#ff8a80"
-        android:layout_marginTop="-6dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/personnagesRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center">
 
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

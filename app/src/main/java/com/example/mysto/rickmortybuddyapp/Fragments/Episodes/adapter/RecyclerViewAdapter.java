@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mysto.rickmortybuddyapp.Episode_Details_Activity;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.RawEpisodesServerResponse;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -52,15 +54,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.episode_fragment_item_name.setText(listEpisodes.get(position).getName());
         holder.episode_fragment_item_season.setText(listEpisodes.get(position).getEpisode());
 
-        //For Production
-        Picasso.Builder builder = new Picasso.Builder(mContext);
-        builder.downloader(new OkHttp3Downloader(mContext));
-        builder.build()
+
+        final ImageView imageView = holder.episode_fragment_item__img;
+
+        Picasso.with(mContext)
                 .load(listEpisodes.get(position).getImage())
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .placeholder((R.drawable.ic_launcher_background))
-                .error(R.drawable.ic_launcher_background)
-                .into(holder.episode_fragment_item__img);
+                .error(R.drawable.no_data)
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+                        Picasso.with(mContext)
+                                .load(listEpisodes.get(position).getImage())
+                                .placeholder((R.drawable.ic_launcher_background))
+                                .error(R.drawable.no_data)
+                                .into(imageView, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                    }
+                                });
+                    }
+                });
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

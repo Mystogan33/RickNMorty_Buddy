@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 public class Episode_Details_Activity extends AppCompatActivity {
@@ -43,22 +45,69 @@ public class Episode_Details_Activity extends AppCompatActivity {
         if(extras != null) {
             episode_details = (Episode) extras.getSerializable("episode_details");
 
-            Picasso.Builder builder = new Picasso.Builder(this);
-            builder.downloader(new OkHttp3Downloader(this));
-
-            builder.build().load(episode_details.getImage())
-                    .placeholder((R.drawable.ic_launcher_background))
-                    .error(R.drawable.ic_launcher_background)
-                    .into(episode_details_img_fullsize);
-
-            builder.build().load(episode_details.getImage())
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_background)
-                    .into(episode_details_img);
-
             episode_details_season.setText(episode_details.getEpisode());
             episode_details_name.setText(episode_details.getName());
             episode_details_air_date.setText(episode_details.getAirDate());
+
+            Picasso.with(this)
+                    .load(episode_details.getImage())
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .placeholder((R.drawable.ic_launcher_background))
+                    .error(R.drawable.no_data)
+                    .into(episode_details_img_fullsize, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(getParent())
+                                    .load(episode_details.getImage())
+                                    .placeholder((R.drawable.ic_launcher_background))
+                                    .error(R.drawable.no_data)
+                                    .into(episode_details_img_fullsize, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onError() {
+                                        }
+                                    });
+                        }
+                    });
+
+            Picasso.with(this)
+                    .load(episode_details.getImage())
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .placeholder((R.drawable.ic_launcher_background))
+                    .error(R.drawable.no_data)
+                    .into(episode_details_img, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(getParent())
+                                    .load(episode_details.getImage())
+                                    .placeholder((R.drawable.ic_launcher_background))
+                                    .error(R.drawable.no_data)
+                                    .into(episode_details_img, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onError() {
+                                        }
+                                    });
+                        }
+                    });
 
         }
 

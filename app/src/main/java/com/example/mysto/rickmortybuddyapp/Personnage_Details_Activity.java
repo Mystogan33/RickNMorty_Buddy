@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 public class Personnage_Details_Activity extends AppCompatActivity {
@@ -49,17 +51,41 @@ public class Personnage_Details_Activity extends AppCompatActivity {
             Picasso.Builder builder = new Picasso.Builder(this);
             builder.downloader(new OkHttp3Downloader(this));
 
-            builder.build().load(personnage_details.getImage())
-                    .placeholder((R.drawable.ic_launcher_background))
-                    .error(R.drawable.ic_launcher_background)
-                    .into(personnage_details_img);
-
             personnage_details_name.setText(personnage_details.getName());
             personnage_details_status.setText(personnage_details.getStatus());
             personnage_details_species.setText(personnage_details.getSpecies());
             personnage_details_gender.setText(personnage_details.getGender());
             personnage_details_origin.setText(personnage_details.getOrigin().getName());
             personnage_details_last_location.setText(personnage_details.getLocation().getName());
+
+            Picasso.with(this)
+                    .load(personnage_details.getImage())
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .placeholder((R.drawable.ic_launcher_background))
+                    .error(R.drawable.no_data)
+                    .into(personnage_details_img, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(getParent())
+                                    .load(personnage_details.getImage())
+                                    .placeholder((R.drawable.ic_launcher_background))
+                                    .error(R.drawable.no_data)
+                                    .into(personnage_details_img, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                        }
+
+                                        @Override
+                                        public void onError() {
+                                        }
+                                    });
+                        }
+                    });
         }
 
 

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,12 +27,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Personnages extends android.support.v4.app.Fragment {
+public class Fragment_Personnages extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     View view;
     RawCharactersServerResponse listPersonnages;
-    ProgressBar progressBar;
     Gson gson;
+    RecyclerView rv_personnages;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    RecyclerViewAdapter adapter;
 
     public Fragment_Personnages() {
 
@@ -43,24 +46,45 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.personnages_fragment, container, false);
-        progressBar = view.findViewById(R.id.progressbar);
+
+        // RecyclerView
+        rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
+
+        // Refresh Layout
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("Characters_List", null);
-        progressBar.setVisibility(View.INVISIBLE);
 
         if(json != null) {
 
             listPersonnages = gson.fromJson(json, RawCharactersServerResponse.class);
-            Toast.makeText(view.getContext(), "Local data retrieved", Toast.LENGTH_SHORT).show();
-            RecyclerView rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
-            RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
+
+            adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
             rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
             rv_personnages.setAdapter(adapter);
 
         } else {
 
-            progressBar.setVisibility(View.VISIBLE);
+            mSwipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    mSwipeRefreshLayout.setRefreshing(true);
+
+                    loadRecyclerViewData();
+
+                }
+            });
+        }
+
+        return view;
+    }
+
+    public void loadRecyclerViewData() {
+
+        mSwipeRefreshLayout.setRefreshing(true);
 
             GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
@@ -70,40 +94,33 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment {
                 @Override
                 public void onResponse(Call<RawCharactersServerResponse> call, Response<RawCharactersServerResponse> response) {
 
-                    progressBar.setVisibility(View.INVISIBLE);
                     listPersonnages = response.body();
                     SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
                     sharedPreferences.edit()
                             .putString("Characters_List", gson.toJson(listPersonnages))
                             .apply();
 
-                    RecyclerView rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
                     RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
                     rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
                     rv_personnages.setAdapter(adapter);
+
+                    mSwipeRefreshLayout.setRefreshing(false);
 
                 }
 
                 @Override
                 public void onFailure(Call<RawCharactersServerResponse> call, Throwable t) {
 
-                    progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(view.getContext(), "Impossible de joindre le serveur, réessayer ultérieurement", Toast.LENGTH_SHORT).show();
+                    mSwipeRefreshLayout.setRefreshing(false);
 
                 }
             });
 
-
-        }
-
-        return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-
-
+    public void onRefresh() {
+        loadRecyclerViewData();
     }
 }
