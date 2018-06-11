@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,81 +9,81 @@
 
     <ImageView
         android:id="@+id/location_details_img_fullsize"
-        android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/no_image" />
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/location_details_img"
+        android:layout_below="@+id/location_details_img_fullsize"
+        android:layout_marginTop="-60dp"
+        android:layout_marginStart="30dp"
         android:layout_width="112dp"
         android:layout_height="112dp"
-        android:layout_marginStart="30dp"
         android:src="@drawable/no_image"
-        app:civ_border_color="#FFFFFF"
         app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/location_details_img_fullsize"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_details_img_fullsize" />
+        app:civ_border_color="#FFFFFF" />
 
     <TextView
         android:id="@+id/location_details_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="8dp"
-        android:text="Earth C-137"
+        android:text="Earth (C-137)"
         android:textColor="@color/colorValidate"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.106"
-        app:layout_constraintStart_toEndOf="@+id/location_details_img"
-        app:layout_constraintTop_toBottomOf="@+id/location_details_img_fullsize" />
+        android:layout_below="@+id/location_details_img_fullsize"
+        android:layout_toRightOf="@id/location_details_img" />
 
     <TextView
         android:id="@+id/location_details_dimension"
-        android:layout_width="210dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/location_details_name"
+        android:paddingEnd="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="8dp"
-        android:text="Dimension C-137"
+        android:layout_toRightOf="@id/location_details_img"
+        android:text="Post-Apocalyptic Dimension"
         android:textColor="@color/colorValidate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.708"
-        app:layout_constraintStart_toEndOf="@+id/location_details_img"
-        app:layout_constraintTop_toBottomOf="@+id/location_details_name" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/location_details_type"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="8dp"
         android:text="Planet"
         android:textColor="@color/colorValidate"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.937"
-        app:layout_constraintStart_toEndOf="@+id/location_details_name"
-        app:layout_constraintTop_toBottomOf="@+id/location_details_img_fullsize" />
-
-    <TextView
-        android:id="@+id/location_details_description"
-        android:layout_width="367dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
-        android:padding="16dp"
-        android:text="Pas de description disponible"
         android:textAlignment="center"
-        android:textColor="@color/colorValidate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_details_img" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/location_details_name"
+        android:layout_below="@id/location_details_img_fullsize" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/location_details_dimension">
+
+        <TextView
+            android:id="@+id/location_details_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="40dp"
+            android:padding="16dp"
+            android:text="Pas de description disponible."
+            android:textAlignment="center"
+            android:textColor="@color/colorValidate"
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+</RelativeLayout>

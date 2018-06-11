@@ -32,6 +32,10 @@ public class Episode implements Serializable {
     @Expose
     private Integer id;
 
+    @SerializedName("description")
+    @Expose
+    private String description;
+
     /**
      * No args constructor for use in serialization
      *
@@ -49,8 +53,9 @@ public class Episode implements Serializable {
      * @param image
      * @param characters
      * @param url
+     * @param description
      */
-    public Episode(String created, String image, String url, List<String> characters, String episode, String airDate, String name, Integer id) {
+    public Episode(String created, String image, String url, List<String> characters, String episode, String airDate, String name, Integer id, String description) {
         super();
         this.created = created;
         this.image = image;
@@ -60,6 +65,15 @@ public class Episode implements Serializable {
         this.airDate = airDate;
         this.name = name;
         this.id = id;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCreated() {

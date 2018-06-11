@@ -15,7 +15,7 @@ public interface GetDataService {
     @GET("/b/5b0568367a973f4ce5784514")
     Call<RawLocationsServerResponse> getAllLocations();
 
-    @GET("/b/5b0575b1c2e3344ccd96bf34")
+    @GET("/b/5b1e327ec83f6d4cc734b197/1")
     Call<RawEpisodesServerResponse> getAllEpisodes();
 
 }

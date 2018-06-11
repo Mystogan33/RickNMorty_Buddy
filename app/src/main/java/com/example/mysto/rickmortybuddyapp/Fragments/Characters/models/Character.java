@@ -44,6 +44,10 @@ public class Character implements Serializable {
     @Expose
     private String created;
 
+    @SerializedName("description")
+    @Expose
+    private String description;
+
     /**
      * No args constructor for use in serialization
      *
@@ -65,6 +69,7 @@ public class Character implements Serializable {
      * @param gender
      * @param type
      * @param url
+     * @param
      */
     public Character(Integer id, String name, String status, String species, String type, String gender, Origin origin, Location location, String image, List<String> episode, String url, String created) {
         super();

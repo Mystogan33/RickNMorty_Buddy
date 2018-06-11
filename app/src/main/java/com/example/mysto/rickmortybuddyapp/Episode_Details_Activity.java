@@ -2,11 +2,12 @@ package com.example.mysto.rickmortybuddyapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
-import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -48,6 +49,7 @@ public class Episode_Details_Activity extends AppCompatActivity {
             episode_details_season.setText(episode_details.getEpisode());
             episode_details_name.setText(episode_details.getName());
             episode_details_air_date.setText(episode_details.getAirDate());
+            episode_details_description.setText(episode_details.getDescription());
 
             Picasso.with(this)
                     .load(episode_details.getImage())
