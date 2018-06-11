@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/location_background"
     tools:context="com.example.mysto.rickmortybuddyapp.Personnage_Details_Activity">
 
     <RelativeLayout
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/grad"
+        android:layout_height="255dp"
         android:paddingBottom="20dp">
 
         <RelativeLayout
@@ -25,7 +25,6 @@
                 android:id="@+id/personnage_details_img"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_margin="9dp"
                 android:src="@drawable/wololo"
                 app:civ_border_width="2dp"
                 app:civ_border_color="#FF000000"/>
@@ -38,7 +37,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
             android:fontFamily="sans-serif-light"
             android:text="Rick Sanchez"
             android:textColor="@color/white"
@@ -54,18 +52,8 @@
             android:fontFamily="sans-serif"
             android:text="Human, Demon, Escalope de Porc"
             android:textAllCaps="true"
-            android:textColor="@color/address"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_settings" />
+            android:textColor="@color/colorAccent"
+            android:textSize="18dp" />
 
     </RelativeLayout>
 
@@ -81,10 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/followersBg"
             android:gravity="center"
             android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+            android:background="@color/colorPrimaryDark">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -98,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="Male"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorValidate"
                     android:textSize="25sp" />
 
                 <TextView
@@ -119,10 +106,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/followingBg"
+            android:background="@color/colorValidate"
             android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+            android:paddingBottom="5dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -145,7 +131,7 @@
                     android:fontFamily="sans-serif-light"
                     android:text="Status"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/cardview_light_background"
                     android:textSize="13sp" />
 
             </LinearLayout>
@@ -157,14 +143,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linlay1">
+        android:layout_below="@+id/linlay1"
+        android:background="@color/tabindicatorcolor">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -176,8 +163,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Origin"
-                    android:textColor="@color/headings"
-                    android:textSize="13sp" />
+                    android:textColor="@color/colorAccent"
+                    android:textSize="17dp" />
 
                 <TextView
                     android:id="@+id/personnage_details_origin"
@@ -185,14 +172,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="Earth (C-137)"
-                    android:textColor="@color/tabindicatorcolor"
+                    android:textColor="@color/colorValidate"
                     android:textSize="18sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/grey" />
+                    android:background="@color/colorAccent" />
 
             </LinearLayout>
 
@@ -206,8 +193,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Last location"
-                    android:textColor="@color/headings"
-                    android:textSize="13sp" />
+                    android:textColor="@color/colorAccent"
+                    android:textSize="17dp" />
 
                 <TextView
                     android:id="@+id/personnage_details_last_location"
@@ -215,14 +202,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="Earth (Replacement Dimension)"
-                    android:textColor="@color/tabindicatorcolor"
+                    android:textColor="@color/colorValidate"
                     android:textSize="18sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/grey" />
+                    android:background="@color/colorAccent" />
 
             </LinearLayout>
 
@@ -230,14 +217,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Description"
-                    android:textColor="@color/headings"
-                    android:textSize="13sp" />
+                    android:textColor="@color/colorAccent"
+                    android:textSize="17dp" />
 
                 <TextView
                     android:id="@+id/personnage_details_description"
@@ -245,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="Aucune description disponible"
-                    android:textColor="@color/tabindicatorcolor"
+                    android:textColor="@color/colorValidate"
                     android:textSize="18sp" />
 
             </LinearLayout>

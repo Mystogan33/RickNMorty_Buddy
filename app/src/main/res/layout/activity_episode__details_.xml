@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mysto.rickmortybuddyapp.Episode_Details_Activity">
+    tools:context="com.example.mysto.rickmortybuddyapp.Episode_Details_Activity"
+    android:background="@color/colorPrimaryDark">
 
     <ImageView
         android:id="@+id/episode_details_img_fullsize"
         android:background="@color/tabindicatorcolor"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="300dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +38,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="S01EP01"
+        android:textColor="@color/colorValidate"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.106"
@@ -45,24 +47,23 @@
 
     <TextView
         android:id="@+id/episode_details_name"
-        android:layout_width="184dp"
+        android:layout_width="194dp"
         android:layout_height="21dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="8dp"
         android:text="Walaladubdub !"
+        android:textColor="@color/colorValidate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
-        app:layout_constraintStart_toEndOf="@+id/episode_details_img"
         app:layout_constraintTop_toBottomOf="@+id/episode_details_season" />
 
     <TextView
         android:id="@+id/episode_details_air_date"
         android:layout_width="wrap_content"
         android:layout_height="17dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="8dp"
         android:text="December 2, 2013"
+        android:textColor="@color/colorValidate"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/episode_details_img_fullsize" />
@@ -70,14 +71,15 @@
     <TextView
         android:id="@+id/episode_details_description"
         android:layout_width="384dp"
-        android:layout_height="131dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="40dp"
         android:padding="16dp"
-        android:text="Ce paragraphe est censé être une description de l'épisode mais malheureusement je n'ai pas eu le temps d'implémenter une description pour chaque lieu, l'API ne proposant pas de base une description des episodes."
+        android:text="Pas de description disponible."
+        android:textAlignment="center"
+        android:textColor="@color/colorValidate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/episode_details_img" />
 </android.support.constraint.ConstraintLayout>

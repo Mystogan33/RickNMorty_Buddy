@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.example.mysto.rickmortybuddyapp.Location_Details_Activity">
 
     <ImageView
@@ -16,18 +17,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/no_image" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/location_details_img"
-        app:layout_constraintBottom_toBottomOf="@+id/location_details_img_fullsize"
-        app:layout_constraintTop_toBottomOf="@+id/location_details_img_fullsize"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="30dp"
         android:layout_width="112dp"
         android:layout_height="112dp"
+        android:layout_marginStart="30dp"
         android:src="@drawable/no_image"
+        app:civ_border_color="#FFFFFF"
         app:civ_border_width="2dp"
-        app:civ_border_color="#FFFFFF"/>
+        app:layout_constraintBottom_toBottomOf="@+id/location_details_img_fullsize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location_details_img_fullsize" />
 
     <TextView
         android:id="@+id/location_details_name"
@@ -36,6 +36,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Earth C-137"
+        android:textColor="@color/colorValidate"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.106"
@@ -44,14 +45,14 @@
 
     <TextView
         android:id="@+id/location_details_dimension"
-        android:layout_width="184dp"
+        android:layout_width="210dp"
         android:layout_height="21dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Dimension C-137"
+        android:textColor="@color/colorValidate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
+        app:layout_constraintHorizontal_bias="0.708"
         app:layout_constraintStart_toEndOf="@+id/location_details_img"
         app:layout_constraintTop_toBottomOf="@+id/location_details_name" />
 
@@ -63,6 +64,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Planet"
+        android:textColor="@color/colorValidate"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.937"
@@ -71,15 +73,17 @@
 
     <TextView
         android:id="@+id/location_details_description"
-        android:layout_width="384dp"
-        android:layout_height="131dp"
+        android:layout_width="367dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="48dp"
         android:padding="16dp"
-        android:text="Ce paragraphe est censé être une description du lieu mais malheureusement je n'ai pas eu le temps d'implémenter une description pour chaque lieu, l'API ne proposant pas de base une description des lieux."
+        android:text="Pas de description disponible"
+        android:textAlignment="center"
+        android:textColor="@color/colorValidate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_details_img" />
 </android.support.constraint.ConstraintLayout>
