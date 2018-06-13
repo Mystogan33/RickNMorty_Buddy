@@ -17,8 +17,8 @@ import com.example.mysto.rickmortybuddyapp.Fragments.Characters.adapter.Recycler
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.RawCharactersServerResponse;
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
 import com.example.mysto.rickmortybuddyapp.R;
-import com.example.mysto.rickmortybuddyapp.network.GetDataService;
-import com.example.mysto.rickmortybuddyapp.network.RetrofitClientInstance;
+import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.GetDataService;
+import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.RetrofitClientInstance;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -31,17 +31,20 @@ import retrofit2.Response;
 public class Fragment_Personnages extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     View view;
-    RawCharactersServerResponse listPersonnages;
+    RawCharactersServerResponse rawPersonnagesResponse;
+    List<Character> listPersonnages;
     Gson gson;
     RecyclerView rv_personnages;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerViewAdapter adapter;
-
     SearchView searchViewCharacter;
+    GetDataService service;
+    SharedPreferences sharedPreferences;
 
     public Fragment_Personnages() {
 
         gson = new Gson();
+        service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
     }
 
     @Nullable
@@ -50,12 +53,16 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
 
         // Inflate the view
         view = inflater.inflate(R.layout.personnages_fragment, container, false);
-
         // RecyclerView
         rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
+        rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
+        rv_personnages.setAdapter(adapter);
+
+        sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
 
         // Refresh Layout
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout.requestFocus();
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         // SearchView
@@ -72,7 +79,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
 
             @Override
             public boolean onQueryTextChange(String userInput) {
-                final List<Character> filterCharacterList = filter(listPersonnages.getResults(), userInput);
+                final List<Character> filterCharacterList = filter(rawPersonnagesResponse.getResults(), userInput);
                 adapter.setFilter(filterCharacterList);
                 return true;
             }
@@ -83,18 +90,22 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
         // Background color for the loading
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimaryDark);
 
+        listPersonnages = new ArrayList<>();
+        adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
+        rv_personnages.setAdapter(adapter);
+
         // Get local Data for Character if exist
-        SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("Characters_List", null);
 
         if(json != null) {
 
-            // Load local data
-            listPersonnages = gson.fromJson(json, RawCharactersServerResponse.class);
+            rawPersonnagesResponse = gson.fromJson(json, RawCharactersServerResponse.class);
+            listPersonnages = rawPersonnagesResponse.getResults();
 
-            adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages.getResults());
+            adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
             rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
             rv_personnages.setAdapter(adapter);
+
 
         } else {
 
@@ -104,7 +115,6 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
                 public void run() {
 
                     mSwipeRefreshLayout.setRefreshing(true);
-
                     loadRecyclerViewData();
 
                 }
@@ -120,23 +130,60 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
 
         mSwipeRefreshLayout.setRefreshing(true);
 
-            GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-
-            Call<RawCharactersServerResponse> call = service.getAllPersonnages();
+            Call<RawCharactersServerResponse> call = service.getAllPersonnagesFromPage(1);
 
             call.enqueue(new Callback<RawCharactersServerResponse>() {
                 @Override
                 public void onResponse(Call<RawCharactersServerResponse> call, Response<RawCharactersServerResponse> response) {
 
-                    listPersonnages = response.body();
-                    SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
-                    sharedPreferences.edit()
-                            .putString("Characters_List", gson.toJson(listPersonnages))
-                            .apply();
+                    rawPersonnagesResponse = response.body();
+                    listPersonnages = rawPersonnagesResponse.getResults();
 
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages.getResults());
+                    final Integer numberOfPages = rawPersonnagesResponse.getInfo().getPages();
+
+                    adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
                     rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
                     rv_personnages.setAdapter(adapter);
+
+
+                    Toast.makeText(view.getContext(), "Vos données sont désormais sauvegardées", Toast.LENGTH_SHORT).show();
+
+                    if(numberOfPages > 1) {
+
+                        for(int i = 2; i <= numberOfPages; i++) {
+
+                            Call<RawCharactersServerResponse> additionalCall = service.getAllPersonnagesFromPage(i);
+
+                            additionalCall.enqueue(new Callback<RawCharactersServerResponse>() {
+                                @Override
+                                public void onResponse(Call<RawCharactersServerResponse> call, Response<RawCharactersServerResponse> response) {
+
+                                    listPersonnages.addAll(response.body().getResults());
+                                    adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
+                                    adapter.notifyDataSetChanged();
+                                    rv_personnages.setAdapter(adapter);
+                                    rawPersonnagesResponse.setResults(listPersonnages);
+
+                                    sharedPreferences.edit()
+                                            .putString("Characters_List", gson.toJson(rawPersonnagesResponse))
+                                            .apply();
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<RawCharactersServerResponse> call, Throwable t) {
+                                    Toast.makeText(view.getContext(), "Un soucis s'est produit lors de la récupération du reste des personnages", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+
+                    } else {
+
+                        sharedPreferences.edit()
+                                .putString("Characters_List", gson.toJson(rawPersonnagesResponse))
+                                .apply();
+                    }
 
                     mSwipeRefreshLayout.setRefreshing(false);
 
@@ -168,11 +215,9 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
             if(name.contains(query) || status.contains(query) || gender.equals(query) || origin.contains(query) || last_location.contains(query)) {
                 filteredList.add(model);
             }
-
         }
 
         return filteredList;
-
     }
 
     @Override

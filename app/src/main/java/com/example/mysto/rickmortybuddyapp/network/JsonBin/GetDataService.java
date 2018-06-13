@@ -1,4 +1,4 @@
-package com.example.mysto.rickmortybuddyapp.network;
+package com.example.mysto.rickmortybuddyapp.network.JsonBin;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.RawCharactersServerResponse;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.RawEpisodesServerResponse;
@@ -6,6 +6,7 @@ import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.RawLocatio
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface GetDataService {
 

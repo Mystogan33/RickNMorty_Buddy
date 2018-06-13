@@ -17,8 +17,8 @@ import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.adapter.RecyclerVi
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.RawEpisodesServerResponse;
 import com.example.mysto.rickmortybuddyapp.R;
-import com.example.mysto.rickmortybuddyapp.network.GetDataService;
-import com.example.mysto.rickmortybuddyapp.network.RetrofitClientInstance;
+import com.example.mysto.rickmortybuddyapp.network.JsonBin.GetDataService;
+import com.example.mysto.rickmortybuddyapp.network.JsonBin.RetrofitClientInstance;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
