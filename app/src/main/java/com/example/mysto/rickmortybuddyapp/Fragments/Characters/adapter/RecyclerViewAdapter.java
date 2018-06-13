@@ -11,28 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.RawCharactersServerResponse;
 import com.example.mysto.rickmortybuddyapp.Personnage_Details_Activity;
 import com.example.mysto.rickmortybuddyapp.R;
-import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
 
     private Context mContext;
-    private RawCharactersServerResponse mData;
+    private List<Character> listCharacters;
 
-    public RecyclerViewAdapter(Context mContext, RawCharactersServerResponse mData) {
+    public RecyclerViewAdapter(Context mContext, List<Character> mData) {
         this.mContext = mContext;
-        this.mData = mData;
+        this.listCharacters = mData;
     }
 
     @NonNull
@@ -49,8 +46,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-
-        final List<Character> listCharacters = mData.getResults();
 
         holder.personnage_fragment_item_name.setText(listCharacters.get(position).getName());
 
@@ -112,7 +107,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return mData.getResults().size();
+        return listCharacters.size();
+    }
+
+    public void setFilter(List<Character> list) {
+
+        listCharacters = new ArrayList<>();
+        listCharacters.addAll(list);
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

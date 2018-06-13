@@ -22,6 +22,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -31,10 +32,9 @@ import java.util.List;
         private RawLocationsServerResponse mData;
         private List<Location> listLocations;
 
-        public RecyclerViewAdapter(Context mContext, RawLocationsServerResponse mData) {
+        public RecyclerViewAdapter(Context mContext, List<Location> mData) {
             this.mContext = mContext;
-            this.mData = mData;
-            this.listLocations = mData.getResults();
+            this.listLocations = mData;
         }
 
         @NonNull
@@ -97,9 +97,16 @@ import java.util.List;
 
         }
 
+        public void setFilter(List<Location> list) {
+
+            listLocations = new ArrayList<>();
+            listLocations.addAll(list);
+            notifyDataSetChanged();
+        }
+
         @Override
         public int getItemCount() {
-            return mData.getResults().size();
+            return listLocations.size();
         }
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {

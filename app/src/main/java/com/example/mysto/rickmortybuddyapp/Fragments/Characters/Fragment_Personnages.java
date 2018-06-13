@@ -10,14 +10,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.adapter.RecyclerViewAdapter;
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.RawCharactersServerResponse;
+import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.network.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RetrofitClientInstance;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +36,8 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
     RecyclerView rv_personnages;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerViewAdapter adapter;
+
+    SearchView searchViewCharacter;
 
     public Fragment_Personnages() {
 
@@ -51,10 +58,28 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
+        // SearchView
+        searchViewCharacter = view.findViewById(R.id.searchViewQuery);
+        searchViewCharacter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+               if(!searchViewCharacter.isIconified()) {
+                   searchViewCharacter.setIconified(true);
+               }
+
+               return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String userInput) {
+                final List<Character> filterCharacterList = filter(listPersonnages.getResults(), userInput);
+                adapter.setFilter(filterCharacterList);
+                return true;
+            }
+        });
+
         // Sequences of colors from the loading circle
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark,android.R.color.holo_orange_dark,android.R.color.holo_blue_dark);
-
-
         // Background color for the loading
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimaryDark);
 
@@ -67,7 +92,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
             // Load local data
             listPersonnages = gson.fromJson(json, RawCharactersServerResponse.class);
 
-            adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
+            adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages.getResults());
             rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
             rv_personnages.setAdapter(adapter);
 
@@ -109,7 +134,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
                             .putString("Characters_List", gson.toJson(listPersonnages))
                             .apply();
 
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
+                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages.getResults());
                     rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
                     rv_personnages.setAdapter(adapter);
 
@@ -125,6 +150,28 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
 
                 }
             });
+
+    }
+
+    private List<Character> filter(List<Character> pl, String query) {
+
+        query = query.toLowerCase();
+        final List<Character> filteredList = new ArrayList<>();
+
+        for(Character model : pl) {
+            final String name = model.getName().toLowerCase();
+            final String status = model.getStatus().toLowerCase();
+            final String gender = model.getGender().toLowerCase();
+            final String origin = model.getOrigin().getName().toLowerCase();
+            final String last_location = model.getLocation().getName().toLowerCase();
+
+            if(name.contains(query) || status.contains(query) || gender.equals(query) || origin.contains(query) || last_location.contains(query)) {
+                filteredList.add(model);
+            }
+
+        }
+
+        return filteredList;
 
     }
 

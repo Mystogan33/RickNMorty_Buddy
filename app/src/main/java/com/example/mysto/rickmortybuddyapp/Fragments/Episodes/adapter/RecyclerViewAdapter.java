@@ -21,17 +21,18 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
 
     private Context mContext;
-    private RawEpisodesServerResponse mData;
+    private List<Episode> listEpisodes;
 
-    public RecyclerViewAdapter(Context mContext, RawEpisodesServerResponse mData) {
+    public RecyclerViewAdapter(Context mContext, List<Episode> mData) {
         this.mContext = mContext;
-        this.mData = mData;
+        this.listEpisodes = mData;
     }
 
     @NonNull
@@ -48,8 +49,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-
-        final List<Episode> listEpisodes = mData.getResults();
 
         holder.episode_fragment_item_name.setText(listEpisodes.get(position).getName());
         holder.episode_fragment_item_season.setText(listEpisodes.get(position).getEpisode());
@@ -100,7 +99,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return mData.getResults().size();
+        return listEpisodes.size();
+    }
+
+
+    public void setFilter(List<Episode> list) {
+
+        listEpisodes = new ArrayList<>();
+        listEpisodes.addAll(list);
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
