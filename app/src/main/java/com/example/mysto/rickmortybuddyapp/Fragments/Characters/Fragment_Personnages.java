@@ -41,6 +41,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
+        // Inflate the view
         view = inflater.inflate(R.layout.personnages_fragment, container, false);
 
         // RecyclerView
@@ -49,14 +50,21 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
         // Refresh Layout
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        // Sequences of colors from the loading circle
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark,android.R.color.holo_orange_dark,android.R.color.holo_blue_dark);
+
+
+        // Background color for the loading
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimaryDark);
 
+        // Get local Data for Character if exist
         SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("Characters_List", null);
 
         if(json != null) {
 
+            // Load local data
             listPersonnages = gson.fromJson(json, RawCharactersServerResponse.class);
 
             adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
@@ -65,6 +73,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
 
         } else {
 
+            // Launch sequence for remote data
             mSwipeRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
@@ -79,6 +88,8 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
 
         return view;
     }
+
+
 
     public void loadRecyclerViewData() {
 

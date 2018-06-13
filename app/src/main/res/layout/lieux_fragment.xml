@@ -9,19 +9,19 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_below="@id/swipe_container"
-        android:layout_marginTop="-25dp"
+        android:layout_marginTop="-30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:backgroundTint="@color/colorAccent"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         <android.support.v7.widget.CardView
@@ -32,7 +32,7 @@
             android:id="@+id/cardS"
             app:cardBackgroundColor="@color/colorPrimaryDark"
             app:cardElevation="0dp"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="20dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             app:cardPreventCornerOverlap="false">
@@ -70,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
+            android:paddingTop="20dp"
             android:paddingBottom="5dp"
             android:id="@+id/locationsRecyclerView">
         </android.support.v7.widget.RecyclerView>
