@@ -25,6 +25,13 @@
                 android:src="@drawable/title"
                 android:layout_alignParentStart="true"/>
 
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingStart="5dp"
+                android:src="@drawable/ic_menu_accent_24dp"
+                android:backgroundTint="@color/colorPrimaryDark"/>
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
