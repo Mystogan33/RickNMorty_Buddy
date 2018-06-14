@@ -1,7 +1,9 @@
 package com.example.mysto.rickmortybuddyapp;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,8 @@ public class Location_Details_Activity extends AppCompatActivity {
     TextView location_details_dimension;
     TextView location_details_type;
 
+    Toolbar toolbar;
+
     Bundle extras;
 
     @Override
@@ -36,6 +40,14 @@ public class Location_Details_Activity extends AppCompatActivity {
         location_details_name = findViewById(R.id.location_details_name);
         location_details_dimension = findViewById(R.id.location_details_dimension);
         location_details_type = findViewById(R.id.location_details_type);
+
+        toolbar = findViewById(R.id.location_details_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_accent);
 
 
         if(extras != null) {
@@ -104,7 +116,12 @@ public class Location_Details_Activity extends AppCompatActivity {
                                     });
                         }
                     });
-
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

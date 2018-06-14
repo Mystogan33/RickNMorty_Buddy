@@ -7,6 +7,14 @@
     android:background="@drawable/location_background"
     tools:context="com.example.mysto.rickmortybuddyapp.Personnage_Details_Activity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        app:navigationIcon="@drawable/ic_keyboard_arrow_left_accent"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
     <RelativeLayout
         android:id="@+id/rellay1"
         android:layout_width="match_parent"

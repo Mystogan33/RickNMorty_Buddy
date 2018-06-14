@@ -1,8 +1,9 @@
 package com.example.mysto.rickmortybuddyapp;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,8 @@ public class Episode_Details_Activity extends AppCompatActivity {
     TextView episode_details_air_date;
     TextView episode_details_description;
 
+    Toolbar toolbar;
+
     Bundle extras;
 
 
@@ -41,6 +44,14 @@ public class Episode_Details_Activity extends AppCompatActivity {
         episode_details_name = findViewById(R.id.episode_details_name);
         episode_details_air_date = findViewById(R.id.episode_details_air_date);
         episode_details_description = findViewById(R.id.episode_details_description);
+
+        toolbar = findViewById(R.id.episode_details_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_accent);
 
 
         if(extras != null) {
@@ -113,5 +124,11 @@ public class Episode_Details_Activity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
