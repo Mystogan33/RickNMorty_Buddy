@@ -22,6 +22,8 @@ import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.RetrofitClientI
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -102,6 +104,15 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
             rawPersonnagesResponse = gson.fromJson(json, RawCharactersServerResponse.class);
             listPersonnages = rawPersonnagesResponse.getResults();
 
+            Collections.sort(listPersonnages, new Comparator<Character>() {
+                @Override
+                public int compare(Character character2, Character character1)
+                {
+
+                    return  character2.getName().compareTo(character1.getName());
+                }
+            });
+
             adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
             rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
             rv_personnages.setAdapter(adapter);
@@ -141,6 +152,15 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
 
                     final Integer numberOfPages = rawPersonnagesResponse.getInfo().getPages();
 
+                    Collections.sort(listPersonnages, new Comparator<Character>() {
+                        @Override
+                        public int compare(Character character2, Character character1)
+                        {
+
+                            return  character2.getName().compareTo(character1.getName());
+                        }
+                    });
+
                     adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
                     rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
                     rv_personnages.setAdapter(adapter);
@@ -159,6 +179,16 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
                                 public void onResponse(Call<RawCharactersServerResponse> call, Response<RawCharactersServerResponse> response) {
 
                                     listPersonnages.addAll(response.body().getResults());
+
+                                    Collections.sort(listPersonnages, new Comparator<Character>() {
+                                        @Override
+                                        public int compare(Character character2, Character character1)
+                                        {
+
+                                            return  character2.getName().compareTo(character1.getName());
+                                        }
+                                    });
+
                                     adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
                                     adapter.notifyDataSetChanged();
                                     rv_personnages.setAdapter(adapter);
@@ -179,6 +209,15 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
                         }
 
                     } else {
+
+                        Collections.sort(listPersonnages, new Comparator<Character>() {
+                            @Override
+                            public int compare(Character character2, Character character1)
+                            {
+
+                                return  character2.getName().compareTo(character1.getName());
+                            }
+                        });
 
                         sharedPreferences.edit()
                                 .putString("Characters_List", gson.toJson(rawPersonnagesResponse))

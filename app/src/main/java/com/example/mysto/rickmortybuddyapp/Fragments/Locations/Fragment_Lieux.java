@@ -22,6 +22,8 @@ import com.example.mysto.rickmortybuddyapp.network.JsonBin.RetrofitClientInstanc
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -86,6 +88,15 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment implements S
         if(json != null) {
 
             listLocations = gson.fromJson(json, RawLocationsServerResponse.class);
+
+            Collections.sort(listLocations.getResults(), new Comparator<Location>() {
+                @Override
+                public int compare(Location loc2, Location loc1)
+                {
+
+                    return  loc1.getName().compareTo(loc2.getName());
+                }
+            });
 
             adapter = new RecyclerViewAdapter(view.getContext(), listLocations.getResults());
             rv_locations.setLayoutManager(new LinearLayoutManager(view.getContext()));

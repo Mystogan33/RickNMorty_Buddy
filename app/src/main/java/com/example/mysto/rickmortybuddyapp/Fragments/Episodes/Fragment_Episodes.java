@@ -22,6 +22,8 @@ import com.example.mysto.rickmortybuddyapp.network.JsonBin.RetrofitClientInstanc
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -119,6 +121,7 @@ public class Fragment_Episodes extends android.support.v4.app.Fragment implement
             public void onResponse(Call<RawEpisodesServerResponse> call, Response<RawEpisodesServerResponse> response) {
 
                 listEpisodes = response.body();
+
                 SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
                 sharedPreferences.edit()
                         .putString("Episodes_List", gson.toJson(listEpisodes))
