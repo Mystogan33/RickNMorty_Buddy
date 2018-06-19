@@ -97,8 +97,8 @@
             android:textSize="18dp" />
 
         <TextView
-            android:layout_below="@id/episode_details_description"
             android:id="@+id/episode_details_separator"
+            android:layout_below="@id/episode_details_description"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
