@@ -57,6 +57,9 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
         view = inflater.inflate(R.layout.personnages_fragment, container, false);
         // RecyclerView
         rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
+
+        listPersonnages = new ArrayList<>();
+        adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
         rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
         rv_personnages.setAdapter(adapter);
 
@@ -91,10 +94,6 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark,android.R.color.holo_orange_dark,android.R.color.holo_blue_dark);
         // Background color for the loading
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimaryDark);
-
-        listPersonnages = new ArrayList<>();
-        adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
-        rv_personnages.setAdapter(adapter);
 
         // Get local Data for Character if exist
         String json = sharedPreferences.getString("Characters_List", null);

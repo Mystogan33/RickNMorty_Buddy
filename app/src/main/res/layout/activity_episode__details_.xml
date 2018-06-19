@@ -85,15 +85,39 @@
             android:id="@+id/episode_details_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="5dp"
             android:padding="16dp"
             android:text="Pas de description disponible."
             android:textAlignment="center"
             android:textColor="@color/colorValidate"
             android:textSize="18dp" />
 
+        <TextView
+            android:layout_below="@id/episode_details_description"
+            android:id="@+id/episode_details_separator"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:padding="16dp"
+            android:text="Characters in this episode"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="18dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_below="@id/episode_details_separator"
+            android:id="@+id/episode_details_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
     </RelativeLayout>
+
 </RelativeLayout>
