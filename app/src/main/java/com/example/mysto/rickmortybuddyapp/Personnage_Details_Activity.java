@@ -6,9 +6,13 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
@@ -17,6 +21,7 @@ import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.RawEpisodesServerResponse;
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Location;
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.RawLocationsServerResponse;
+import com.example.mysto.rickmortybuddyapp.adapters.RecyclerViewEpisodesAdapter;
 import com.google.gson.Gson;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Callback;
@@ -30,15 +35,20 @@ public class Personnage_Details_Activity extends AppCompatActivity {
 
     Character personnage_details;
 
-    ImageView personnage_details_img;
     TextView personnage_details_name;
-
     TextView personnage_details_status;
     TextView personnage_details_species;
     TextView personnage_details_gender;
-
     TextView personnage_details_origin;
     TextView personnage_details_last_location;
+
+    ImageView personnage_details_img;
+    ImageView origin_img;
+    ImageView last_location_img;
+
+    RelativeLayout personnage_details_relay_origin;
+    RelativeLayout personnage_details_relay_last_location;
+
 
     Toolbar toolbar;
 
@@ -46,13 +56,20 @@ public class Personnage_Details_Activity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
 
     List<String> listURLEpisodes;
+    List<Episode> listEpisodes;
     List<Episode> listEpisodesDetails;
 
     String lastLocationURL;
     Location lastLocationData;
+    Integer idLastLocation;
 
     String originURL;
+    List<Location> listLocations;
     Location originData;
+    Integer idOrigin;
+
+    RecyclerView recyclerView;
+    RecyclerViewEpisodesAdapter adapter;
 
     Bundle extras;
 
@@ -77,6 +94,12 @@ public class Personnage_Details_Activity extends AppCompatActivity {
         personnage_details_gender = findViewById(R.id.personnage_details_gender);
         personnage_details_origin = findViewById(R.id.personnage_details_origin);
         personnage_details_last_location = findViewById(R.id.personnage_details_last_location);
+        personnage_details_relay_origin = findViewById(R.id.relayOrigin);
+        personnage_details_relay_last_location = findViewById(R.id.relayLastLocation);
+        origin_img = findViewById(R.id.origin_img);
+        last_location_img = findViewById(R.id.last_location_img);
+
+        recyclerView = findViewById(R.id.episodes_recyclerview);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,6 +108,11 @@ public class Personnage_Details_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_accent);
+
+        listEpisodesDetails = new ArrayList<>();
+        adapter = new RecyclerViewEpisodesAdapter(listEpisodesDetails, this);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,5));
+        recyclerView.setAdapter(adapter);
 
         if(extras != null) {
             personnage_details = (Character) extras.getSerializable("personnage_details");
@@ -96,6 +124,8 @@ public class Personnage_Details_Activity extends AppCompatActivity {
             personnage_details_status.setText(personnage_details.getStatus());
             personnage_details_species.setText(personnage_details.getSpecies());
             personnage_details_gender.setText(personnage_details.getGender());
+            personnage_details_last_location.setText(personnage_details.getLocation().getName());
+            personnage_details_origin.setText(personnage_details.getOrigin().getName());
 
             listURLEpisodes = personnage_details.getEpisode();
             lastLocationURL = personnage_details.getLocation().getUrl();
@@ -106,36 +136,63 @@ public class Personnage_Details_Activity extends AppCompatActivity {
             String jsonLocations = sharedPreferences.getString("Locations_List", null);
             String jsonEpisodes = sharedPreferences.getString("Episodes_List", null);
 
-            RawLocationsServerResponse listLocations =  gson.fromJson(jsonLocations, RawLocationsServerResponse.class);
-            RawEpisodesServerResponse listEpisodes = gson.fromJson(jsonEpisodes, RawEpisodesServerResponse.class);
+            RawLocationsServerResponse locationsData =  gson.fromJson(jsonLocations, RawLocationsServerResponse.class);
+            RawEpisodesServerResponse episodesData = gson.fromJson(jsonEpisodes, RawEpisodesServerResponse.class);
 
-            listEpisodesDetails = new ArrayList<>();
 
-            for(String episodeUrl: listURLEpisodes) {
-
-                final String id = episodeUrl.split("/episode/")[1];
-
-                for(Episode episode: listEpisodes.getResults()) {
-
-                    if(episode.getId() == Integer.valueOf(id)) {
-                        listEpisodesDetails.add(episode);
-                    }
-
-                }
-
+            if (episodesData != null) {
+                listEpisodes = episodesData.getResults();
             }
 
-            for(Location location: listLocations.getResults()) {
+            if(locationsData != null) {
+                listLocations = locationsData.getResults();
+            }
 
-                final Integer idLastLocation = Integer.valueOf(lastLocationURL.split("/location/")[1]);
-                final Integer idOrigin = Integer.valueOf(originURL.split("/location/")[1]);
+            if(lastLocationURL != "") {
+                idLastLocation = Integer.valueOf(lastLocationURL.split("/location/")[1]);
+            }
 
-                if(idLastLocation == location.getId()) {
+            if(originURL != "") {
+                idOrigin = Integer.valueOf(originURL.split("/location/")[1]);
+            }
+
+            for(Location location: listLocations) {
+
+                if(location.getId().equals(idLastLocation)) {
                     lastLocationData = location;
                     personnage_details_last_location.setText(lastLocationData.getName());
 
-                    // Experimental
-                    personnage_details_last_location.setOnClickListener(new View.OnClickListener() {
+
+                    Picasso.with(this)
+                            .load(lastLocationData.getImage())
+                            .networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder((R.drawable.ic_launcher_background))
+                            .error(R.drawable.no_image)
+                            .into(last_location_img, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError() {
+                                    Picasso.with(getParent())
+                                            .load(lastLocationData.getImage())
+                                            .placeholder((R.drawable.ic_launcher_background))
+                                            .error(R.drawable.no_image)
+                                            .into(last_location_img, new Callback() {
+                                                @Override
+                                                public void onSuccess() {
+                                                }
+
+                                                @Override
+                                                public void onError() {
+                                                }
+                                            });
+                                }
+                            });
+
+                    personnage_details_relay_last_location.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
@@ -146,16 +203,42 @@ public class Personnage_Details_Activity extends AppCompatActivity {
                         }
                     });
 
-                } else {
-                    personnage_details_last_location.setText(personnage_details.getLocation().getName());
                 }
 
-                if(idOrigin == location.getId()) {
+                if(location.getId().equals(idOrigin)) {
                     originData = location;
                     personnage_details_origin.setText(originData.getName());
 
-                    // Experimental
-                    personnage_details_origin.setOnClickListener(new View.OnClickListener() {
+                    Picasso.with(this)
+                            .load(originData.getImage())
+                            .networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder((R.drawable.ic_launcher_background))
+                            .error(R.drawable.no_image)
+                            .into(origin_img, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError() {
+                                    Picasso.with(getParent())
+                                            .load(originData.getImage())
+                                            .placeholder((R.drawable.ic_launcher_background))
+                                            .error(R.drawable.no_image)
+                                            .into(origin_img, new Callback() {
+                                                @Override
+                                                public void onSuccess() {
+                                                }
+
+                                                @Override
+                                                public void onError() {
+                                                }
+                                            });
+                                }
+                            });
+
+                    personnage_details_relay_origin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(getApplicationContext(), Location_Details_Activity.class);
@@ -163,9 +246,26 @@ public class Personnage_Details_Activity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
+                }
 
-                } else {
-                    personnage_details_origin.setText(personnage_details.getOrigin().getName());
+            }
+
+            if(listURLEpisodes != null) {
+
+                for(String episodeUrl: listURLEpisodes) {
+
+                    final String id = episodeUrl.split("/episode/")[1];
+
+                    for(Episode episode: listEpisodes) {
+
+                        if(episode.getId().equals(Integer.valueOf(id))) {
+                            listEpisodesDetails.add(episode);
+                            adapter = new RecyclerViewEpisodesAdapter(listEpisodesDetails, getApplicationContext());
+                            recyclerView.setAdapter(adapter);
+                        }
+
+                    }
+
                 }
 
             }

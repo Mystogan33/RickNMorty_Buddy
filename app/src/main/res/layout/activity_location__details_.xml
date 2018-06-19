@@ -50,10 +50,25 @@
         android:layout_toRightOf="@id/location_details_img" />
 
     <TextView
+        android:id="@+id/location_details_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="8dp"
+        android:text="Planet"
+        android:textColor="@color/colorValidate"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_toRightOf="@id/location_details_img"
+        android:layout_below="@id/location_details_name" />
+
+
+    <TextView
         android:id="@+id/location_details_dimension"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/location_details_name"
+        android:layout_below="@+id/location_details_type"
         android:paddingEnd="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="15dp"
@@ -62,21 +77,6 @@
         android:text="Post-Apocalyptic Dimension"
         android:textColor="@color/colorValidate"
         android:textSize="15dp" />
-
-    <TextView
-        android:id="@+id/location_details_type"
-        android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="8dp"
-        android:text="Planet"
-        android:textColor="@color/colorValidate"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@id/location_details_name"
-        android:layout_below="@id/location_details_img_fullsize" />
 
     <RelativeLayout
         android:layout_width="match_parent"
