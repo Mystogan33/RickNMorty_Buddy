@@ -6,11 +6,14 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,6 +51,9 @@ public class Personnage_Details_Activity extends AppCompatActivity {
 
     RelativeLayout personnage_details_relay_origin;
     RelativeLayout personnage_details_relay_last_location;
+    RelativeLayout episodes_recyclerview_relay;
+
+    CardView cardView;
 
 
     Toolbar toolbar;
@@ -98,8 +104,10 @@ public class Personnage_Details_Activity extends AppCompatActivity {
         personnage_details_relay_last_location = findViewById(R.id.relayLastLocation);
         origin_img = findViewById(R.id.origin_img);
         last_location_img = findViewById(R.id.last_location_img);
+        cardView = findViewById(R.id.cardview_episodes_of_character);
 
         recyclerView = findViewById(R.id.episodes_recyclerview);
+        episodes_recyclerview_relay = findViewById(R.id.episodes_recyclerview_relay);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -252,6 +260,17 @@ public class Personnage_Details_Activity extends AppCompatActivity {
 
             if(listURLEpisodes != null) {
 
+                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) episodes_recyclerview_relay.getLayoutParams();
+
+                if(listURLEpisodes.size() <= 10) {
+
+                    params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+                    params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+
+                }
+
+                episodes_recyclerview_relay.setLayoutParams(params);
+
                 for(String episodeUrl: listURLEpisodes) {
 
                     final String id = episodeUrl.split("/episode/")[1];
@@ -299,6 +318,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
                                     });
                         }
                     });
+
         }
     }
 

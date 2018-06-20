@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/location_background"
-        tools:context="com.example.mysto.rickmortybuddyapp.Personnage_Details_Activity">
+        tools:context=".Personnage_Details_Activity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,8 +19,7 @@
     <RelativeLayout
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
-        android:layout_height="255dp"
-        android:paddingBottom="20dp">
+        android:layout_height="255dp">
 
         <RelativeLayout
             android:id="@+id/imgUser"
@@ -58,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/personnage_details__name"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif"
             android:text="Human, Demon, Escalope de Porc"
             android:textAllCaps="true"
@@ -157,7 +157,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true">
 
             <android.support.v7.widget.CardView
@@ -166,23 +165,30 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/tabindicatorcolor"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/tabindicatorcolor"
                     android:orientation="vertical">
 
                     <RelativeLayout
                         android:id="@+id/relayOrigin"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/origin_label"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Origin"
                             android:textColor="@color/colorAccent"
@@ -216,7 +222,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_below="@id/origin_img"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/colorAccent" />
 
                     </RelativeLayout>
@@ -225,12 +231,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
                         android:orientation="vertical">
 
                         <RelativeLayout
                             android:id="@+id/relayLastLocation"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp">
 
                             <TextView
                                 android:id="@+id/last_location_label"
@@ -268,7 +276,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:layout_below="@id/last_location_img"
-                                android:layout_marginTop="15dp"
+                                android:layout_marginTop="10dp"
                                 android:background="@color/colorAccent" />
 
                         </RelativeLayout>
@@ -279,7 +287,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -307,11 +317,11 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="235dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/cardview_details"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/tabindicatorcolor"
+                app:cardBackgroundColor="@color/colorValidate"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
@@ -326,21 +336,41 @@
                             android:id="@+id/episodes_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
                             android:text="Appeared in the episodes"
                             android:textAlignment="center"
                             android:elevation="20dp"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/episodes_recyclerview"
+                        
+                        <android.support.v7.widget.CardView
+                            android:layout_below="@id/episodes_label"
+                            android:id="@+id/cardview_episodes_of_character"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/episodes_label"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"/>
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            app:cardBackgroundColor="@color/tabindicatorcolor"
+                            app:cardCornerRadius="20dp">
 
+                            <RelativeLayout
+                                android:id="@+id/episodes_recyclerview_relay"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginEnd="5dp">
+
+                                <android.support.v7.widget.RecyclerView
+                                    android:id="@+id/episodes_recyclerview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/tabindicatorcolor" />
+
+                            </RelativeLayout>
+
+                        </android.support.v7.widget.CardView>
 
                     </RelativeLayout>
 
