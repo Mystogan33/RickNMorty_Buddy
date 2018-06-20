@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/location_background"
-    tools:context="com.example.mysto.rickmortybuddyapp.Personnage_Details_Activity">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/location_background"
+        tools:context="com.example.mysto.rickmortybuddyapp.Personnage_Details_Activity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -148,72 +149,77 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/linlay1">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview_details"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_centerHorizontal="true"
-            app:cardBackgroundColor="@color/tabindicatorcolor"
-            app:cardCornerRadius="20dp">
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
-                android:orientation="vertical">
+                app:cardBackgroundColor="@color/tabindicatorcolor"
+                app:cardCornerRadius="20dp">
 
-                <RelativeLayout
-                    android:id="@+id/relayOrigin"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/origin_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Origin"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="17dp" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:layout_below="@id/origin_label"
-                        android:id="@+id/origin_img"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/no_image"
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="#FF000000"/>
-
-                    <TextView
-                        android:id="@+id/personnage_details_origin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginLeft="10dp"
-                        android:text="Earth (C-137)"
-                        android:textColor="@color/colorValidate"
-                        android:textSize="18sp"
-                        android:layout_toRightOf="@id/origin_img"
-                        android:layout_below="@id/origin_label"/>
-
-                    <View
-                        android:id="@+id/origin_underscore"
-                        android:layout_below="@id/origin_img"
+                    <RelativeLayout
+                        android:id="@+id/relayOrigin"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@color/colorAccent" />
+                        android:layout_height="wrap_content">
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/origin_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Origin"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="17dp" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/origin_img"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_below="@id/origin_label"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/no_image"
+                            app:civ_border_color="#FF000000"
+                            app:civ_border_width="2dp" />
+
+                        <TextView
+                            android:id="@+id/personnage_details_origin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/origin_label"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_toRightOf="@id/origin_img"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Earth (C-137)"
+                            android:textColor="@color/colorValidate"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:id="@+id/origin_underscore"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/origin_img"
+                            android:layout_marginTop="15dp"
+                            android:background="@color/colorAccent" />
+
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -234,113 +240,116 @@
                                 android:textColor="@color/colorAccent"
                                 android:textSize="17dp" />
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                xmlns:app="http://schemas.android.com/apk/res-auto"
-                                android:layout_below="@id/last_location_label"
+                            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                                 android:id="@+id/last_location_img"
-                                android:layout_marginTop="5dp"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
+                                android:layout_below="@id/last_location_label"
+                                android:layout_marginTop="5dp"
                                 android:src="@drawable/no_image"
-                                app:civ_border_width="2dp"
-                                app:civ_border_color="#FF000000"/>
+                                app:civ_border_color="#FF000000"
+                                app:civ_border_width="2dp" />
 
                             <TextView
                                 android:id="@+id/personnage_details_last_location"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:layout_marginTop="8dp"
+                                android:layout_below="@id/last_location_label"
                                 android:layout_marginLeft="10dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_toRightOf="@id/last_location_img"
+                                android:fontFamily="sans-serif-light"
                                 android:text="Earth (C-137)"
                                 android:textColor="@color/colorValidate"
-                                android:textSize="18sp"
-                                android:layout_toRightOf="@id/last_location_img"
-                                android:layout_below="@id/last_location_label"/>
+                                android:textSize="18sp" />
 
                             <View
                                 android:id="@+id/last_location_underscore"
-                                android:layout_below="@id/last_location_img"
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
+                                android:layout_below="@id/last_location_img"
                                 android:layout_marginTop="15dp"
                                 android:background="@color/colorAccent" />
 
                         </RelativeLayout>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Description"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="17dp" />
+
+                        <TextView
+                            android:id="@+id/personnage_details_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Aucune description disponible"
+                            android:textColor="@color/colorValidate"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="235dp"
+                android:layout_below="@id/cardview_details"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="@color/tabindicatorcolor"
+                app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Description"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="17dp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/personnage_details_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Aucune description disponible"
-                        android:textColor="@color/colorValidate"
-                        android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/episodes_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Appeared in the episodes"
+                            android:textAlignment="center"
+                            android:elevation="20dp"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/episodes_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/episodes_label"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"/>
+
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
+            </android.support.v7.widget.CardView>
 
-            </LinearLayout>
+        </RelativeLayout>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cardview_details"
-            android:layout_margin="10dp"
-            android:layout_centerHorizontal="true"
-            app:cardBackgroundColor="@color/tabindicatorcolor"
-            app:cardCornerRadius="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/episodes_label"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Appeared in the episodes"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/episodes_recyclerview"
-                        android:layout_below="@id/episodes_label"
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+    </ScrollView>
 
     </RelativeLayout>
-
-</RelativeLayout>
