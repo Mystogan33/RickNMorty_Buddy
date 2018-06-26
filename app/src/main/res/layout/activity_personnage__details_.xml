@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/location_background"
+        android:background="@drawable/fuck3"
         tools:context=".Personnage_Details_Activity">
 
     <android.support.v7.widget.Toolbar

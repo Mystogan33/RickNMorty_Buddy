@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
         );
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.AddFragment(new Fragment_Personnages(), "Personnages");
+        adapter.AddFragment(new Fragment_Personnages(), "Characters");
         adapter.AddFragment(new Fragment_Episodes(), "Episodes");
-        adapter.AddFragment(new Fragment_Lieux(), "Lieux");
+        adapter.AddFragment(new Fragment_Lieux(), "Locations");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

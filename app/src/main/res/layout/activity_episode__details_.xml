@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.mysto.rickmortybuddyapp.Episode_Details_Activity"
-    android:background="@color/colorPrimaryDark">
+    android:background="@drawable/grad2">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/episode_details_toolbar"
@@ -36,50 +36,78 @@
         app:civ_border_width="2dp"
         app:civ_border_color="#FFFFFF"/>
 
-    <TextView
-        android:id="@+id/episode_details_season"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_dtls"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        android:text="S01EP01"
-        android:textColor="@color/colorValidate"
-        android:textStyle="bold"
-        android:layout_below="@+id/episode_details_img_fullsize"
-        android:layout_toRightOf="@id/episode_details_img"/>
-
-    <TextView
-        android:id="@+id/episode_details_name"
-        android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="8dp"
-        android:text="Walaladubdub !"
-        android:textColor="@color/colorValidate"
-        android:textSize="15dp"
-        android:layout_below="@+id/episode_details_season"
         android:layout_toRightOf="@id/episode_details_img"
-        android:layout_marginStart="15dp"/>
+        android:layout_below="@id/episode_details_img_fullsize"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="20dp"
+        android:elevation="20dp"
+        app:cardBackgroundColor="@color/tabindicatorcolor">
 
-    <TextView
-        android:id="@+id/episode_details_air_date"
-        android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="8dp"
-        android:text="December 2, 2013"
-        android:textColor="@color/colorValidate"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@id/episode_details_season"
-        android:layout_below="@id/episode_details_img_fullsize"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/episode_details_season"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="S01EP01"
+                android:textColor="@color/colorValidate"
+                android:textStyle="bold"
+                android:layout_below="@+id/episode_details_img_fullsize"
+                android:layout_toRightOf="@id/episode_details_img"/>
+
+            <TextView
+                android:id="@+id/episode_details_name"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Walaladubdub !"
+                android:textColor="@color/colorValidate"
+                android:textSize="15dp"
+                android:layout_below="@+id/episode_details_season"
+                android:layout_toRightOf="@id/episode_details_img"
+                android:layout_marginStart="15dp"/>
+
+            <TextView
+                android:id="@+id/episode_details_air_date"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="December 2, 2013"
+                android:textColor="@color/colorValidate"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/episode_details_season"
+                android:layout_below="@id/episode_details_img_fullsize"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/episode_details_name">
+        android:layout_below="@id/cardview_dtls">
 
         <TextView
             android:id="@+id/episode_details_description"
@@ -96,27 +124,61 @@
             android:textColor="@color/colorValidate"
             android:textSize="18dp" />
 
-        <TextView
-            android:id="@+id/episode_details_separator"
-            android:layout_below="@id/episode_details_description"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:padding="16dp"
-            android:text="Characters in this episode"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            android:textSize="18dp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_below="@id/episode_details_separator"
-            android:id="@+id/episode_details_recyclerview"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/episode_details_description"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/colorValidate">
 
-        </android.support.v7.widget.RecyclerView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/episode_details_separator"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="2dp"
+                        android:text="Characters in this episode"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/episode_details_separator"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardBackgroundColor="@color/tabindicatorcolor">
+
+
+                        <RelativeLayout
+                          android:id="@+id/relay_recyclerview"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+
+                          <android.support.v7.widget.RecyclerView
+                            android:id="@+id/episode_details_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                         </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
 
     </RelativeLayout>
 

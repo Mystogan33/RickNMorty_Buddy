@@ -7,7 +7,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -43,6 +46,8 @@ public class Episode_Details_Activity extends AppCompatActivity {
     RecyclerViewEpisodesCharactersAdapter adapter;
     List<String> listURLCharacters;
     List<Character> listCharacters;
+
+    RelativeLayout relativeLayout;
 
     Toolbar toolbar;
 
@@ -95,6 +100,8 @@ public class Episode_Details_Activity extends AppCompatActivity {
             episode_details_description.setText(episode_details.getDescription());
             listURLCharacters = episode_details.getCharacters();
             listCharacters = new ArrayList<>();
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
 
             for(String characterUrl : listURLCharacters) {
 
