@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -98,7 +99,7 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment implements S
                 }
             });
 
-            adapter = new RecyclerViewAdapter(view.getContext(), listLocations.getResults());
+            adapter = new RecyclerViewAdapter( this, listLocations.getResults());
             rv_locations.setLayoutManager(new LinearLayoutManager(view.getContext()));
             rv_locations.setAdapter(adapter);
 
@@ -137,7 +138,7 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment implements S
                         .putString("Locations_List", gson.toJson(listLocations))
                         .apply();
 
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listLocations.getResults());
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter( Fragment_Lieux.this, listLocations.getResults());
                 rv_locations.setLayoutManager(new LinearLayoutManager(view.getContext()));
                 rv_locations.setAdapter(adapter);
 

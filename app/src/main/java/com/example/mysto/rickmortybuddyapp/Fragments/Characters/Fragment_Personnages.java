@@ -67,7 +67,6 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
 
         // Refresh Layout
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
-        mSwipeRefreshLayout.requestFocus();
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         // SearchView

@@ -1,9 +1,10 @@
 package com.example.mysto.rickmortybuddyapp.Fragments.Locations.adapter;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,13 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Location;
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.RawLocationsServerResponse;
 import com.example.mysto.rickmortybuddyapp.Location_Details_Activity;
 import com.example.mysto.rickmortybuddyapp.R;
-import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -28,12 +27,12 @@ import java.util.List;
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
 
-        private Context mContext;
+        private Fragment parentFragment;
         private RawLocationsServerResponse mData;
         private List<Location> listLocations;
 
-        public RecyclerViewAdapter(Context mContext, List<Location> mData) {
-            this.mContext = mContext;
+        public RecyclerViewAdapter(Fragment parentFragment, List<Location> mData) {
+            this.parentFragment = parentFragment;
             this.listLocations = mData;
         }
 
@@ -42,14 +41,14 @@ import java.util.List;
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
             View view;
-            LayoutInflater mInflater = LayoutInflater.from(mContext);
+            LayoutInflater mInflater = LayoutInflater.from(parentFragment.getActivity());
             view = mInflater.inflate(R.layout.lieux_fragment_item,parent,false);
 
             return new MyViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+        public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
             holder.location_fragment_item_name.setText(listLocations.get(position).getName());
             holder.location_fragment_item_type.setText(listLocations.get(position).getType());
@@ -57,7 +56,7 @@ import java.util.List;
 
             final ImageView imageView = holder.location_fragment_item__img;
 
-            Picasso.with(mContext.getApplicationContext())
+            Picasso.with(parentFragment.getActivity())
                     .load(listLocations.get(position).getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .placeholder((R.drawable.ic_launcher_background))
@@ -69,7 +68,7 @@ import java.util.List;
 
                         @Override
                         public void onError() {
-                            Picasso.with(mContext.getApplicationContext())
+                            Picasso.with(parentFragment.getActivity())
                                     .load(listLocations.get(position).getImage())
                                     .placeholder((R.drawable.ic_launcher_background))
                                     .error(R.drawable.no_image)
@@ -89,9 +88,17 @@ import java.util.List;
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, Location_Details_Activity.class);
+
+                    Intent intent = new Intent(parentFragment.getActivity(), Location_Details_Activity.class);
+
+                    Pair[] pairs = new Pair[1];
+                    pairs[0] = new Pair<View, String>(holder.location_fragment_item__img, "imageLocation");
+
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(parentFragment.getActivity(), pairs);
+
+
                     intent.putExtra("location_details", listLocations.get(position));
-                    mContext.startActivity(intent);
+                    parentFragment.startActivity(intent, optionsCompat.toBundle());
                 }
             });
 

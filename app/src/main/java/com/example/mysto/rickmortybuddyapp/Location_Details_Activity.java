@@ -15,7 +15,6 @@ import com.example.mysto.rickmortybuddyapp.adapters.RecyclerViewEpisodesCharacte
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.RetrofitClientInstance;
 import com.google.gson.Gson;
-import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -31,7 +30,6 @@ public class Location_Details_Activity extends AppCompatActivity {
     Location location_details;
 
     ImageView location_details_img_fullsize;
-    ImageView location_details_img;
 
     TextView location_details_name;
     TextView location_details_dimension;
@@ -63,7 +61,6 @@ public class Location_Details_Activity extends AppCompatActivity {
         extras = getIntent().getExtras();
 
         location_details_img_fullsize = findViewById(R.id.location_details_img_fullsize);
-        location_details_img = findViewById(R.id.location_details_img);
         location_details_name = findViewById(R.id.location_details_name);
         location_details_dimension = findViewById(R.id.location_details_dimension);
         location_details_type = findViewById(R.id.location_details_type);
@@ -118,7 +115,6 @@ public class Location_Details_Activity extends AppCompatActivity {
             Picasso.with(this)
                     .load(location_details.getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder((R.drawable.ic_launcher_background))
                     .error(R.drawable.no_image)
                     .into(location_details_img_fullsize, new Callback() {
                         @Override
@@ -130,39 +126,8 @@ public class Location_Details_Activity extends AppCompatActivity {
                         public void onError() {
                             Picasso.with(getParent())
                                     .load(location_details.getImage())
-                                    .placeholder((R.drawable.ic_launcher_background))
                                     .error(R.drawable.no_image)
                                     .into(location_details_img_fullsize, new Callback() {
-                                        @Override
-                                        public void onSuccess() {
-
-                                        }
-
-                                        @Override
-                                        public void onError() {
-                                        }
-                                    });
-                        }
-                    });
-
-            Picasso.with(this)
-                    .load(location_details.getImage())
-                    .networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder((R.drawable.ic_launcher_background))
-                    .error(R.drawable.no_image)
-                    .into(location_details_img, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError() {
-                            Picasso.with(getParent())
-                                    .load(location_details.getImage())
-                                    .placeholder((R.drawable.ic_launcher_background))
-                                    .error(R.drawable.no_image)
-                                    .into(location_details_img, new Callback() {
                                         @Override
                                         public void onSuccess() {
 
