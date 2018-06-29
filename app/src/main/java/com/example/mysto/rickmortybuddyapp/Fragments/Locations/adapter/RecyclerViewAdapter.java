@@ -94,11 +94,12 @@ import java.util.List;
                     Pair[] pairs = new Pair[1];
                     pairs[0] = new Pair<View, String>(holder.location_fragment_item__img, "imageLocation");
 
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(parentFragment.getActivity(), pairs);
+                    //ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(parentFragment.getActivity(), pairs);
 
 
                     intent.putExtra("location_details", listLocations.get(position));
-                    parentFragment.startActivity(intent, optionsCompat.toBundle());
+                    //parentFragment.startActivity(intent, optionsCompat.toBundle());
+                    parentFragment.startActivity(intent);
                 }
             });
 

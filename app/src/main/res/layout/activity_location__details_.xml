@@ -23,7 +23,8 @@
         android:layout_height="300dp"
         android:scaleType="centerCrop"
         android:transitionName="imageLocation"
-        app:srcCompat="@drawable/no_image">
+        app:srcCompat="@drawable/no_image"
+        android:alpha="0.80">
 
     </ImageView>
 
@@ -31,132 +32,120 @@
         android:id="@+id/location_details_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="-35dp"
         android:text="Earth (C-137)"
-        android:textColor="@color/colorValidate"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="24dp"
+        android:transitionName="nameLocation"
         android:layout_below="@+id/location_details_img_fullsize"
         android:textAlignment="textStart"
         />
 
-    <TextView
-        android:id="@+id/location_details_type_placeholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:text="Type"
-        android:paddingRight="4dp"
-        android:textSize="18dp"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_below="@id/location_details_name" />
-
-    <TextView
-        android:id="@+id/location_details_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Planet"
-        android:textSize="18dp"
-        android:textColor="@color/colorValidate"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_below="@id/location_details_name"
-        android:layout_toRightOf="@id/location_details_type_placeholder"/>
-
-
-    <TextView
-        android:id="@+id/location_details_dimension_placeholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:text="Dimension"
-        android:paddingRight="4dp"
-        android:textSize="18dp"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_below="@id/location_details_type_placeholder" />
-
-
-    <TextView
-        android:id="@+id/location_details_dimension"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/location_details_type"
-        android:paddingEnd="5dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:textSize="18dp"
-        android:text="Post-Apocalyptic Dimension"
-        android:textColor="@color/colorValidate"
-        android:layout_toRightOf="@id/location_details_dimension_placeholder"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/location_details_dimension"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/location_details_img_fullsize">
 
         <TextView
-            android:id="@+id/description_placeholder"
+            android:id="@+id/location_details_type_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:text="Description"
-            android:paddingRight="4dp"
-            android:textSize="18dp"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold"
-            android:textAlignment="center" />
-
-        <TextView
-            android:id="@+id/location_details_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:padding="16dp"
-            android:text="Pas de description disponible."
-            android:textAlignment="center"
-            android:textColor="@color/colorValidate"
-            android:textSize="18dp"
-            android:layout_below="@id/description_placeholder"/>
-
-        <TextView
-            android:id="@+id/location_details_separator"
-            android:layout_below="@id/location_details_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:text="Residents of the planet"
-            android:paddingRight="4dp"
+            android:text="Type"
             android:textSize="18dp"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             android:textAlignment="center"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/location_details_recyclerview"
-            android:layout_below="@id/location_details_separator"
+        <TextView
+            android:id="@+id/location_details_type"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp">
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Planet"
+            android:textSize="18dp"
+            android:textColor="@color/colorValidate"
+            android:textAlignment="center"
+            android:layout_below="@id/location_details_name"
+            android:layout_toRightOf="@id/location_details_type_placeholder"/>
 
-        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/location_details_dimension_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Dimension"
+            android:textSize="18dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_below="@id/location_details_type_placeholder" />
+
+
+        <TextView
+            android:id="@+id/location_details_dimension"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/location_details_type"
+            android:paddingEnd="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:textSize="18dp"
+            android:text="Post-Apocalyptic Dimension"
+            android:textColor="@color/colorValidate"
+            android:layout_toRightOf="@id/location_details_dimension_placeholder"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location_details_dimension">
+
+            <TextView
+                android:id="@+id/location_details_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="30dp"
+                android:padding="16dp"
+                android:text="Pas de description disponible."
+                android:textAlignment="center"
+                android:textColor="@color/colorValidate"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/location_details_separator"
+                android:layout_below="@id/location_details_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="Residents of the planet"
+                android:paddingRight="4dp"
+                android:textSize="18dp"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/location_details_recyclerview"
+                android:layout_below="@id/location_details_separator"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp">
+
+            </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
 
     </RelativeLayout>
 </RelativeLayout>

@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="@color/colorValidate"
                 android:layout_height="wrap_content"
-                android:text="Name of Planets"
+                android:text="Name of Planet"
                 android:transitionName="nameLocation"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
