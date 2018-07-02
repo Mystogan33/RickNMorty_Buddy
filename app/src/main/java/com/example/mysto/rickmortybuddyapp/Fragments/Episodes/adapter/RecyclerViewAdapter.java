@@ -2,7 +2,10 @@ package com.example.mysto.rickmortybuddyapp.Fragments.Episodes.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,10 +30,10 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
 
-    private Context mContext;
+    private Fragment mContext;
     private List<Episode> listEpisodes;
 
-    public RecyclerViewAdapter(Context mContext, List<Episode> mData) {
+    public RecyclerViewAdapter(Fragment mContext, List<Episode> mData) {
         this.mContext = mContext;
         this.listEpisodes = mData;
     }
@@ -40,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view;
-        LayoutInflater mInflater = LayoutInflater.from(mContext);
+        LayoutInflater mInflater = LayoutInflater.from(mContext.getContext());
 
         view = mInflater.inflate(R.layout.episodes_fragment_item,parent,false);
 
@@ -48,7 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
         holder.episode_fragment_item_name.setText(listEpisodes.get(position).getName());
         holder.episode_fragment_item_season.setText(listEpisodes.get(position).getEpisode());
@@ -56,10 +59,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         final ImageView imageView = holder.episode_fragment_item__img;
 
-        Picasso.with(mContext.getApplicationContext())
+        Picasso.with(mContext.getActivity())
                 .load(listEpisodes.get(position).getImage())
                 .networkPolicy(NetworkPolicy.OFFLINE)
-                .placeholder((R.drawable.ic_launcher_background))
+                .fit()
+                .centerCrop()
                 .error(R.drawable.no_image)
                 .into(imageView, new Callback() {
                     @Override
@@ -69,9 +73,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     @Override
                     public void onError() {
-                        Picasso.with(mContext.getApplicationContext())
+                        Picasso.with(mContext.getActivity())
                                 .load(listEpisodes.get(position).getImage())
-                                .placeholder((R.drawable.ic_launcher_background))
+                                .fit()
+                                .centerCrop()
                                 .error(R.drawable.no_image)
                                 .into(imageView, new Callback() {
                                     @Override
@@ -89,9 +94,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Episode_Details_Activity.class);
+                Intent intent = new Intent(mContext.getActivity(), Episode_Details_Activity.class);
                 intent.putExtra("episode_details", listEpisodes.get(position));
-                mContext.startActivity(intent);
+
+                // Check if we're running on Android 5.0 or higher
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext.getActivity(), holder.episode_fragment_item__img,"imageEpisode");
+                    mContext.startActivity(intent, optionsCompat.toBundle());
+
+                } else {
+                    // Swap without transition
+                }
             }
         });
 

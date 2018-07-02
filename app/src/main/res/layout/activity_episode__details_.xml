@@ -18,6 +18,7 @@
 
     <ImageView
         android:id="@+id/episode_details_img_fullsize"
+        android:transitionName="imageEpisode"
         android:background="@color/tabindicatorcolor"
         android:layout_width="match_parent"
         android:layout_height="300dp"

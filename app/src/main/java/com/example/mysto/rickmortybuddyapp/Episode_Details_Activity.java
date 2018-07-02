@@ -67,6 +67,8 @@ public class Episode_Details_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_episode__details_);
 
+        supportPostponeEnterTransition();
+
         extras = getIntent().getExtras();
 
         episode_details_img_fullsize = findViewById(R.id.episode_details_img_fullsize);
@@ -127,28 +129,36 @@ public class Episode_Details_Activity extends AppCompatActivity {
             Picasso.with(this)
                     .load(episode_details.getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder((R.drawable.ic_launcher_background))
+                    .fit()
+                    .noFade()
+                    .centerCrop()
                     .error(R.drawable.no_data)
                     .into(episode_details_img_fullsize, new Callback() {
                         @Override
                         public void onSuccess() {
-
+                            supportStartPostponedEnterTransition();
                         }
 
                         @Override
                         public void onError() {
                             Picasso.with(getParent())
                                     .load(episode_details.getImage())
-                                    .placeholder((R.drawable.ic_launcher_background))
+                                    .fit()
+                                    .noFade()
+                                    .centerCrop()
                                     .error(R.drawable.no_data)
                                     .into(episode_details_img_fullsize, new Callback() {
                                         @Override
                                         public void onSuccess() {
 
+                                            supportStartPostponedEnterTransition();
+
                                         }
 
                                         @Override
                                         public void onError() {
+
+                                            supportStartPostponedEnterTransition();
                                         }
                                     });
                         }
@@ -157,28 +167,33 @@ public class Episode_Details_Activity extends AppCompatActivity {
             Picasso.with(this)
                     .load(episode_details.getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder((R.drawable.ic_launcher_background))
+                    .fit()
+                    .noFade()
+                    .centerCrop()
                     .error(R.drawable.no_image)
                     .into(episode_details_img, new Callback() {
                         @Override
                         public void onSuccess() {
-
+                            supportStartPostponedEnterTransition();
                         }
 
                         @Override
                         public void onError() {
                             Picasso.with(getParent())
                                     .load(episode_details.getImage())
-                                    .placeholder((R.drawable.ic_launcher_background))
+                                    .fit()
+                                    .noFade()
+                                    .centerCrop()
                                     .error(R.drawable.no_image)
                                     .into(episode_details_img, new Callback() {
                                         @Override
                                         public void onSuccess() {
-
+                                            supportStartPostponedEnterTransition();
                                         }
 
                                         @Override
                                         public void onError() {
+                                            supportStartPostponedEnterTransition();
                                         }
                                     });
                         }

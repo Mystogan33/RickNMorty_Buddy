@@ -1,8 +1,11 @@
 package com.example.mysto.rickmortybuddyapp.Fragments.Characters.adapter;
 
-import android.content.Context;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,10 +27,10 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
 
-    private Context mContext;
+    private Fragment mContext;
     private List<Character> listCharacters;
 
-    public RecyclerViewAdapter(Context mContext, List<Character> mData) {
+    public RecyclerViewAdapter(Fragment mContext, List<Character> mData) {
         this.mContext = mContext;
         this.listCharacters = mData;
     }
@@ -37,7 +40,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view;
-        LayoutInflater mInflater = LayoutInflater.from(mContext);
+        LayoutInflater mInflater = LayoutInflater.from(mContext.getContext());
 
         view = mInflater.inflate(R.layout.personnages_fragment_item,parent,false);
 
@@ -45,16 +48,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
         holder.personnage_fragment_item_name.setText(listCharacters.get(position).getName());
 
         String status = listCharacters.get(position).getStatus();
         holder.personnage_fragment_item_status.setText(status);
         if(status.equals("Dead")) {
-            holder.personnage_fragment_item_status.setTextColor(ContextCompat.getColor(mContext, R.color.colorDanger));
+            holder.personnage_fragment_item_status.setTextColor(ContextCompat.getColor(mContext.getContext(), R.color.colorDanger));
         } else {
-            holder.personnage_fragment_item_status.setTextColor(ContextCompat.getColor(mContext, R.color.colorValidate));
+            holder.personnage_fragment_item_status.setTextColor(ContextCompat.getColor(mContext.getContext(), R.color.colorValidate));
         }
 
         holder.personnage_fragment_item_species.setText(listCharacters.get(position).getSpecies());
@@ -64,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         final ImageView imageView = holder.personnage_fragment_item__img;
 
-        Picasso.with(mContext.getApplicationContext())
+        Picasso.with(mContext.getActivity())
                 .load(listCharacters.get(position).getImage())
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .placeholder((R.drawable.ic_launcher_background))
@@ -77,7 +80,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     @Override
                     public void onError() {
-                        Picasso.with(mContext.getApplicationContext())
+                        Picasso.with(mContext.getActivity())
                                 .load(listCharacters.get(position).getImage())
                                 .placeholder((R.drawable.ic_launcher_background))
                                 .error(R.drawable.no_image)
@@ -97,9 +100,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Personnage_Details_Activity.class);
+                Intent intent = new Intent(mContext.getActivity(), Personnage_Details_Activity.class);
                 intent.putExtra("personnage_details", listCharacters.get(position));
-                mContext.startActivity(intent);
+
+                // Check if we're running on Android 5.0 or higher
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    mContext.startActivity(intent,
+                            ActivityOptions.makeSceneTransitionAnimation(mContext.getActivity()).toBundle());
+
+                } else {
+                    // Swap without transition
+                }
             }
         });
 

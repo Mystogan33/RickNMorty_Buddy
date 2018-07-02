@@ -31,6 +31,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/personnage_details_img"
+                android:transitionName="imageCharacter"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:src="@drawable/wololo"

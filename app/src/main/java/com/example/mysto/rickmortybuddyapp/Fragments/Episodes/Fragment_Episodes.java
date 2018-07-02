@@ -87,7 +87,7 @@ public class Fragment_Episodes extends android.support.v4.app.Fragment implement
 
             listEpisodes = gson.fromJson(json, RawEpisodesServerResponse.class);
 
-            adapter = new RecyclerViewAdapter(view.getContext(), listEpisodes.getResults());
+            adapter = new RecyclerViewAdapter(Fragment_Episodes.this, listEpisodes.getResults());
             rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),3));
             rv_episodes.setAdapter(adapter);
 
@@ -127,7 +127,7 @@ public class Fragment_Episodes extends android.support.v4.app.Fragment implement
                         .putString("Episodes_List", gson.toJson(listEpisodes))
                         .apply();
 
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(view.getContext(), listEpisodes.getResults());
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter(Fragment_Episodes.this, listEpisodes.getResults());
                 rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),3));
                 rv_episodes.setAdapter(adapter);
 

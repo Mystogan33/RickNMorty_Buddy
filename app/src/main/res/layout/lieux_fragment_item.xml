@@ -31,14 +31,15 @@
 
             <TextView
                 android:id="@+id/location_fragment_item_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:textColor="@color/colorValidate"
                 android:layout_height="wrap_content"
                 android:text="Name of Planet"
                 android:transitionName="nameLocation"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="2dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

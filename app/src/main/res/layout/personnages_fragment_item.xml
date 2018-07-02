@@ -18,6 +18,7 @@
 
         <ImageView
             android:id="@+id/personnage_fragment_item__img"
+            android:transitionName="imageCharacter"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:scaleType="centerCrop"

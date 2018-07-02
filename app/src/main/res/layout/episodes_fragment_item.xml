@@ -22,11 +22,13 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:scaleType="centerCrop"
-            android:background="#2d2d2d"/>
+            android:background="#2d2d2d"
+            android:transitionName="imageEpisode"/>
 
         <TextView
             android:id="@+id/episode_fragment_item_name"
             android:textSize="12dp"
+            android:transitionName="nameEpisode"
             android:ellipsize="end"
             android:maxLines="1"
             android:layout_marginStart="5dp"

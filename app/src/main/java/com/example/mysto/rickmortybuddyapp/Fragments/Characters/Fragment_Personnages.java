@@ -59,7 +59,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
         rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
 
         listPersonnages = new ArrayList<>();
-        adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
+        adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
         rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
         rv_personnages.setAdapter(adapter);
 
@@ -111,7 +111,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
                 }
             });
 
-            adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
+            adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
             rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
             rv_personnages.setAdapter(adapter);
 
@@ -159,7 +159,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
                         }
                     });
 
-                    adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
+                    adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
                     rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
                     rv_personnages.setAdapter(adapter);
 
@@ -187,7 +187,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
                                         }
                                     });
 
-                                    adapter = new RecyclerViewAdapter(view.getContext(), listPersonnages);
+                                    adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
                                     adapter.notifyDataSetChanged();
                                     rv_personnages.setAdapter(adapter);
                                     rawPersonnagesResponse.setResults(listPersonnages);

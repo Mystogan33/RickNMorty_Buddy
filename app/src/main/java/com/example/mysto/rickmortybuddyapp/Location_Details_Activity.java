@@ -112,29 +112,41 @@ public class Location_Details_Activity extends AppCompatActivity {
 
             }
 
+            supportPostponeEnterTransition();
+
             Picasso.with(this)
                     .load(location_details.getImage())
+                    .fit()
+                    .noFade()
+                    .centerCrop()
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .error(R.drawable.no_image)
                     .into(location_details_img_fullsize, new Callback() {
                         @Override
                         public void onSuccess() {
-
+                            supportStartPostponedEnterTransition();
                         }
 
                         @Override
                         public void onError() {
                             Picasso.with(getParent())
                                     .load(location_details.getImage())
+                                    .fit()
+                                    .noFade()
+                                    .centerCrop()
                                     .error(R.drawable.no_image)
                                     .into(location_details_img_fullsize, new Callback() {
                                         @Override
                                         public void onSuccess() {
 
+                                            supportStartPostponedEnterTransition();
+
                                         }
 
                                         @Override
                                         public void onError() {
+
+                                            supportStartPostponedEnterTransition();
                                         }
                                     });
                         }

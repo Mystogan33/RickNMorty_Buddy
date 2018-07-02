@@ -1,15 +1,20 @@
 package com.example.mysto.rickmortybuddyapp.Fragments.Locations.adapter;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.transition.Explode;
+import android.support.transition.Slide;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,6 +63,8 @@ import java.util.List;
 
             Picasso.with(parentFragment.getActivity())
                     .load(listLocations.get(position).getImage())
+                    .fit()
+                    .centerCrop()
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .placeholder((R.drawable.ic_launcher_background))
                     .error(R.drawable.no_image)
@@ -70,6 +77,8 @@ import java.util.List;
                         public void onError() {
                             Picasso.with(parentFragment.getActivity())
                                     .load(listLocations.get(position).getImage())
+                                    .fit()
+                                    .centerCrop()
                                     .placeholder((R.drawable.ic_launcher_background))
                                     .error(R.drawable.no_image)
                                     .into(imageView, new Callback() {
@@ -90,16 +99,17 @@ import java.util.List;
                 public void onClick(View view) {
 
                     Intent intent = new Intent(parentFragment.getActivity(), Location_Details_Activity.class);
-
-                    Pair[] pairs = new Pair[1];
-                    pairs[0] = new Pair<View, String>(holder.location_fragment_item__img, "imageLocation");
-
-                    //ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(parentFragment.getActivity(), pairs);
-
-
                     intent.putExtra("location_details", listLocations.get(position));
-                    //parentFragment.startActivity(intent, optionsCompat.toBundle());
-                    parentFragment.startActivity(intent);
+
+                    // Check if we're running on Android 5.0 or higher
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(parentFragment.getActivity(), holder.location_fragment_item__img,"imageLocation");
+                        parentFragment.startActivity(intent, optionsCompat.toBundle());
+
+                    } else {
+                        // Swap without transition
+                    }
                 }
             });
 

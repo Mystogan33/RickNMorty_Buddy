@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/grad"
-    tools:context="com.example.mysto.rickmortybuddyapp.Location_Details_Activity">
+    tools:context=".Location_Details_Activity">
 
 
     <android.support.v7.widget.Toolbar
@@ -33,7 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="-35dp"
+        android:layout_marginTop="-45dp"
+        android:padding="5dp"
         android:text="Earth (C-137)"
         android:textColor="@android:color/white"
         android:textStyle="bold"
@@ -72,7 +73,6 @@
             android:textSize="18dp"
             android:textColor="@color/colorValidate"
             android:textAlignment="center"
-            android:layout_below="@id/location_details_name"
             android:layout_toRightOf="@id/location_details_type_placeholder"/>
 
 
