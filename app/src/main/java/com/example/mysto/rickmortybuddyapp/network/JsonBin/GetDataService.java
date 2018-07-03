@@ -10,10 +10,7 @@ import retrofit2.http.Path;
 
 public interface GetDataService {
 
-    @GET("/b/5b05486ec83f6d4cc7349c0d")
-    Call<RawCharactersServerResponse> getAllPersonnages();
-
-    @GET("/b/5b0568367a973f4ce5784514")
+    @GET("/b/5b0568367a973f4ce5784514/1")
     Call<RawLocationsServerResponse> getAllLocations();
 
     @GET("/b/5b1e327ec83f6d4cc734b197/1")

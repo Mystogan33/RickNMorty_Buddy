@@ -36,16 +36,20 @@ import static com.example.mysto.rickmortybuddyapp.R.id.locationsRecyclerView;
 public class Fragment_Lieux extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     View view;
-    RawLocationsServerResponse listLocations;
+    RawLocationsServerResponse rawLocationsResponse;
+    List<Location> listLocations;
     Gson gson;
     RecyclerView rv_locations;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerViewAdapter adapter;
-
+    SharedPreferences sharedPreferences;
     SearchView searchViewLocations;
+    GetDataService service;
 
     public Fragment_Lieux() {
+
         gson = new Gson();
+        service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
     }
 
     @Nullable
@@ -57,6 +61,13 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment implements S
         // RecyclerView
         rv_locations = view.findViewById(locationsRecyclerView);
 
+        listLocations = new ArrayList<>();
+        adapter = new RecyclerViewAdapter( this, listLocations);
+        rv_locations.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rv_locations.setAdapter(adapter);
+
+        sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
+
         // Refresh Layout
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -67,7 +78,7 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment implements S
 
         searchViewLocations.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String userInput) {
                 if(!searchViewLocations.isIconified()) {
                     searchViewLocations.setIconified(true);
                 }
@@ -77,29 +88,29 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment implements S
 
             @Override
             public boolean onQueryTextChange(String userInput) {
-                final List<Location> filterLocationsList = setFilter(listLocations.getResults(), userInput);
+                final List<Location> filterLocationsList = setFilter(listLocations, userInput);
                 adapter.setFilter(filterLocationsList);
                 return true;
             }
         });
 
-        SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("Locations_List", null);
 
         if(json != null) {
 
-            listLocations = gson.fromJson(json, RawLocationsServerResponse.class);
+            rawLocationsResponse = gson.fromJson(json, RawLocationsServerResponse.class);
+            listLocations = rawLocationsResponse.getResults();
 
-            Collections.sort(listLocations.getResults(), new Comparator<Location>() {
+            Collections.sort(listLocations, new Comparator<Location>() {
                 @Override
                 public int compare(Location loc2, Location loc1)
                 {
 
-                    return  loc1.getName().compareTo(loc2.getName());
+                    return  loc2.getName().compareTo(loc1.getName());
                 }
             });
 
-            adapter = new RecyclerViewAdapter( this, listLocations.getResults());
+            adapter = new RecyclerViewAdapter( this, listLocations);
             rv_locations.setLayoutManager(new LinearLayoutManager(view.getContext()));
             rv_locations.setAdapter(adapter);
 
@@ -132,15 +143,28 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment implements S
             @Override
             public void onResponse(Call<RawLocationsServerResponse> call, Response<RawLocationsServerResponse> response) {
 
-                listLocations = response.body();
-                SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
-                sharedPreferences.edit()
-                        .putString("Locations_List", gson.toJson(listLocations))
-                        .apply();
+                rawLocationsResponse = response.body();
+                listLocations = rawLocationsResponse.getResults();
 
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter( Fragment_Lieux.this, listLocations.getResults());
+                Collections.sort(listLocations, new Comparator<Location>() {
+                    @Override
+                    public int compare(Location loc2, Location loc1)
+                    {
+
+                        return  loc2.getName().compareTo(loc1.getName());
+                    }
+                });
+
+                adapter = new RecyclerViewAdapter( Fragment_Lieux.this, listLocations);
                 rv_locations.setLayoutManager(new LinearLayoutManager(view.getContext()));
                 rv_locations.setAdapter(adapter);
+
+                SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
+                sharedPreferences.edit()
+                        .putString("Locations_List", gson.toJson(rawLocationsResponse))
+                        .apply();
+
+                Toast.makeText(view.getContext(), "Vos données sont désormais sauvegardées", Toast.LENGTH_SHORT).show();
 
                 mSwipeRefreshLayout.setRefreshing(false);
 

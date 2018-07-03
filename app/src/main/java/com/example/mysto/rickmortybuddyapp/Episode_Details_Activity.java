@@ -1,19 +1,18 @@
 package com.example.mysto.rickmortybuddyapp;
 
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.dailymotion.android.player.sdk.PlayerWebView;
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
 import com.example.mysto.rickmortybuddyapp.adapters.RecyclerViewEpisodesCharactersAdapter;
@@ -36,6 +35,8 @@ public class Episode_Details_Activity extends AppCompatActivity {
 
     ImageView episode_details_img_fullsize;
     ImageView episode_details_img;
+
+    private PlayerWebView webView;
 
     TextView episode_details_season;
     TextView episode_details_name;
@@ -67,8 +68,6 @@ public class Episode_Details_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_episode__details_);
 
-        supportPostponeEnterTransition();
-
         extras = getIntent().getExtras();
 
         episode_details_img_fullsize = findViewById(R.id.episode_details_img_fullsize);
@@ -77,10 +76,11 @@ public class Episode_Details_Activity extends AppCompatActivity {
         episode_details_name = findViewById(R.id.episode_details_name);
         episode_details_air_date = findViewById(R.id.episode_details_air_date);
         episode_details_description = findViewById(R.id.episode_details_description);
-
         recyclerView = findViewById(R.id.episode_details_recyclerview);
-
         toolbar = findViewById(R.id.episode_details_toolbar);
+        webView = findViewById(R.id.webView);
+        webView.load("x6fb3x9");
+
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -151,14 +151,11 @@ public class Episode_Details_Activity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess() {
 
-                                            supportStartPostponedEnterTransition();
-
                                         }
 
                                         @Override
                                         public void onError() {
 
-                                            supportStartPostponedEnterTransition();
                                         }
                                     });
                         }
@@ -188,12 +185,10 @@ public class Episode_Details_Activity extends AppCompatActivity {
                                     .into(episode_details_img, new Callback() {
                                         @Override
                                         public void onSuccess() {
-                                            supportStartPostponedEnterTransition();
                                         }
 
                                         @Override
                                         public void onError() {
-                                            supportStartPostponedEnterTransition();
                                         }
                                     });
                         }
@@ -201,6 +196,25 @@ public class Episode_Details_Activity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            webView.onPause();
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            webView.onResume();
+        }
     }
 
     @Override

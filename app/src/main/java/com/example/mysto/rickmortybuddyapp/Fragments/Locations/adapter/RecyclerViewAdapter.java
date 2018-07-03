@@ -61,10 +61,12 @@ import java.util.List;
 
             final ImageView imageView = holder.location_fragment_item__img;
 
+            String image = listLocations.get(position).getImage();
+
+            if(image == null) { listLocations.get(position).setImage("unknown"); }
+
             Picasso.with(parentFragment.getActivity())
                     .load(listLocations.get(position).getImage())
-                    .fit()
-                    .centerCrop()
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .placeholder((R.drawable.ic_launcher_background))
                     .error(R.drawable.no_image)
@@ -77,8 +79,6 @@ import java.util.List;
                         public void onError() {
                             Picasso.with(parentFragment.getActivity())
                                     .load(listLocations.get(position).getImage())
-                                    .fit()
-                                    .centerCrop()
                                     .placeholder((R.drawable.ic_launcher_background))
                                     .error(R.drawable.no_image)
                                     .into(imageView, new Callback() {

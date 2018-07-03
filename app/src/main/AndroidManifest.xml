@@ -14,7 +14,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity.MainActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,12 +23,12 @@
         </activity>
         <activity
             android:name=".Episode_Details_Activity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".Location_Details_Activity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden" />
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".Personnage_Details_Activity"

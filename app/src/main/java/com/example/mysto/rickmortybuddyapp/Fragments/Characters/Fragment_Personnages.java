@@ -201,6 +201,7 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
                                 @Override
                                 public void onFailure(Call<RawCharactersServerResponse> call, Throwable t) {
                                     Toast.makeText(view.getContext(), "Un soucis s'est produit lors de la récupération du reste des personnages", Toast.LENGTH_LONG).show();
+                                    mSwipeRefreshLayout.setRefreshing(false);
                                 }
                             });
 

@@ -21,28 +21,21 @@
         android:transitionName="imageEpisode"
         android:background="@color/tabindicatorcolor"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="240dp"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/no_image" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/episode_details_img"
-        android:layout_below="@+id/episode_details_img_fullsize"
-        android:layout_marginTop="-60dp"
-        android:layout_marginStart="30dp"
-        android:layout_width="112dp"
-        android:layout_height="112dp"
-        android:src="@drawable/no_image"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FFFFFF"/>
+    <com.dailymotion.android.player.sdk.PlayerWebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="240dp">
+    </com.dailymotion.android.player.sdk.PlayerWebView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview_dtls"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/episode_details_img"
-        android:layout_below="@id/episode_details_img_fullsize"
+        android:layout_below="@id/webView"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -51,7 +44,7 @@
         android:elevation="20dp"
         app:cardBackgroundColor="@color/tabindicatorcolor">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
@@ -68,9 +61,7 @@
                 android:layout_marginTop="5dp"
                 android:text="S01EP01"
                 android:textColor="@color/colorValidate"
-                android:textStyle="bold"
-                android:layout_below="@+id/episode_details_img_fullsize"
-                android:layout_toRightOf="@id/episode_details_img"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/episode_details_name"
@@ -82,7 +73,6 @@
                 android:textColor="@color/colorValidate"
                 android:textSize="15dp"
                 android:layout_below="@+id/episode_details_season"
-                android:layout_toRightOf="@id/episode_details_img"
                 android:layout_marginStart="15dp"/>
 
             <TextView
@@ -97,11 +87,19 @@
                 android:textColor="@color/colorValidate"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/episode_details_season"
-                android:layout_below="@id/episode_details_img_fullsize"/>
+                android:layout_below="@id/episode_details_name"/>
 
-        </LinearLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/episode_details_img"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/no_image"
+                app:civ_border_color="#FFFFFF"
+                app:civ_border_width="2dp" />
+
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 

@@ -117,9 +117,9 @@ public class Location_Details_Activity extends AppCompatActivity {
             Picasso.with(this)
                     .load(location_details.getImage())
                     .fit()
-                    .noFade()
                     .centerCrop()
                     .networkPolicy(NetworkPolicy.OFFLINE)
+                    .placeholder(R.drawable.ic_launcher_background)
                     .error(R.drawable.no_image)
                     .into(location_details_img_fullsize, new Callback() {
                         @Override
@@ -132,8 +132,8 @@ public class Location_Details_Activity extends AppCompatActivity {
                             Picasso.with(getParent())
                                     .load(location_details.getImage())
                                     .fit()
-                                    .noFade()
                                     .centerCrop()
+                                    .placeholder(R.drawable.ic_launcher_background)
                                     .error(R.drawable.no_image)
                                     .into(location_details_img_fullsize, new Callback() {
                                         @Override
