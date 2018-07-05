@@ -2,7 +2,10 @@ package com.example.mysto.rickmortybuddyapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
-import com.example.mysto.rickmortybuddyapp.Personnage_Details_Activity;
+import com.example.mysto.rickmortybuddyapp.character_details.Personnage_Details_Activity;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
@@ -20,11 +23,11 @@ import java.util.List;
 
 public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<RecyclerViewEpisodesCharactersAdapter.MyViewHolder> {
 
-    List<Character> listEpisodeCharacters;
-    Context mContext;
+    List<Character> listCharacters;
+    AppCompatActivity mContext;
 
-    public RecyclerViewEpisodesCharactersAdapter(List<Character> listEpisodeCharacters, Context mContext) {
-        this.listEpisodeCharacters = listEpisodeCharacters;
+    public RecyclerViewEpisodesCharactersAdapter(List<Character> listEpisodeCharacters, AppCompatActivity mContext) {
+        this.listCharacters = listEpisodeCharacters;
         this.mContext = mContext;
     }
 
@@ -48,7 +51,7 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
 
 
         Picasso.with(mContext.getApplicationContext())
-                .load(listEpisodeCharacters.get(position).getImage())
+                .load(listCharacters.get(position).getImage())
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .placeholder((R.drawable.ic_launcher_background))
                 .error(R.drawable.no_data)
@@ -61,7 +64,7 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
                     @Override
                     public void onError() {
                         Picasso.with(mContext.getApplicationContext())
-                                .load(listEpisodeCharacters.get(position).getImage())
+                                .load(listCharacters.get(position).getImage())
                                 .placeholder((R.drawable.ic_launcher_background))
                                 .error(R.drawable.no_image)
                                 .into(imageView, new Callback() {
@@ -81,8 +84,17 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, Personnage_Details_Activity.class);
-                intent.putExtra("personnage_details", listEpisodeCharacters.get(position));
-                mContext.startActivity(intent);
+                intent.putExtra("personnage_details", listCharacters.get(position));
+
+                // Check if we're running on Android 5.0 or higher
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, imageView, "imageCharacter");
+                    mContext.startActivity(intent, optionsCompat.toBundle());
+
+                } else {
+                    // Swap without transition
+                }
             }
         });
 
@@ -90,7 +102,7 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
 
     @Override
     public int getItemCount() {
-        return listEpisodeCharacters.size();
+        return listCharacters.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -106,19 +118,4 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
         }
     }
 
-    public List<Character> getListEpisodeCharacters() {
-        return listEpisodeCharacters;
-    }
-
-    public void setListEpisodeCharacters(List<Character> listEpisodeCharacters) {
-        this.listEpisodeCharacters = listEpisodeCharacters;
-    }
-
-    public Context getmContext() {
-        return mContext;
-    }
-
-    public void setmContext(Context mContext) {
-        this.mContext = mContext;
-    }
 }

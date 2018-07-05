@@ -22,16 +22,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Episode_Details_Activity"
+            android:name=".episode_details.Episode_Details_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".Location_Details_Activity"
+            android:name=".location_details.Location_Details_Activity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".Personnage_Details_Activity"
+            android:name=".character_details.Personnage_Details_Activity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden" />
 

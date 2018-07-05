@@ -25,24 +25,27 @@
             android:background="@color/colorValidate"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:id="@+id/location_fragment_item_name"
                 android:layout_width="match_parent"
                 android:textColor="@color/colorValidate"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Name of Planet"
                 android:transitionName="nameLocation"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:paddingTop="2dp"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -60,6 +63,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Planet Type"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:transitionName="typeLocation"
                     android:textColor="@color/colorValidate"
                     android:layout_marginStart="10dp"
@@ -69,7 +74,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -87,6 +92,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Dimension C-137"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:transitionName="dimensionLocation"
                     android:textColor="@color/colorValidate"
                     android:layout_marginStart="10dp"

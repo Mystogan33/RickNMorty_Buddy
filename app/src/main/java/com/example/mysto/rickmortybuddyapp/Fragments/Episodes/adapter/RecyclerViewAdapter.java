@@ -1,6 +1,5 @@
 package com.example.mysto.rickmortybuddyapp.Fragments.Episodes.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -13,13 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.mysto.rickmortybuddyapp.Episode_Details_Activity;
+import com.example.mysto.rickmortybuddyapp.episode_details.Episode_Details_Activity;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
-import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.RawEpisodesServerResponse;
 import com.example.mysto.rickmortybuddyapp.R;
-import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -64,6 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .fit()
                 .centerCrop()
+                .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.no_image)
                 .into(imageView, new Callback() {
                     @Override
@@ -77,6 +74,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 .load(listEpisodes.get(position).getImage())
                                 .fit()
                                 .centerCrop()
+                                .placeholder(R.drawable.ic_launcher_background)
                                 .error(R.drawable.no_image)
                                 .into(imageView, new Callback() {
                                     @Override

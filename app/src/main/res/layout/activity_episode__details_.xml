@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mysto.rickmortybuddyapp.Episode_Details_Activity"
+    tools:context="com.example.mysto.rickmortybuddyapp.episode_details.Episode_Details_Activity"
     android:background="@drawable/grad2">
 
     <android.support.v7.widget.Toolbar

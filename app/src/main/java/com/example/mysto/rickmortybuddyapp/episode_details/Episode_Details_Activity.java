@@ -1,4 +1,4 @@
-package com.example.mysto.rickmortybuddyapp;
+package com.example.mysto.rickmortybuddyapp.episode_details;
 
 import android.os.Build;
 import android.support.v7.app.ActionBar;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.dailymotion.android.player.sdk.PlayerWebView;
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
+import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.adapters.RecyclerViewEpisodesCharactersAdapter;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.RetrofitClientInstance;
@@ -105,6 +106,8 @@ public class Episode_Details_Activity extends AppCompatActivity {
 
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
 
+            final AppCompatActivity app = this;
+
             for(String characterUrl : listURLCharacters) {
 
                 final String id = characterUrl.split("/character/")[1];
@@ -114,7 +117,7 @@ public class Episode_Details_Activity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Character> call, Response<Character> response) {
                         listCharacters.add(response.body());
-                        adapter = new RecyclerViewEpisodesCharactersAdapter(listCharacters, getApplicationContext());
+                        adapter = new RecyclerViewEpisodesCharactersAdapter(listCharacters, app);
                         recyclerView.setAdapter(adapter);
                     }
 

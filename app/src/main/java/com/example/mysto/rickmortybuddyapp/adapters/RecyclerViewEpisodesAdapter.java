@@ -1,15 +1,17 @@
 package com.example.mysto.rickmortybuddyapp.adapters;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.mysto.rickmortybuddyapp.Episode_Details_Activity;
+import com.example.mysto.rickmortybuddyapp.episode_details.Episode_Details_Activity;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
 import com.example.mysto.rickmortybuddyapp.R;
 import com.squareup.picasso.Callback;
@@ -21,9 +23,9 @@ import java.util.List;
 public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerViewEpisodesAdapter.MyViewHolder> {
 
     List<Episode> listEpisodes;
-    Context mContext;
+    AppCompatActivity mContext;
 
-    public RecyclerViewEpisodesAdapter(List<Episode> listEpisodes, Context mContext) {
+    public RecyclerViewEpisodesAdapter(List<Episode> listEpisodes, AppCompatActivity mContext) {
         this.listEpisodes = listEpisodes;
         this.mContext = mContext;
     }
@@ -82,7 +84,17 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, Episode_Details_Activity.class);
                 intent.putExtra("episode_details", listEpisodes.get(position));
-                mContext.startActivity(intent);
+
+
+                // Check if we're running on Android 5.0 or higher
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, imageView, "imageEpisode");
+                    mContext.startActivity(intent, optionsCompat.toBundle());
+
+                } else {
+                    // Swap without transition
+                }
             }
         });
 

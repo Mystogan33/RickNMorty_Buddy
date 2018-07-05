@@ -1,4 +1,4 @@
-package com.example.mysto.rickmortybuddyapp;
+package com.example.mysto.rickmortybuddyapp.character_details;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,21 +10,20 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
-import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.RawCharactersServerResponse;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.Episode;
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.models.RawEpisodesServerResponse;
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Location;
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.RawLocationsServerResponse;
+import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.adapters.RecyclerViewEpisodesAdapter;
+import com.example.mysto.rickmortybuddyapp.location_details.Location_Details_Activity;
 import com.google.gson.Gson;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Callback;
@@ -279,7 +278,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
 
                         if(episode.getId().equals(Integer.valueOf(id))) {
                             listEpisodesDetails.add(episode);
-                            adapter = new RecyclerViewEpisodesAdapter(listEpisodesDetails, getApplicationContext());
+                            adapter = new RecyclerViewEpisodesAdapter(listEpisodesDetails, this);
                             recyclerView.setAdapter(adapter);
                         }
 

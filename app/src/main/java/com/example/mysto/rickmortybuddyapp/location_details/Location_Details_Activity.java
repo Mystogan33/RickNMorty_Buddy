@@ -1,4 +1,4 @@
-package com.example.mysto.rickmortybuddyapp;
+package com.example.mysto.rickmortybuddyapp.location_details;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Location;
+import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.adapters.RecyclerViewEpisodesCharactersAdapter;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.RetrofitClientInstance;
@@ -91,6 +92,8 @@ public class Location_Details_Activity extends AppCompatActivity {
             listURLCharacters = location_details.getResidents();
             listCharacters = new ArrayList<>();
 
+            final AppCompatActivity app = this;
+
             for(String characterUrl : listURLCharacters) {
 
                 final String id = characterUrl.split("/character/")[1];
@@ -100,7 +103,7 @@ public class Location_Details_Activity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Character> call, Response<Character> response) {
                         listCharacters.add(response.body());
-                        adapter = new RecyclerViewEpisodesCharactersAdapter(listCharacters, getApplicationContext());
+                        adapter = new RecyclerViewEpisodesCharactersAdapter(listCharacters, app);
                         recyclerView.setAdapter(adapter);
                     }
 
