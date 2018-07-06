@@ -57,10 +57,6 @@ import java.util.List;
 
             final ImageView imageView = holder.location_fragment_item__img;
 
-            String image = listLocations.get(position).getImage();
-
-            if(image == null) { listLocations.get(position).setImage("unknown"); }
-
             Picasso.with(parentFragment.getActivity())
                     .load(listLocations.get(position).getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)

@@ -204,20 +204,14 @@ public class Episode_Details_Activity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-            webView.onPause();
-        }
+        webView.onPause();
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-            webView.onResume();
-        }
+        webView.onResume();
     }
 
     @Override

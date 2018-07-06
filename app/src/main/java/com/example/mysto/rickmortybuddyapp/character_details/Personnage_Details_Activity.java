@@ -169,7 +169,6 @@ public class Personnage_Details_Activity extends AppCompatActivity {
                     lastLocationData = location;
                     personnage_details_last_location.setText(lastLocationData.getName());
 
-
                     Picasso.with(this)
                             .load(lastLocationData.getImage())
                             .networkPolicy(NetworkPolicy.OFFLINE)

@@ -21,6 +21,7 @@ import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.network.JsonBin.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.JsonBin.RetrofitClientInstance;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -144,7 +145,15 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment implements S
             public void onResponse(Call<RawLocationsServerResponse> call, Response<RawLocationsServerResponse> response) {
 
                 rawLocationsResponse = response.body();
-                listLocations = rawLocationsResponse.getResults();
+                listLocations = new ArrayList<>();
+
+                for(Location loc: rawLocationsResponse.getResults()) {
+                    String image = loc.getImage();
+                    if(image == null || image.equals("unknown")) {
+                        loc.setImage("https://i.redd.it/lwwt86ci5anz.jpg");
+                    }
+                    listLocations.add(loc);
+                }
 
                 Collections.sort(listLocations, new Comparator<Location>() {
                     @Override
@@ -159,7 +168,6 @@ public class Fragment_Lieux extends android.support.v4.app.Fragment implements S
                 rv_locations.setLayoutManager(new LinearLayoutManager(view.getContext()));
                 rv_locations.setAdapter(adapter);
 
-                SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
                 sharedPreferences.edit()
                         .putString("Locations_List", gson.toJson(rawLocationsResponse))
                         .apply();
