@@ -14,6 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_menu_accent_24dp"
+            android:backgroundTint="@color/colorPrimaryDark"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -38,14 +46,6 @@
                         android:layout_alignParentBottom="true"
                         android:src="@drawable/title"
                         android:layout_alignParentStart="true"/>
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/menu_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/ic_menu_accent_24dp"
-                        android:backgroundTint="@color/colorPrimaryDark"/>
                 </RelativeLayout>
 
             </android.support.design.widget.AppBarLayout>
