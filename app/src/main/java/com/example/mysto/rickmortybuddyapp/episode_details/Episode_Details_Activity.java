@@ -80,7 +80,7 @@ public class Episode_Details_Activity extends AppCompatActivity {
         recyclerView = findViewById(R.id.episode_details_recyclerview);
         toolbar = findViewById(R.id.episode_details_toolbar);
         webView = findViewById(R.id.webView);
-        webView.load("x6fb3x9");
+        webView.load("x62qgh0");
 
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();

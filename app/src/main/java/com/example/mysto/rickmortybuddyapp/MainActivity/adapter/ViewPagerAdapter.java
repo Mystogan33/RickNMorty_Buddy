@@ -38,3 +38,5 @@ public class ViewPagerAdapter extends android.support.v4.app.FragmentPagerAdapte
         FragmentListTitles.add(Title);
     }
 }
+
+
