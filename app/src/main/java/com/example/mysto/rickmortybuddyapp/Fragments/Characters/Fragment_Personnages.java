@@ -7,10 +7,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.SearchView;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.adapter.RecyclerViewAdapter;
@@ -20,6 +25,8 @@ import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.RetrofitClientInstance;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,8 +47,11 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerViewAdapter adapter;
     SearchView searchViewCharacter;
+    ImageButton imageButton;
     GetDataService service;
     SharedPreferences sharedPreferences;
+    PopupMenu popup;
+    MenuInflater inflater;
 
     public Fragment_Personnages() {
 
@@ -57,6 +67,9 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
         view = inflater.inflate(R.layout.personnages_fragment, container, false);
         // RecyclerView
         rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
+
+        // Button options
+        imageButton = view.findViewById(R.id.imageViewSearchMenu);
 
         listPersonnages = new ArrayList<>();
         adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
@@ -86,6 +99,15 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
                 final List<Character> filterCharacterList = filter(rawPersonnagesResponse.getResults(), userInput);
                 adapter.setFilter(filterCharacterList);
                 return true;
+            }
+        });
+
+        initPopup(imageButton);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.show();
             }
         });
 
@@ -250,16 +272,56 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
             final String origin = model.getOrigin().getName().toLowerCase();
             final String last_location = model.getLocation().getName().toLowerCase();
 
-            if(name.contains(query) || status.contains(query) || gender.equals(query) || origin.contains(query) || last_location.contains(query)) {
-                filteredList.add(model);
-            }
+            if((name.contains(query) && popup.getMenu().getItem(0).isChecked())
+                    || (status.contains(query) && popup.getMenu().getItem(1).isChecked())
+                    || (gender.equals(query) && popup.getMenu().getItem(2).isChecked())
+                    || (origin.contains(query) && popup.getMenu().getItem(3).isChecked())
+                    || (last_location.contains(query) && popup.getMenu().getItem(4).isChecked()))  filteredList.add(model);
         }
 
         return filteredList;
+    }
+
+    public void initPopup(View v) {
+
+        popup = new PopupMenu(view.getContext(), v);
+        inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.filters_characters, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.name:
+                        /*if(menuItem.isChecked()) menuItem.setChecked(false);
+                        else menuItem.setChecked(true);*/
+                        return true;
+                    case R.id.status:
+                        if(menuItem.isChecked()) menuItem.setChecked(false);
+                        else menuItem.setChecked(true);
+                        return true;
+                    case R.id.gender:
+                        if(menuItem.isChecked()) menuItem.setChecked(false);
+                        else menuItem.setChecked(true);
+                        return true;
+                    case R.id.origin:
+                        if(menuItem.isChecked()) menuItem.setChecked(false);
+                        else menuItem.setChecked(true);
+                        return true;
+                    case R.id.last_location:
+                        if(menuItem.isChecked()) menuItem.setChecked(false);
+                        else menuItem.setChecked(true);
+                        return true;
+                }
+                return true;
+            }
+        });
+
     }
 
     @Override
     public void onRefresh() {
         loadRecyclerViewData();
     }
+
 }

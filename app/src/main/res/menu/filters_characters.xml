@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/name"
+            android:title="Name"
+            android:checked="true"
+            android:checkable="false"
+            />
+        <item
+            android:id="@+id/status"
+            android:title="Status"
+            android:checked="true"
+            />
+        <item
+            android:id="@+id/gender"
+            android:title="Gender"
+            android:checked="true"
+            />
+        <item
+            android:id="@+id/origin"
+            android:title="Origin"
+            android:checked="true"
+            />
+        <item
+            android:id="@+id/last_location"
+            android:title="Last Location"
+            android:checked="true"
+            />
+    </group>
+</menu>
