@@ -102,15 +102,6 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
             }
         });
 
-        initPopup(imageButton);
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popup.show();
-            }
-        });
-
         // Sequences of colors from the loading circle
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark,android.R.color.holo_orange_dark,android.R.color.holo_blue_dark);
         // Background color for the loading
@@ -280,43 +271,6 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
         }
 
         return filteredList;
-    }
-
-    public void initPopup(View v) {
-
-        popup = new PopupMenu(view.getContext(), v);
-        inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.filters_characters, popup.getMenu());
-
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.name:
-                        /*if(menuItem.isChecked()) menuItem.setChecked(false);
-                        else menuItem.setChecked(true);*/
-                        return true;
-                    case R.id.status:
-                        if(menuItem.isChecked()) menuItem.setChecked(false);
-                        else menuItem.setChecked(true);
-                        return true;
-                    case R.id.gender:
-                        if(menuItem.isChecked()) menuItem.setChecked(false);
-                        else menuItem.setChecked(true);
-                        return true;
-                    case R.id.origin:
-                        if(menuItem.isChecked()) menuItem.setChecked(false);
-                        else menuItem.setChecked(true);
-                        return true;
-                    case R.id.last_location:
-                        if(menuItem.isChecked()) menuItem.setChecked(false);
-                        else menuItem.setChecked(true);
-                        return true;
-                }
-                return true;
-            }
-        });
-
     }
 
     @Override

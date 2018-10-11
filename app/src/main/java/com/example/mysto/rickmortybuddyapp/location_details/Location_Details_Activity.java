@@ -1,5 +1,6 @@
 package com.example.mysto.rickmortybuddyapp.location_details;
 
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -115,7 +116,9 @@ public class Location_Details_Activity extends AppCompatActivity {
 
             }
 
-            supportPostponeEnterTransition();
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                supportPostponeEnterTransition();
+            }
 
             Picasso.with(this)
                     .load(location_details.getImage())
@@ -127,7 +130,10 @@ public class Location_Details_Activity extends AppCompatActivity {
                     .into(location_details_img_fullsize, new Callback() {
                         @Override
                         public void onSuccess() {
-                            supportStartPostponedEnterTransition();
+
+                            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                                supportStartPostponedEnterTransition();
+                            }
                         }
 
                         @Override
@@ -142,14 +148,19 @@ public class Location_Details_Activity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess() {
 
-                                            supportStartPostponedEnterTransition();
+                                            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                                                supportStartPostponedEnterTransition();
+                                            }
 
                                         }
 
                                         @Override
                                         public void onError() {
 
-                                            supportStartPostponedEnterTransition();
+                                            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                                                supportStartPostponedEnterTransition();
+                                            }
+
                                         }
                                     });
                         }

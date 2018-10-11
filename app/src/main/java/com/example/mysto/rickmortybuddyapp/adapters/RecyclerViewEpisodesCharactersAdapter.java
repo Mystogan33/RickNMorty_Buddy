@@ -87,7 +87,7 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
                 intent.putExtra("personnage_details", listCharacters.get(position));
 
                 // Check if we're running on Android 5.0 or higher
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
 
                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, imageView, "imageCharacter");
                     mContext.startActivity(intent, optionsCompat.toBundle());

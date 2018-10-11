@@ -1,5 +1,6 @@
 package com.example.mysto.rickmortybuddyapp.MainActivity;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Episodes.Fragment_Episodes;
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.Fragment_Lieux;
@@ -28,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private ViewPagerAdapter mViewPagerAdapter;
-    private FloatingActionButton home_button;
+    //private FloatingActionButton home_button;
+    private ImageButton home_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +72,12 @@ public class MainActivity extends AppCompatActivity {
         mViewPagerAdapter.AddFragment(new Fragment_Lieux(), "Locations");
 
         mViewPager.setAdapter(mViewPagerAdapter);
-        mViewPager.setPageTransformer(true, new DepthPageTransformer());
-        //mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+            mViewPager.setPageTransformer(true, new DepthPageTransformer());
+            //mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        }
+
         mTabLayout.setupWithViewPager(mViewPager);
 
     }

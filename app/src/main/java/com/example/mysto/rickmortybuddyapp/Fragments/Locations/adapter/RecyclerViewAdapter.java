@@ -94,7 +94,7 @@ import java.util.List;
                     intent.putExtra("location_details", listLocations.get(position));
 
                     // Check if we're running on Android 5.0 or higher
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
 
                         Pair<View, String> p2 = Pair.create((View) holder.location_fragment_item__img, "imageLocation");
 

@@ -129,6 +129,10 @@ public class Episode_Details_Activity extends AppCompatActivity {
 
             }
 
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                supportPostponeEnterTransition();
+            }
+
             Picasso.with(this)
                     .load(episode_details.getImage())
                     .networkPolicy(NetworkPolicy.OFFLINE)
@@ -139,7 +143,11 @@ public class Episode_Details_Activity extends AppCompatActivity {
                     .into(episode_details_img_fullsize, new Callback() {
                         @Override
                         public void onSuccess() {
-                            supportStartPostponedEnterTransition();
+
+                            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                                supportStartPostponedEnterTransition();
+                            }
+
                         }
 
                         @Override
@@ -154,10 +162,18 @@ public class Episode_Details_Activity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess() {
 
+                                            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                                                supportStartPostponedEnterTransition();
+                                            }
+
                                         }
 
                                         @Override
                                         public void onError() {
+
+                                            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                                                supportStartPostponedEnterTransition();
+                                            }
 
                                         }
                                     });

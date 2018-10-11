@@ -103,10 +103,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putExtra("personnage_details", listCharacters.get(position));
 
                 // Check if we're running on Android 5.0 or higher
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
 
-                    mContext.startActivity(intent,
-                            ActivityOptions.makeSceneTransitionAnimation(mContext.getActivity()).toBundle());
+                    mContext.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mContext.getActivity()).toBundle());
 
                 } else {
                     // Swap without transition

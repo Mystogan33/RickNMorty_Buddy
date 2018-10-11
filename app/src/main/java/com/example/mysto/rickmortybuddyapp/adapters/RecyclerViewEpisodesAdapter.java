@@ -47,8 +47,6 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
 
         final ImageView imageView = holder.img_episode;
 
-
-
         Picasso.with(mContext.getApplicationContext())
                 .load(listEpisodes.get(position).getImage())
                 .networkPolicy(NetworkPolicy.OFFLINE)
@@ -87,7 +85,7 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
 
 
                 // Check if we're running on Android 5.0 or higher
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
 
                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, imageView, "imageEpisode");
                     mContext.startActivity(intent, optionsCompat.toBundle());
