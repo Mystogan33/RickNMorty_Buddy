@@ -91,7 +91,7 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
                     mContext.startActivity(intent, optionsCompat.toBundle());
 
                 } else {
-                    // Swap without transition
+                    mContext.startActivity(intent);
                 }
             }
         });

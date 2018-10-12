@@ -4,7 +4,7 @@
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_help_accent_24dp"
-            android:title="But what is that app ?" />
+            android:title="But what is that app ?"/>
         <item
             android:id="@+id/nav_contact"
             android:icon="@drawable/ic_mail_accent_24dp"

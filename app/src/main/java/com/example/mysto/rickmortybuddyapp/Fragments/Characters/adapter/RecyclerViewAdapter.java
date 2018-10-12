@@ -108,7 +108,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     mContext.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mContext.getActivity()).toBundle());
 
                 } else {
-                    // Swap without transition
+                    mContext.startActivity(intent);
                 }
             }
         });

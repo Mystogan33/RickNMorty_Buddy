@@ -102,7 +102,7 @@ import java.util.List;
                         parentFragment.startActivity(intent, optionsCompat.toBundle());
 
                     } else {
-                        // Swap without transition
+                        parentFragment.startActivity(intent);
                     }
                 }
             });

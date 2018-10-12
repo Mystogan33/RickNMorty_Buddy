@@ -93,7 +93,7 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
                     mContext.startActivity(intent, optionsCompat.toBundle());
 
                 } else {
-                    // Swap without transition
+                    mContext.startActivity(intent);
                 }
             }
         });

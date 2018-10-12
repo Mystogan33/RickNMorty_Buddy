@@ -98,6 +98,6 @@
         android:fitsSystemWindows="true"
         app:menu="@menu/drawer_view"
         app:headerLayout="@layout/nav_header"
-        android:background="@color/colorPrimaryDark"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
 </android.support.v4.widget.DrawerLayout>

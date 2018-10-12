@@ -263,11 +263,10 @@ public class Fragment_Personnages extends android.support.v4.app.Fragment implem
             final String origin = model.getOrigin().getName().toLowerCase();
             final String last_location = model.getLocation().getName().toLowerCase();
 
-            if((name.contains(query) && popup.getMenu().getItem(0).isChecked())
-                    || (status.contains(query) && popup.getMenu().getItem(1).isChecked())
-                    || (gender.equals(query) && popup.getMenu().getItem(2).isChecked())
-                    || (origin.contains(query) && popup.getMenu().getItem(3).isChecked())
-                    || (last_location.contains(query) && popup.getMenu().getItem(4).isChecked()))  filteredList.add(model);
+            if(name.contains(query) || status.contains(query) || gender.equals(query) || origin.contains(query) || last_location.contains(query)) {
+                filteredList.add(model);
+            }
+
         }
 
         return filteredList;
