@@ -1,15 +1,15 @@
 package com.example.mysto.rickmortybuddyapp.MainActivity;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import androidx.core.view.GravityCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.setAdapter(mViewPagerAdapter);
 
-        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+        /*if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
             //mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        }
+        }*/
 
         mTabLayout.setupWithViewPager(mViewPager);
 

@@ -3,11 +3,11 @@ package com.example.mysto.rickmortybuddyapp.Fragments.Characters.adapter;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +103,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putExtra("personnage_details", listCharacters.get(position));
 
                 // Check if we're running on Android 5.0 or higher
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
                     mContext.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mContext.getActivity()).toBundle());
 

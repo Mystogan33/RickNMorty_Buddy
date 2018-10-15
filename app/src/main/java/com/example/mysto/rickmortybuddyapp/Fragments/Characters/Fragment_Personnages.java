@@ -3,17 +3,18 @@ package com.example.mysto.rickmortybuddyapp.Fragments.Characters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Personnages extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     View view;
     RawCharactersServerResponse rawPersonnagesResponse;

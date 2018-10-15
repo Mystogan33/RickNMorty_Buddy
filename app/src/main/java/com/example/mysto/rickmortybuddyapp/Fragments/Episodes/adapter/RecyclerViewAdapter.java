@@ -2,12 +2,12 @@ package com.example.mysto.rickmortybuddyapp.Fragments.Episodes.adapter;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.util.Pair;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putExtra("episode_details", listEpisodes.get(position));
 
                 // Check if we're running on Android 5.0 or higher
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
                     Pair<View, String> p2 = Pair.create((View) holder.episode_fragment_item__img, "imageEpisode");
 

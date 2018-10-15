@@ -7,7 +7,7 @@
     android:background="@drawable/grad"
 
     tools:context=".location_details.Location_Details_Activity">
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/location_details_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -135,7 +135,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"/>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/location_details_recyclerview"
                 android:layout_below="@id/location_details_separator"
                 android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
     </RelativeLayout>
 

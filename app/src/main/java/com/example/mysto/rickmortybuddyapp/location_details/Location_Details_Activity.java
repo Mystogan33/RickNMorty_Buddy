@@ -1,12 +1,12 @@
 package com.example.mysto.rickmortybuddyapp.location_details;
 
 import android.os.Build;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -116,9 +116,7 @@ public class Location_Details_Activity extends AppCompatActivity {
 
             }
 
-            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
                 supportPostponeEnterTransition();
-            }
 
             Picasso.with(this)
                     .load(location_details.getImage())
@@ -130,10 +128,7 @@ public class Location_Details_Activity extends AppCompatActivity {
                     .into(location_details_img_fullsize, new Callback() {
                         @Override
                         public void onSuccess() {
-
-                            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
                                 supportStartPostponedEnterTransition();
-                            }
                         }
 
                         @Override
@@ -148,18 +143,13 @@ public class Location_Details_Activity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess() {
 
-                                            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
                                                 supportStartPostponedEnterTransition();
-                                            }
 
                                         }
 
                                         @Override
                                         public void onError() {
-
-                                            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
                                                 supportStartPostponedEnterTransition();
-                                            }
 
                                         }
                                     });

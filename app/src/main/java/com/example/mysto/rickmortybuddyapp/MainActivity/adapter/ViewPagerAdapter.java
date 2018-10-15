@@ -1,13 +1,14 @@
 package com.example.mysto.rickmortybuddyapp.MainActivity.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> fragmentList = new ArrayList<>();
     private final List<String> FragmentListTitles = new ArrayList<>();
