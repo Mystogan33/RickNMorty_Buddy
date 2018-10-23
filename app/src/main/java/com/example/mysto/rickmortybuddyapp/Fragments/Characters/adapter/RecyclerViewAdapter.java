@@ -69,14 +69,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Picasso.with(mContext.getActivity())
                 .load(listCharacters.get(position).getImage())
                 .networkPolicy(NetworkPolicy.OFFLINE)
-                .placeholder((R.drawable.ic_launcher_background))
+                .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.no_data)
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {
 
                     }
-
                     @Override
                     public void onError() {
                         Picasso.with(mContext.getActivity())
@@ -150,7 +149,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             personnage_fragment_item_gender = itemView.findViewById(R.id.personnage_fragment_item_gender);
             personnage_fragment_item_origin = itemView.findViewById(R.id.personnage_fragment_item_origin);
             personnage_fragment_item_last_location = itemView.findViewById(R.id.personnage_fragment_item_last_location);
-
             cardView = itemView.findViewById(R.id.cardview_fragment_item_id);
 
         }

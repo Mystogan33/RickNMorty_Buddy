@@ -1,6 +1,5 @@
 package com.example.mysto.rickmortybuddyapp.episode_details;
 
-import android.os.Build;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -49,8 +47,6 @@ public class Episode_Details_Activity extends AppCompatActivity {
     List<String> listURLCharacters;
     List<Character> listCharacters;
 
-    RelativeLayout relativeLayout;
-
     Toolbar toolbar;
 
     Bundle extras;
@@ -58,18 +54,15 @@ public class Episode_Details_Activity extends AppCompatActivity {
     GetDataService service;
     Gson gson;
 
+    AppCompatActivity app;
+
 
     public Episode_Details_Activity() {
         gson = new Gson();
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_episode__details_);
-
-        extras = getIntent().getExtras();
+    public void findViews() {
 
         episode_details_img_fullsize = findViewById(R.id.episode_details_img_fullsize);
         episode_details_img = findViewById(R.id.episode_details_img);
@@ -82,6 +75,10 @@ public class Episode_Details_Activity extends AppCompatActivity {
         webView = findViewById(R.id.webView);
         webView.load("x62qgh0");
 
+    }
+
+    public void initActionBar() {
+
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -89,123 +86,99 @@ public class Episode_Details_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_accent);
 
+    }
+
+    public void setValuesToViews() {
+        episode_details_season.setText(episode_details.getEpisode());
+        episode_details_name.setText(episode_details.getName());
+        episode_details_air_date.setText(episode_details.getAirDate());
+        episode_details_description.setText(episode_details.getDescription());
+    }
+
+    public void loadCharacters() {
+
+        for(String characterUrl : listURLCharacters) {
+
+            final String id = characterUrl.split("/character/")[1];
+            Call<Character> call = service.getPersonnageById(Integer.valueOf(id));
+
+            call.enqueue(new retrofit2.Callback<Character>() {
+                @Override
+                public void onResponse(Call<Character> call, Response<Character> response) {
+                    listCharacters.add(response.body());
+                    adapter.refreshData(listCharacters);
+                }
+                @Override
+                public void onFailure(Call<Character> call, Throwable t) {}
+            });
+
+        }
+
+    }
+
+    public void loadImage(final String imgUrl, final ImageView imgView) {
+
+        Picasso.with(app)
+                .load(imgUrl)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .fit()
+                .noFade()
+                .centerCrop()
+                .error(R.drawable.no_data)
+                .into(imgView, new Callback() {
+                    @Override
+                    public void onSuccess() { supportStartPostponedEnterTransition(); }
+                    @Override
+                    public void onError() {
+                        Picasso.with(app)
+                                .load(imgUrl)
+                                .fit()
+                                .noFade()
+                                .centerCrop()
+                                .error(R.drawable.no_data)
+                                .into(imgView, new Callback() {
+                                    @Override
+                                    public void onSuccess() { supportStartPostponedEnterTransition(); }
+
+                                    @Override
+                                    public void onError() {}
+                                });
+                    }
+                });
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_episode__details_);
+
+        extras = getIntent().getExtras();
+
+        this.findViews();
+        this.initActionBar();
+
         listCharacters = new ArrayList<>();
         adapter = new RecyclerViewEpisodesCharactersAdapter(listCharacters, this);
         recyclerView.setLayoutManager(new GridLayoutManager(this,5));
         recyclerView.setAdapter(adapter);
 
         if(extras != null) {
+
             episode_details = (Episode) extras.getSerializable("episode_details");
 
-            episode_details_season.setText(episode_details.getEpisode());
-            episode_details_name.setText(episode_details.getName());
-            episode_details_air_date.setText(episode_details.getAirDate());
-            episode_details_description.setText(episode_details.getDescription());
+            this.setValuesToViews();
+
             listURLCharacters = episode_details.getCharacters();
-            listCharacters = new ArrayList<>();
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
+            app = this;
 
-            final AppCompatActivity app = this;
+            this.loadCharacters();
 
-            for(String characterUrl : listURLCharacters) {
+            supportPostponeEnterTransition();
 
-                final String id = characterUrl.split("/character/")[1];
-               Call<Character> call = service.getPersonnageById(Integer.valueOf(id));
-
-                call.enqueue(new retrofit2.Callback<Character>() {
-                    @Override
-                    public void onResponse(Call<Character> call, Response<Character> response) {
-                        listCharacters.add(response.body());
-                        adapter = new RecyclerViewEpisodesCharactersAdapter(listCharacters, app);
-                        recyclerView.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onFailure(Call<Character> call, Throwable t) {
-
-                    }
-                });
-
-            }
-
-            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
-                supportPostponeEnterTransition();
-            }
-
-            Picasso.with(this)
-                    .load(episode_details.getImage())
-                    .networkPolicy(NetworkPolicy.OFFLINE)
-                    .fit()
-                    .noFade()
-                    .centerCrop()
-                    .error(R.drawable.no_data)
-                    .into(episode_details_img_fullsize, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                                supportStartPostponedEnterTransition();
-
-                        }
-
-                        @Override
-                        public void onError() {
-                            Picasso.with(getParent())
-                                    .load(episode_details.getImage())
-                                    .fit()
-                                    .noFade()
-                                    .centerCrop()
-                                    .error(R.drawable.no_data)
-                                    .into(episode_details_img_fullsize, new Callback() {
-                                        @Override
-                                        public void onSuccess() {
-
-                                                supportStartPostponedEnterTransition();
-
-                                        }
-
-                                        @Override
-                                        public void onError() {
-
-                                                supportStartPostponedEnterTransition();
-
-                                        }
-                                    });
-                        }
-                    });
-
-            Picasso.with(this)
-                    .load(episode_details.getImage())
-                    .networkPolicy(NetworkPolicy.OFFLINE)
-                    .fit()
-                    .noFade()
-                    .centerCrop()
-                    .error(R.drawable.no_image)
-                    .into(episode_details_img, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            supportStartPostponedEnterTransition();
-                        }
-
-                        @Override
-                        public void onError() {
-                            Picasso.with(getParent())
-                                    .load(episode_details.getImage())
-                                    .fit()
-                                    .noFade()
-                                    .centerCrop()
-                                    .error(R.drawable.no_image)
-                                    .into(episode_details_img, new Callback() {
-                                        @Override
-                                        public void onSuccess() {
-                                        }
-
-                                        @Override
-                                        public void onError() {
-                                        }
-                                    });
-                        }
-                    });
+            this.loadImage(episode_details.getImage(), episode_details_img_fullsize);
+            this.loadImage(episode_details.getImage(), episode_details_img);
 
         }
 
@@ -216,7 +189,6 @@ public class Episode_Details_Activity extends AppCompatActivity {
         super.onPause();
         webView.onPause();
     }
-
 
     @Override
     protected void onResume() {

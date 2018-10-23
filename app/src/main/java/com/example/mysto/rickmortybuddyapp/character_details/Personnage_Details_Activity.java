@@ -5,11 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -51,6 +56,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
     RelativeLayout personnage_details_relay_origin;
     RelativeLayout personnage_details_relay_last_location;
     RelativeLayout episodes_recyclerview_relay;
+    RelativeLayout personnage_details_relay_status;
 
     CardView cardView;
 
@@ -67,7 +73,6 @@ public class Personnage_Details_Activity extends AppCompatActivity {
     String lastLocationURL;
     Location lastLocationData;
     Integer idLastLocation;
-
     String originURL;
     List<Location> listLocations;
     Location originData;
@@ -80,17 +85,10 @@ public class Personnage_Details_Activity extends AppCompatActivity {
 
 
     public Personnage_Details_Activity() {
-
         gson = new Gson();
-
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personnage__details_);
-
-        extras = getIntent().getExtras();
+    public void findViews() {
 
         personnage_details_img = findViewById(R.id.personnage_details_img);
         personnage_details_name = findViewById(R.id.personnage_details__name);
@@ -101,6 +99,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
         personnage_details_last_location = findViewById(R.id.personnage_details_last_location);
         personnage_details_relay_origin = findViewById(R.id.relayOrigin);
         personnage_details_relay_last_location = findViewById(R.id.relayLastLocation);
+        personnage_details_relay_status = findViewById(R.id.relayStatus);
         origin_img = findViewById(R.id.origin_img);
         last_location_img = findViewById(R.id.last_location_img);
         cardView = findViewById(R.id.cardview_episodes_of_character);
@@ -109,12 +108,135 @@ public class Personnage_Details_Activity extends AppCompatActivity {
         episodes_recyclerview_relay = findViewById(R.id.episodes_recyclerview_relay);
 
         toolbar = findViewById(R.id.toolbar);
+
+    }
+
+    public void setValuesToViews() {
+        personnage_details_name.setText(personnage_details.getName());
+        personnage_details_status.setText(personnage_details.getStatus());
+
+        if(personnage_details.getStatus().toLowerCase().equals("dead")) {
+            personnage_details_relay_status.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDanger));
+        }
+        if(personnage_details.getStatus().toLowerCase().equals("unknown")) {
+            personnage_details_relay_status.setBackgroundColor(ContextCompat.getColor(this, R.color.followersBg));
+        }
+
+        personnage_details_species.setText(personnage_details.getSpecies());
+        personnage_details_gender.setText(personnage_details.getGender());
+        personnage_details_last_location.setText(personnage_details.getLocation().getName());
+        personnage_details_origin.setText(personnage_details.getOrigin().getName());
+    }
+
+    public void initActionBar() {
+
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_accent);
+
+    }
+
+    public void loadImage(final String imgUrl, final ImageView imgView) {
+
+        Picasso.with(this)
+                .load(imgUrl)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .placeholder((R.drawable.ic_launcher_background))
+                .error(R.drawable.no_image)
+                .into(imgView, new Callback() {
+                    @Override
+                    public void onSuccess() {}
+                    @Override
+                    public void onError() {
+                        Picasso.with(getParent())
+                                .load(imgUrl)
+                                .placeholder((R.drawable.ic_launcher_background))
+                                .error(R.drawable.no_image)
+                                .into(imgView, new Callback() {
+                                    @Override
+                                    public void onSuccess() {}
+                                    @Override
+                                    public void onError() {}
+                                });
+                    }
+                });
+
+    }
+
+    public void searchForLocations() {
+
+        for(Location location: listLocations) {
+
+            if(location.getId().equals(idLastLocation)) {
+                lastLocationData = location;
+                personnage_details_last_location.setText(lastLocationData.getName());
+
+                this.loadImage(lastLocationData.getImage(), last_location_img);
+
+                personnage_details_relay_last_location.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(getApplicationContext(), Location_Details_Activity.class);
+                        intent.putExtra("location_details", lastLocationData);
+                        startActivity(intent);
+
+                    }
+                });
+
+            }
+
+            if(location.getId().equals(idOrigin)) {
+                originData = location;
+                personnage_details_origin.setText(originData.getName());
+
+                this.loadImage(originData.getImage(), origin_img);
+
+                personnage_details_relay_origin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), Location_Details_Activity.class);
+                        intent.putExtra("location_details", originData);
+                        startActivity(intent);
+                    }
+                });
+            }
+
+        }
+
+    }
+
+    public void searchForEpisodes() {
+
+        for(String episodeUrl: listURLEpisodes) {
+
+            final String id = episodeUrl.split("/episode/")[1];
+
+            for(Episode episode: listEpisodes) {
+
+                if(episode.getId().equals(Integer.valueOf(id))) {
+                    listEpisodesDetails.add(episode);
+                    adapter.refreshData(listEpisodesDetails);
+                }
+
+            }
+
+        }
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_personnage__details_);
+
+        extras = getIntent().getExtras();
+
+        this.findViews();
+        this.initActionBar();
 
         listEpisodesDetails = new ArrayList<>();
         adapter = new RecyclerViewEpisodesAdapter(listEpisodesDetails, this);
@@ -124,198 +246,38 @@ public class Personnage_Details_Activity extends AppCompatActivity {
         if(extras != null) {
             personnage_details = (Character) extras.getSerializable("personnage_details");
 
-            Picasso.Builder builder = new Picasso.Builder(this);
-            builder.downloader(new OkHttp3Downloader(this));
-
-            personnage_details_name.setText(personnage_details.getName());
-            personnage_details_status.setText(personnage_details.getStatus());
-            personnage_details_species.setText(personnage_details.getSpecies());
-            personnage_details_gender.setText(personnage_details.getGender());
-            personnage_details_last_location.setText(personnage_details.getLocation().getName());
-            personnage_details_origin.setText(personnage_details.getOrigin().getName());
+            this.setValuesToViews();
 
             listURLEpisodes = personnage_details.getEpisode();
             lastLocationURL = personnage_details.getLocation().getUrl();
             originURL = personnage_details.getOrigin().getUrl();
 
-
             sharedPreferences = getApplicationContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
-            String jsonLocations = sharedPreferences.getString("Locations_List", null);
-            String jsonEpisodes = sharedPreferences.getString("Episodes_List", null);
 
-            RawLocationsServerResponse locationsData =  gson.fromJson(jsonLocations, RawLocationsServerResponse.class);
-            RawEpisodesServerResponse episodesData = gson.fromJson(jsonEpisodes, RawEpisodesServerResponse.class);
+            RawLocationsServerResponse locationsData =  gson.fromJson(sharedPreferences.getString("Locations_List", null), RawLocationsServerResponse.class);
+            RawEpisodesServerResponse episodesData = gson.fromJson(sharedPreferences.getString("Episodes_List", null), RawEpisodesServerResponse.class);
 
 
-            if (episodesData != null) {
-                listEpisodes = episodesData.getResults();
-            }
+            if (episodesData != null) listEpisodes = episodesData.getResults();
+            if(locationsData != null) listLocations = locationsData.getResults();
+            if(lastLocationURL != "") idLastLocation = Integer.valueOf(lastLocationURL.split("/location/")[1]);
+            if(originURL != "") idOrigin = Integer.valueOf(originURL.split("/location/")[1]);
 
-            if(locationsData != null) {
-                listLocations = locationsData.getResults();
-            }
-
-            if(lastLocationURL != "") {
-                idLastLocation = Integer.valueOf(lastLocationURL.split("/location/")[1]);
-            }
-
-            if(originURL != "") {
-                idOrigin = Integer.valueOf(originURL.split("/location/")[1]);
-            }
-
-            for(Location location: listLocations) {
-
-                if(location.getId().equals(idLastLocation)) {
-                    lastLocationData = location;
-                    personnage_details_last_location.setText(lastLocationData.getName());
-
-                    Picasso.with(this)
-                            .load(lastLocationData.getImage())
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder((R.drawable.ic_launcher_background))
-                            .error(R.drawable.no_image)
-                            .into(last_location_img, new Callback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getParent())
-                                            .load(lastLocationData.getImage())
-                                            .placeholder((R.drawable.ic_launcher_background))
-                                            .error(R.drawable.no_image)
-                                            .into(last_location_img, new Callback() {
-                                                @Override
-                                                public void onSuccess() {
-                                                }
-
-                                                @Override
-                                                public void onError() {
-                                                }
-                                            });
-                                }
-                            });
-
-                    personnage_details_relay_last_location.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            Intent intent = new Intent(getApplicationContext(), Location_Details_Activity.class);
-                            intent.putExtra("location_details", lastLocationData);
-                            startActivity(intent);
-
-                        }
-                    });
-
-                }
-
-                if(location.getId().equals(idOrigin)) {
-                    originData = location;
-                    personnage_details_origin.setText(originData.getName());
-
-                    Picasso.with(this)
-                            .load(originData.getImage())
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder((R.drawable.ic_launcher_background))
-                            .error(R.drawable.no_image)
-                            .into(origin_img, new Callback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getParent())
-                                            .load(originData.getImage())
-                                            .placeholder((R.drawable.ic_launcher_background))
-                                            .error(R.drawable.no_image)
-                                            .into(origin_img, new Callback() {
-                                                @Override
-                                                public void onSuccess() {
-                                                }
-
-                                                @Override
-                                                public void onError() {
-                                                }
-                                            });
-                                }
-                            });
-
-                    personnage_details_relay_origin.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(getApplicationContext(), Location_Details_Activity.class);
-                            intent.putExtra("location_details", originData);
-                            startActivity(intent);
-                        }
-                    });
-                }
-
-            }
+            this.searchForLocations();
 
             if(listURLEpisodes != null) {
 
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) episodes_recyclerview_relay.getLayoutParams();
 
-                if(listURLEpisodes.size() <= 10) {
-
-                    params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-                    params.width = FrameLayout.LayoutParams.MATCH_PARENT;
-
-                }
+                if(listURLEpisodes.size() <= 10) { params.height = FrameLayout.LayoutParams.WRAP_CONTENT; params.width = FrameLayout.LayoutParams.MATCH_PARENT; }
 
                 episodes_recyclerview_relay.setLayoutParams(params);
 
-                for(String episodeUrl: listURLEpisodes) {
-
-                    final String id = episodeUrl.split("/episode/")[1];
-
-                    for(Episode episode: listEpisodes) {
-
-                        if(episode.getId().equals(Integer.valueOf(id))) {
-                            listEpisodesDetails.add(episode);
-                            adapter = new RecyclerViewEpisodesAdapter(listEpisodesDetails, this);
-                            recyclerView.setAdapter(adapter);
-                        }
-
-                    }
-
-                }
+                this.searchForEpisodes();
 
             }
 
-
-            Picasso.with(this)
-                    .load(personnage_details.getImage())
-                    .networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder((R.drawable.ic_launcher_background))
-                    .error(R.drawable.no_image)
-                    .into(personnage_details_img, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError() {
-                            Picasso.with(getParent())
-                                    .load(personnage_details.getImage())
-                                    .placeholder((R.drawable.ic_launcher_background))
-                                    .error(R.drawable.no_image)
-                                    .into(personnage_details_img, new Callback() {
-                                        @Override
-                                        public void onSuccess() {
-                                        }
-
-                                        @Override
-                                        public void onError() {
-                                        }
-                                    });
-                        }
-                    });
+            this.loadImage(personnage_details.getImage(), personnage_details_img);
 
         }
     }

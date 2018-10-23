@@ -1,9 +1,7 @@
 package com.example.mysto.rickmortybuddyapp.MainActivity;
 
-import android.os.Build;
 import androidx.annotation.NonNull;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import androidx.core.view.GravityCompat;

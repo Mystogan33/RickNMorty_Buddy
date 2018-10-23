@@ -1,6 +1,5 @@
 package com.example.mysto.rickmortybuddyapp.location_details;
 
-import android.os.Build;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,11 +47,89 @@ public class Location_Details_Activity extends AppCompatActivity {
     List<Character> listCharacters;
 
     Bundle extras;
+    AppCompatActivity app;
 
     public Location_Details_Activity() {
 
         gson = new Gson();
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+    }
+
+    public void findViews() {
+        location_details_img_fullsize = findViewById(R.id.location_details_img_fullsize);
+        location_details_name = findViewById(R.id.location_details_name);
+        location_details_dimension = findViewById(R.id.location_details_dimension);
+        location_details_type = findViewById(R.id.location_details_type);
+        recyclerView = findViewById(R.id.location_details_recyclerview);
+        toolbar = findViewById(R.id.location_details_toolbar);
+    }
+
+    public void initActionBar() {
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_accent);
+    }
+
+    public void setValuesToViews() {
+        location_details_name.setText(location_details.getName());
+        location_details_dimension.setText(location_details.getDimension());
+        location_details_type.setText(location_details.getType());
+    }
+
+    public void loadCharacters() {
+        for(String characterUrl : listURLCharacters) {
+
+            final String id = characterUrl.split("/character/")[1];
+            Call<Character> call = service.getPersonnageById(Integer.valueOf(id));
+
+            call.enqueue(new retrofit2.Callback<Character>() {
+                @Override
+                public void onResponse(Call<Character> call, Response<Character> response) {
+                    listCharacters.add(response.body());
+                    adapter.refreshData(listCharacters);
+                }
+                @Override
+                public void onFailure(Call<Character> call, Throwable t) { }
+            });
+
+        }
+
+    }
+
+    public void loadImage(final String imgUrl, final ImageView imgView) {
+        Picasso.with(app)
+                .load(imgUrl)
+                .fit()
+                .centerCrop()
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.no_image)
+                .into(imgView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        supportStartPostponedEnterTransition();
+                    }
+
+                    @Override
+                    public void onError() {
+                        Picasso.with(app)
+                                .load(imgUrl)
+                                .fit()
+                                .centerCrop()
+                                .placeholder(R.drawable.ic_launcher_background)
+                                .error(R.drawable.no_image)
+                                .into(imgView, new Callback() {
+                                    @Override
+                                    public void onSuccess() { supportStartPostponedEnterTransition(); }
+
+                                    @Override
+                                    public void onError() { supportStartPostponedEnterTransition(); }
+                                });
+                    }
+                });
     }
 
     @Override
@@ -62,99 +139,29 @@ public class Location_Details_Activity extends AppCompatActivity {
 
         extras = getIntent().getExtras();
 
-        location_details_img_fullsize = findViewById(R.id.location_details_img_fullsize);
-        location_details_name = findViewById(R.id.location_details_name);
-        location_details_dimension = findViewById(R.id.location_details_dimension);
-        location_details_type = findViewById(R.id.location_details_type);
-
-        recyclerView = findViewById(R.id.location_details_recyclerview);
-
-        toolbar = findViewById(R.id.location_details_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_accent);
+        this.findViews();
+        this.initActionBar();
 
         listCharacters = new ArrayList<>();
         adapter = new RecyclerViewEpisodesCharactersAdapter(listCharacters, this);
         recyclerView.setLayoutManager(new GridLayoutManager(this,5));
         recyclerView.setAdapter(adapter);
 
-
         if(extras != null) {
             location_details = (Location) extras.getSerializable("location_details");
 
-            location_details_name.setText(location_details.getName());
-            location_details_dimension.setText(location_details.getDimension());
-            location_details_type.setText(location_details.getType());
+            this.setValuesToViews();
 
             listURLCharacters = location_details.getResidents();
             listCharacters = new ArrayList<>();
 
-            final AppCompatActivity app = this;
+            app = this;
 
-            for(String characterUrl : listURLCharacters) {
+            this.loadCharacters();
 
-                final String id = characterUrl.split("/character/")[1];
-                Call<Character> call = service.getPersonnageById(Integer.valueOf(id));
+            supportPostponeEnterTransition();
 
-                call.enqueue(new retrofit2.Callback<Character>() {
-                    @Override
-                    public void onResponse(Call<Character> call, Response<Character> response) {
-                        listCharacters.add(response.body());
-                        adapter = new RecyclerViewEpisodesCharactersAdapter(listCharacters, app);
-                        recyclerView.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onFailure(Call<Character> call, Throwable t) {
-
-                    }
-                });
-
-            }
-
-                supportPostponeEnterTransition();
-
-            Picasso.with(this)
-                    .load(location_details.getImage())
-                    .fit()
-                    .centerCrop()
-                    .networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.no_image)
-                    .into(location_details_img_fullsize, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                                supportStartPostponedEnterTransition();
-                        }
-
-                        @Override
-                        public void onError() {
-                            Picasso.with(getParent())
-                                    .load(location_details.getImage())
-                                    .fit()
-                                    .centerCrop()
-                                    .placeholder(R.drawable.ic_launcher_background)
-                                    .error(R.drawable.no_image)
-                                    .into(location_details_img_fullsize, new Callback() {
-                                        @Override
-                                        public void onSuccess() {
-
-                                                supportStartPostponedEnterTransition();
-
-                                        }
-
-                                        @Override
-                                        public void onError() {
-                                                supportStartPostponedEnterTransition();
-
-                                        }
-                                    });
-                        }
-                    });
+            this.loadImage(location_details.getImage(), location_details_img_fullsize);
         }
     }
 

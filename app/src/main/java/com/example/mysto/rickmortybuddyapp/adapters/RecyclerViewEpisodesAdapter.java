@@ -18,6 +18,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerViewEpisodesAdapter.MyViewHolder> {
@@ -34,6 +35,7 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
 
@@ -101,6 +103,12 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public int getItemCount() {
         return listEpisodes.size();
+    }
+
+    public void refreshData(List<Episode> list) {
+        listEpisodes = new ArrayList<>();
+        listEpisodes.addAll(list);
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

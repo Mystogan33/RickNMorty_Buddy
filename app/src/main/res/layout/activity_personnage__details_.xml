@@ -76,7 +76,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
@@ -112,8 +112,9 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relayStatus"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@color/colorValidate"
@@ -318,10 +319,12 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@id/cardview_details"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 app:cardBackgroundColor="@color/colorValidate"
                 app:cardCornerRadius="20dp">
 
@@ -342,12 +345,12 @@
                             android:elevation="20dp"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
-                        
+
                         <androidx.cardview.widget.CardView
                             android:layout_below="@id/episodes_label"
                             android:id="@+id/cardview_episodes_of_character"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="5dp"
@@ -358,7 +361,7 @@
                             <RelativeLayout
                                 android:id="@+id/episodes_recyclerview_relay"
                                 android:layout_width="match_parent"
-                                android:layout_height="200dp"
+                                android:layout_height="150dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_marginEnd="5dp">

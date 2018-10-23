@@ -39,11 +39,13 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
     RecyclerView rv_episodes;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerViewAdapter adapter;
-
+    GetDataService service;
     SearchView searchViewEpisodes;
 
     public Fragment_Episodes() {
+
         gson = new Gson();
+        service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
     }
 
     @Nullable
@@ -84,13 +86,15 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
         SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("Episodes_List", null);
 
+
+        adapter = new RecyclerViewAdapter(Fragment_Episodes.this, new ArrayList<Episode>());
+        rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),3));
+        rv_episodes.setAdapter(adapter);
+
         if(json != null) {
 
             listEpisodes = gson.fromJson(json, RawEpisodesServerResponse.class);
-
-            adapter = new RecyclerViewAdapter(Fragment_Episodes.this, listEpisodes.getResults());
-            rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),3));
-            rv_episodes.setAdapter(adapter);
+            adapter.setFilter(listEpisodes.getResults());
 
         } else {
 
@@ -99,7 +103,6 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
                 public void run() {
 
                     mSwipeRefreshLayout.setRefreshing(true);
-
                     loadRecyclerViewData();
 
                 }
@@ -112,8 +115,6 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
     public void loadRecyclerViewData() {
 
         mSwipeRefreshLayout.setRefreshing(true);
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
         Call<RawEpisodesServerResponse> call = service.getAllEpisodes();
 
@@ -128,9 +129,7 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
                         .putString("Episodes_List", gson.toJson(listEpisodes))
                         .apply();
 
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(Fragment_Episodes.this, listEpisodes.getResults());
-                rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),3));
-                rv_episodes.setAdapter(adapter);
+                adapter.setFilter(listEpisodes.getResults());
 
                 mSwipeRefreshLayout.setRefreshing(false);
 

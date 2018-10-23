@@ -8,15 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.SearchView;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.adapter.RecyclerViewAdapter;
@@ -26,8 +22,6 @@ import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.RetrofitClientInstance;
 import com.google.gson.Gson;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,13 +45,18 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
     ImageButton imageButton;
     GetDataService service;
     SharedPreferences sharedPreferences;
-    PopupMenu popup;
-    MenuInflater inflater;
 
     public Fragment_Personnages() {
 
         gson = new Gson();
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+    }
+
+    public void findViews() {
+        rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
+        imageButton = view.findViewById(R.id.imageViewSearchMenu);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
+        searchViewCharacter = view.findViewById(R.id.searchViewQuery);
     }
 
     @Nullable
@@ -66,11 +65,7 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
 
         // Inflate the view
         view = inflater.inflate(R.layout.personnages_fragment, container, false);
-        // RecyclerView
-        rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
-
-        // Button options
-        imageButton = view.findViewById(R.id.imageViewSearchMenu);
+        this.findViews();
 
         listPersonnages = new ArrayList<>();
         adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
@@ -80,11 +75,9 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
         sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
 
         // Refresh Layout
-        mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         // SearchView
-        searchViewCharacter = view.findViewById(R.id.searchViewQuery);
         searchViewCharacter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -125,9 +118,7 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
                 }
             });
 
-            adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
-            rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
-            rv_personnages.setAdapter(adapter);
+            adapter.setFilter(listPersonnages);
 
 
         } else {
@@ -173,10 +164,7 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
                         }
                     });
 
-                    adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
-                    rv_personnages.setLayoutManager(new GridLayoutManager(view.getContext(),2));
-                    rv_personnages.setAdapter(adapter);
-
+                    adapter.setFilter(listPersonnages);
 
                     Toast.makeText(view.getContext(), "Vos données sont désormais sauvegardées", Toast.LENGTH_SHORT).show();
 
@@ -201,9 +189,7 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
                                         }
                                     });
 
-                                    adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
-                                    adapter.notifyDataSetChanged();
-                                    rv_personnages.setAdapter(adapter);
+                                    adapter.setFilter(listPersonnages);
                                     rawPersonnagesResponse.setResults(listPersonnages);
 
                                     sharedPreferences.edit()

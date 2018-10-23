@@ -112,9 +112,7 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
                 }
             });
 
-            adapter = new RecyclerViewAdapter( this, listLocations);
-            rv_locations.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            rv_locations.setAdapter(adapter);
+            adapter.setFilter(listLocations);
 
         } else {
 
@@ -136,8 +134,6 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
     public void loadRecyclerViewData() {
 
         mSwipeRefreshLayout.setRefreshing(true);
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
         Call<RawLocationsServerResponse> call = service.getAllLocations();
 
@@ -165,9 +161,7 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
                     }
                 });
 
-                adapter = new RecyclerViewAdapter( Fragment_Lieux.this, listLocations);
-                rv_locations.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                rv_locations.setAdapter(adapter);
+                adapter.setFilter(listLocations);
 
                 sharedPreferences.edit()
                         .putString("Locations_List", gson.toJson(rawLocationsResponse))
