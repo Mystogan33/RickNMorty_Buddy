@@ -19,6 +19,7 @@ import com.example.mysto.rickmortybuddyapp.Fragments.Locations.adapter.RecyclerV
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.Location;
 import com.example.mysto.rickmortybuddyapp.Fragments.Locations.models.RawLocationsServerResponse;
 import com.example.mysto.rickmortybuddyapp.R;
+import com.example.mysto.rickmortybuddyapp.interfaces.Refreshable;
 import com.example.mysto.rickmortybuddyapp.network.JsonBin.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.JsonBin.RetrofitClientInstance;
 import com.google.gson.Gson;
@@ -35,7 +36,7 @@ import retrofit2.Response;
 
 import static com.example.mysto.rickmortybuddyapp.R.id.locationsRecyclerView;
 
-public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Refreshable {
 
     View view;
     RawLocationsServerResponse rawLocationsResponse;
@@ -119,8 +120,6 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
             mSwipeRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
-
-                    mSwipeRefreshLayout.setRefreshing(true);
 
                     loadRecyclerViewData();
 

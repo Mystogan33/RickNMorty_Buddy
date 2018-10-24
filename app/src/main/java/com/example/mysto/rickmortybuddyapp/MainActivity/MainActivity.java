@@ -3,6 +3,7 @@ package com.example.mysto.rickmortybuddyapp.MainActivity;
 import androidx.annotation.NonNull;
 
 import com.example.mysto.rickmortybuddyapp.notifications.NotificationHelperWelcomeBack;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import androidx.core.view.GravityCompat;
@@ -13,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -26,7 +26,6 @@ import com.example.mysto.rickmortybuddyapp.MainActivity.adapter.ViewPagerAdapter
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private ViewPagerAdapter mViewPagerAdapter;
-    //private FloatingActionButton home_button;
     private ImageButton home_button;
+    private ImageButton more_button;
+    private FloatingActionButton refresh_button;
 
     NotificationHelperWelcomeBack mNotifier;
 
@@ -45,18 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        mTabLayout = findViewById(R.id.tablayout_id);
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        mViewPager = findViewById(R.id.viewpager_id);
-        home_button = findViewById(R.id.menu_button);
-
-        home_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+        this.findViews();
 
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -79,13 +68,35 @@ public class MainActivity extends AppCompatActivity {
         mViewPagerAdapter.AddFragment(new Fragment_Lieux(), "Locations");
 
         mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPager.setOffscreenPageLimit(2);
 
-        /*if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+          /*if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
             //mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         }*/
 
         mTabLayout.setupWithViewPager(mViewPager);
+
+        home_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        more_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        refresh_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPagerAdapter.refreshAllFragments();
+            }
+        });
+
         this.sendNotifications();
 
     }
@@ -96,14 +107,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("last_launch_time", null);
 
-        Log.e("TIME", json);
-
-        if(json.equals(null)) {
+        if(json != null) {
             sharedPreferences.edit()
                     .putString("last_launch_time", date)
                     .apply();
         } else {
-            if(!json.equals(date)) {
+            if(json != date) {
                 mNotifier = new NotificationHelperWelcomeBack(this);
                 mNotifier.createNotification("Welcome Back", "Thanks to visit Rick & Morty ! Hope you get swifty. Stay connected ! ");
 
@@ -112,5 +121,17 @@ public class MainActivity extends AppCompatActivity {
                         .apply();
             }
         }
+    }
+
+    public void findViews() {
+
+        mTabLayout = findViewById(R.id.tablayout_id);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        mViewPager = findViewById(R.id.viewpager_id);
+        home_button = findViewById(R.id.menu_button);
+        more_button = findViewById(R.id.more_button);
+        refresh_button = findViewById(R.id.refresh_button);
+
     }
 }

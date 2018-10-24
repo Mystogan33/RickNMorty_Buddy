@@ -19,6 +19,7 @@ import com.example.mysto.rickmortybuddyapp.Fragments.Characters.adapter.Recycler
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.RawCharactersServerResponse;
 import com.example.mysto.rickmortybuddyapp.Fragments.Characters.models.Character;
 import com.example.mysto.rickmortybuddyapp.R;
+import com.example.mysto.rickmortybuddyapp.interfaces.Refreshable;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.RickNMortyAPI.RetrofitClientInstance;
 import com.google.gson.Gson;
@@ -32,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Refreshable {
 
     View view;
     RawCharactersServerResponse rawPersonnagesResponse;
