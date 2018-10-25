@@ -48,7 +48,7 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:closeIcon="@android:drawable/ic_menu_close_clear_cancel"
                 app:iconifiedByDefault="false"
-                app:queryHint="Search episodes..." />
+                app:queryHint="@string/episodes_fragment_query_hint" />
 
             <!--ImageButton
                 android:layout_marginRight="5dp"
@@ -73,19 +73,26 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:paddingTop="30dp"
-        android:orientation="vertical"
-        android:focusableInTouchMode="true">
+        android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:focusableInTouchMode="true"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingBottom="5dp"
-            android:id="@+id/episodesRecyclerView"/>
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:focusableInTouchMode="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingBottom="5dp"
+                android:id="@+id/episodesRecyclerView"/>
+
+        </LinearLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

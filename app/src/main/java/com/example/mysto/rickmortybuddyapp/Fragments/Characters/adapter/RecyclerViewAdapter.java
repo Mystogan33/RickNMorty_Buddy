@@ -41,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext.getContext());
 
-        view = mInflater.inflate(R.layout.personnages_fragment_item,parent,false);
+        view = mInflater.inflate(R.layout.characters_fragment_item,parent,false);
 
         return new MyViewHolder(view);
     }
@@ -52,15 +52,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.personnage_fragment_item_name.setText(listCharacters.get(position).getName());
 
         String status = listCharacters.get(position).getStatus();
-        holder.personnage_fragment_item_status.setText(status);
-        if(status.equals("Dead")) {
+        if(status.toLowerCase().equals("dead")) {
             holder.personnage_fragment_item_status.setTextColor(ContextCompat.getColor(mContext.getContext(), R.color.colorDanger));
-        } else {
+            holder.personnage_fragment_item_status.setText(mContext.getResources().getString(R.string.status_dead));
+        } else if(status.toLowerCase().equals("alive")) {
             holder.personnage_fragment_item_status.setTextColor(ContextCompat.getColor(mContext.getContext(), R.color.colorValidate));
+            holder.personnage_fragment_item_status.setText(mContext.getResources().getString(R.string.status_alive));
+        } else {
+            holder.personnage_fragment_item_status.setTextColor(ContextCompat.getColor(mContext.getContext(), R.color.followersBg));
+            holder.personnage_fragment_item_status.setText(mContext.getResources().getString(R.string.status_unknown));
         }
 
         holder.personnage_fragment_item_species.setText(listCharacters.get(position).getSpecies());
-        holder.personnage_fragment_item_gender.setText(listCharacters.get(position).getGender());
+
+        String gender = listCharacters.get(position).getGender();
+
+        if(gender.toLowerCase().equals("female")) {
+            holder.personnage_fragment_item_gender.setText(mContext.getResources().getString(R.string.gender_female));
+        } else if(gender.toLowerCase().equals("male")) {
+            holder.personnage_fragment_item_gender.setText(mContext.getResources().getString(R.string.gender_male));
+        } else {
+            holder.personnage_fragment_item_gender.setText(gender);
+        }
+
         holder.personnage_fragment_item_origin.setText(listCharacters.get(position).getOrigin().getName());
         holder.personnage_fragment_item_last_location.setText(listCharacters.get(position).getLocation().getName());
 

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +22,6 @@ import com.example.mysto.rickmortybuddyapp.interfaces.Refreshable;
 import com.example.mysto.rickmortybuddyapp.network.JsonBin.GetDataService;
 import com.example.mysto.rickmortybuddyapp.network.JsonBin.RetrofitClientInstance;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +57,7 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.lieux_fragment, container, false);
+        view = inflater.inflate(R.layout.locations_fragment, container, false);
 
         // RecyclerView
         rv_locations = view.findViewById(locationsRecyclerView);

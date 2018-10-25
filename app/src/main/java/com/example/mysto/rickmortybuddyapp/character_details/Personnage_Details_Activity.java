@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -14,10 +13,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,7 +29,6 @@ import com.example.mysto.rickmortybuddyapp.R;
 import com.example.mysto.rickmortybuddyapp.adapters.RecyclerViewEpisodesAdapter;
 import com.example.mysto.rickmortybuddyapp.location_details.Location_Details_Activity;
 import com.google.gson.Gson;
-import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -56,7 +54,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
     RelativeLayout personnage_details_relay_origin;
     RelativeLayout personnage_details_relay_last_location;
     RelativeLayout episodes_recyclerview_relay;
-    RelativeLayout personnage_details_relay_status;
+    LinearLayout personnage_details_relay_status;
 
     CardView cardView;
 
@@ -113,17 +111,32 @@ public class Personnage_Details_Activity extends AppCompatActivity {
 
     public void setValuesToViews() {
         personnage_details_name.setText(personnage_details.getName());
-        personnage_details_status.setText(personnage_details.getStatus());
 
-        if(personnage_details.getStatus().toLowerCase().equals("dead")) {
+        String status = personnage_details.getStatus();
+
+        if(status.toLowerCase().equals("dead")) {
+            personnage_details_status.setText(getResources().getString(R.string.status_dead));
             personnage_details_relay_status.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDanger));
-        }
-        if(personnage_details.getStatus().toLowerCase().equals("unknown")) {
+        } else if(status.toLowerCase().equals("alive")) {
+            personnage_details_status.setText(getResources().getString(R.string.status_alive));
+        } else {
+            personnage_details_status.setText(getResources().getString(R.string.status_unknown));
             personnage_details_relay_status.setBackgroundColor(ContextCompat.getColor(this, R.color.followersBg));
         }
 
         personnage_details_species.setText(personnage_details.getSpecies());
         personnage_details_gender.setText(personnage_details.getGender());
+
+        String gender = personnage_details.getGender();
+
+        if(gender.toLowerCase().equals("male")) {
+            personnage_details_gender.setText(getResources().getString(R.string.gender_male));
+        } else if(gender.toLowerCase().equals("female")) {
+            personnage_details_gender.setText(getResources().getString(R.string.gender_female));
+        } else {
+            personnage_details_gender.setText(getResources().getString(R.string.gender_unknown));
+        }
+
         personnage_details_last_location.setText(personnage_details.getLocation().getName());
         personnage_details_origin.setText(personnage_details.getOrigin().getName());
     }
@@ -231,7 +244,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personnage__details_);
+        setContentView(R.layout.activity_character__details_);
 
         extras = getIntent().getExtras();
 

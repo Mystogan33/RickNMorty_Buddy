@@ -63,31 +63,26 @@
             android:text="Human, Demon, Escalope de Porc"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
     <LinearLayout
+        android:baselineAligned="false"
         android:id="@+id/linlay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rellay1"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
             android:paddingBottom="5dp"
+            android:orientation="vertical"
             android:background="@color/colorPrimaryDark">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/personnage_details_gender"
@@ -95,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="Male"
+                    android:gravity="center"
                     android:textColor="@color/colorValidate"
                     android:textSize="25sp" />
 
@@ -102,30 +98,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:text="gender"
+                    android:text="@string/character_details_gender"
                     android:textAllCaps="true"
                     android:textColor="@color/colorAccent"
+                    android:gravity="center"
                     android:textSize="13sp" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relayStatus"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@color/colorValidate"
             android:gravity="center"
+            android:orientation="vertical"
             android:paddingBottom="5dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/personnage_details_status"
@@ -140,14 +129,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="Status"
+                    android:text="@string/character_details_status"
                     android:textAllCaps="true"
-                    android:textColor="@color/cardview_light_background"
+                    android:textColor="@color/white"
                     android:textSize="13sp" />
 
-            </LinearLayout>
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -158,8 +145,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true">
+            android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardview_details"
@@ -183,8 +169,8 @@
                     <RelativeLayout
                         android:id="@+id/relayOrigin"
                         android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -192,9 +178,9 @@
                             android:id="@+id/origin_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Origin"
+                            android:text="@string/character_details_origin"
                             android:textColor="@color/colorAccent"
-                            android:textSize="17dp" />
+                            android:textSize="17sp" />
 
                         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/origin_img"
@@ -211,9 +197,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/origin_label"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="7dp"
-                            android:layout_toRightOf="@id/origin_img"
+                            android:layout_toEndOf="@id/origin_img"
                             android:fontFamily="sans-serif-light"
                             android:text="Earth (C-137)"
                             android:textColor="@color/colorValidate"
@@ -229,26 +215,20 @@
 
                     </RelativeLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
-                        android:orientation="vertical">
-
                         <RelativeLayout
                             android:id="@+id/relayLastLocation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp">
+                            android:layout_marginStart="10dp">
 
                             <TextView
                                 android:id="@+id/last_location_label"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Last location"
+                                android:text="@string/character_details_last_location"
                                 android:textColor="@color/colorAccent"
-                                android:textSize="17dp" />
+                                android:textSize="17sp"
+                                android:layout_marginTop="10dp"/>
 
                             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                                 android:id="@+id/last_location_img"
@@ -265,9 +245,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/last_location_label"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:layout_marginTop="8dp"
-                                android:layout_toRightOf="@id/last_location_img"
+                                android:layout_toEndOf="@id/last_location_img"
                                 android:fontFamily="sans-serif-light"
                                 android:text="Earth (C-137)"
                                 android:textColor="@color/colorValidate"
@@ -283,23 +263,21 @@
 
                         </RelativeLayout>
 
-                    </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="5dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Description"
+                            android:text="@string/character_details_description"
                             android:textColor="@color/colorAccent"
-                            android:textSize="17dp" />
+                            android:textSize="17sp" />
 
                         <TextView
                             android:id="@+id/personnage_details_description"
@@ -311,7 +289,6 @@
                             android:textSize="18sp" />
 
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -328,10 +305,6 @@
                 app:cardBackgroundColor="@color/colorValidate"
                 app:cardCornerRadius="20dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -340,7 +313,7 @@
                             android:id="@+id/episodes_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Appeared in the episodes"
+                            android:text="@string/character_details_episodes_placeholder_text"
                             android:textAlignment="center"
                             android:elevation="20dp"
                             android:textColor="@color/white"
@@ -364,6 +337,7 @@
                                 android:layout_height="150dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
+                                android:layout_marginStart="5dp"
                                 android:layout_marginEnd="5dp">
 
                                 <androidx.recyclerview.widget.RecyclerView
@@ -373,12 +347,9 @@
                                     android:background="@color/tabindicatorcolor" />
 
                             </RelativeLayout>
-
                         </androidx.cardview.widget.CardView>
 
                     </RelativeLayout>
-
-                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 

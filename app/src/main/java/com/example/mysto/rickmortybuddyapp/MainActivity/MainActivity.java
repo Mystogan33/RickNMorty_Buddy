@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
         );
 
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mViewPagerAdapter.AddFragment(new Fragment_Personnages(), "Characters");
-        mViewPagerAdapter.AddFragment(new Fragment_Episodes(), "Episodes");
-        mViewPagerAdapter.AddFragment(new Fragment_Lieux(), "Locations");
+        mViewPagerAdapter.AddFragment(new Fragment_Personnages(), getResources().getString(R.string.tab_title_characters));
+        mViewPagerAdapter.AddFragment(new Fragment_Episodes(), getResources().getString(R.string.tab_title_episodes));
+        mViewPagerAdapter.AddFragment(new Fragment_Lieux(), getResources().getString(R.string.tab_title_locations));
 
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);

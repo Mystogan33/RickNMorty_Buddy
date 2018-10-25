@@ -43,23 +43,14 @@
                 android:id="@+id/searchViewQuery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:closeIcon="@android:drawable/ic_menu_close_clear_cancel"
                 app:iconifiedByDefault="false"
-                app:queryHint="Search locations..." />
-
-            <!--ImageButton
-                android:layout_marginRight="5dp"
-                android:onClick="PopupShowMenu"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="end|center_vertical"
-                android:id="@+id/imageViewSearchMenu"
-                style="?android:attr/actionOverflowButtonStyle"/-->
+                app:queryHint="@string/characters_fragment_query_hint" />
 
             <ImageButton
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="end|center_vertical"
@@ -74,17 +65,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:paddingTop="30dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="30dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:focusableInTouchMode="true"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingBottom="5dp"
-            android:id="@+id/locationsRecyclerView">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/personnagesRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clipToPadding="false"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="5dp"/>
+
+        </LinearLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

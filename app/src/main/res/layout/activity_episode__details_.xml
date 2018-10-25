@@ -71,7 +71,7 @@
                 android:layout_marginTop="5dp"
                 android:text="Walaladubdub !"
                 android:textColor="@color/colorValidate"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:layout_below="@+id/episode_details_season"
                 android:layout_marginStart="15dp"/>
 
@@ -121,7 +121,7 @@
             android:text="Pas de description disponible."
             android:textAlignment="center"
             android:textColor="@color/colorValidate"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -144,10 +144,10 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="2dp"
-                        android:text="Characters in this episode"
+                        android:text="@string/episode_details_separator_text"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="18dp" />
+                        android:textSize="18sp" />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"

@@ -65,7 +65,7 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the view
-        view = inflater.inflate(R.layout.personnages_fragment, container, false);
+        view = inflater.inflate(R.layout.characters_fragment, container, false);
         this.findViews();
 
         listPersonnages = new ArrayList<>();

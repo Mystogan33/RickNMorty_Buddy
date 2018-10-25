@@ -43,7 +43,7 @@ import java.util.List;
 
             View view;
             LayoutInflater mInflater = LayoutInflater.from(parentFragment.getActivity());
-            view = mInflater.inflate(R.layout.lieux_fragment_item,parent,false);
+            view = mInflater.inflate(R.layout.locations_fragment_item,parent,false);
 
             return new MyViewHolder(view);
         }
