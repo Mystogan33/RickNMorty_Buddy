@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +40,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext.getContext());
-
-        view = mInflater.inflate(R.layout.characters_fragment_item,parent,false);
-
-        return new MyViewHolder(view);
+        return new MyViewHolder(mInflater.inflate(R.layout.characters_fragment_item,parent,false));
     }
 
     @Override
@@ -87,9 +85,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .error(R.drawable.no_data)
                 .into(imageView, new Callback() {
                     @Override
-                    public void onSuccess() {
-
-                    }
+                    public void onSuccess() { }
                     @Override
                     public void onError() {
                         Picasso.with(mContext.getActivity())
@@ -98,13 +94,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 .error(R.drawable.no_image)
                                 .into(imageView, new Callback() {
                                     @Override
-                                    public void onSuccess() {
-
-                                    }
-
+                                    public void onSuccess() { }
                                     @Override
-                                    public void onError() {
-                                    }
+                                    public void onError() { }
                                 });
                     }
                 });
@@ -117,9 +109,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 // Check if we're running on Android 5.0 or higher
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
                     mContext.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mContext.getActivity()).toBundle());
-
                 } else {
                     mContext.startActivity(intent);
                 }
@@ -142,29 +132,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.personnage_fragment_item__img)
         ImageView personnage_fragment_item__img;
+        @BindView(R.id.personnage_fragment_item_name)
         TextView personnage_fragment_item_name;
+        @BindView(R.id.personnage_fragment_item_status)
         TextView personnage_fragment_item_status;
+        @BindView(R.id.personnage_fragment_item_species)
         TextView personnage_fragment_item_species;
+        @BindView(R.id.personnage_fragment_item_gender)
         TextView personnage_fragment_item_gender;
+        @BindView(R.id.personnage_fragment_item_origin)
         TextView personnage_fragment_item_origin;
+        @BindView(R.id.personnage_fragment_item_last_location)
         TextView personnage_fragment_item_last_location;
-
+        @BindView(R.id.cardview_fragment_item_id)
         CardView cardView;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
-            personnage_fragment_item__img = itemView.findViewById(R.id.personnage_fragment_item__img);
-            personnage_fragment_item_name = itemView.findViewById(R.id.personnage_fragment_item_name);
-            personnage_fragment_item_status = itemView.findViewById(R.id.personnage_fragment_item_status);
-            personnage_fragment_item_species = itemView.findViewById(R.id.personnage_fragment_item_species);
-            personnage_fragment_item_gender = itemView.findViewById(R.id.personnage_fragment_item_gender);
-            personnage_fragment_item_origin = itemView.findViewById(R.id.personnage_fragment_item_origin);
-            personnage_fragment_item_last_location = itemView.findViewById(R.id.personnage_fragment_item_last_location);
-            cardView = itemView.findViewById(R.id.cardview_fragment_item_id);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 }

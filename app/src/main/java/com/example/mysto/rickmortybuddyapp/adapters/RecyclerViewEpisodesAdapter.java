@@ -6,6 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +25,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerViewEpisodesAdapter.MyViewHolder> {
+public class RecyclerViewEpisodesAdapter
+        extends RecyclerView.Adapter<RecyclerViewEpisodesAdapter.MyViewHolder> {
 
     List<Episode> listEpisodes;
     AppCompatActivity mContext;
@@ -36,12 +41,8 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-
-        view = mInflater.inflate(R.layout.activity_character_details_episode,parent,false);
-
-        return new MyViewHolder(view);
+        return new MyViewHolder(mInflater.inflate(R.layout.activity_character_details_episode,parent,false));
     }
 
     @Override
@@ -56,10 +57,7 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
                 .error(R.drawable.no_data)
                 .into(imageView, new Callback() {
                     @Override
-                    public void onSuccess() {
-
-                    }
-
+                    public void onSuccess() { }
                     @Override
                     public void onError() {
                         Picasso.with(mContext.getApplicationContext())
@@ -68,13 +66,9 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
                                 .error(R.drawable.no_image)
                                 .into(imageView, new Callback() {
                                     @Override
-                                    public void onSuccess() {
-
-                                    }
-
+                                    public void onSuccess() { }
                                     @Override
-                                    public void onError() {
-                                    }
+                                    public void onError() { }
                                 });
                     }
                 });
@@ -84,7 +78,6 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, Episode_Details_Activity.class);
                 intent.putExtra("episode_details", listEpisodes.get(position));
-
 
                 // Check if we're running on Android 5.0 or higher
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -113,13 +106,14 @@ public class RecyclerViewEpisodesAdapter extends RecyclerView.Adapter<RecyclerVi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.img)
         ImageView img_episode;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            img_episode = itemView.findViewById(R.id.img);
+            ButterKnife.bind(this, itemView);
 
         }
     }

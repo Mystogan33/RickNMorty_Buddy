@@ -28,6 +28,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,18 +39,21 @@ import static com.example.mysto.rickmortybuddyapp.R.id.locationsRecyclerView;
 public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Refreshable {
 
     View view;
+    @BindView(locationsRecyclerView)
+    RecyclerView rv_locations;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.searchViewQuery)
+    SearchView searchViewLocations;
+
     RawLocationsServerResponse rawLocationsResponse;
     List<Location> listLocations;
     Gson gson;
-    RecyclerView rv_locations;
-    SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerViewAdapter adapter;
     SharedPreferences sharedPreferences;
-    SearchView searchViewLocations;
     GetDataService service;
 
     public Fragment_Lieux() {
-
         gson = new Gson();
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
     }
@@ -58,9 +63,7 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.locations_fragment, container, false);
-
-        // RecyclerView
-        rv_locations = view.findViewById(locationsRecyclerView);
+        ButterKnife.bind(this, view);
 
         listLocations = new ArrayList<>();
         adapter = new RecyclerViewAdapter( this, listLocations);
@@ -70,23 +73,16 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
         sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
 
         // Refresh Layout
-        mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark,android.R.color.holo_orange_dark,android.R.color.holo_blue_dark);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimaryDark);
 
-        searchViewLocations = view.findViewById(R.id.searchViewQuery);
-
         searchViewLocations.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String userInput) {
-                if(!searchViewLocations.isIconified()) {
-                    searchViewLocations.setIconified(true);
-                }
-
+                if(!searchViewLocations.isIconified()) searchViewLocations.setIconified(true);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String userInput) {
                 final List<Location> filterLocationsList = setFilter(listLocations, userInput);
@@ -106,7 +102,6 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
                 @Override
                 public int compare(Location loc2, Location loc1)
                 {
-
                     return  loc2.getName().compareTo(loc1.getName());
                 }
             });
@@ -114,13 +109,10 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
             adapter.setFilter(listLocations);
 
         } else {
-
             mSwipeRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
-
                     loadRecyclerViewData();
-
                 }
             });
         }
@@ -133,19 +125,15 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
         mSwipeRefreshLayout.setRefreshing(true);
 
         Call<RawLocationsServerResponse> call = service.getAllLocations();
-
         call.enqueue(new Callback<RawLocationsServerResponse>() {
             @Override
             public void onResponse(Call<RawLocationsServerResponse> call, Response<RawLocationsServerResponse> response) {
-
                 rawLocationsResponse = response.body();
                 listLocations = new ArrayList<>();
 
                 for(Location loc: rawLocationsResponse.getResults()) {
                     String image = loc.getImage();
-                    if(image == null || image.equals("unknown")) {
-                        loc.setImage("https://i.redd.it/lwwt86ci5anz.jpg");
-                    }
+                    if(image == null || image.equals("unknown")) loc.setImage("https://i.redd.it/lwwt86ci5anz.jpg");
                     listLocations.add(loc);
                 }
 
@@ -153,13 +141,11 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
                     @Override
                     public int compare(Location loc2, Location loc1)
                     {
-
                         return  loc2.getName().compareTo(loc1.getName());
                     }
                 });
 
                 adapter.setFilter(listLocations);
-
                 sharedPreferences.edit()
                         .putString("Locations_List", gson.toJson(rawLocationsResponse))
                         .apply();
@@ -167,22 +153,16 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
                 Toast.makeText(view.getContext(), "Vos données sont désormais sauvegardées", Toast.LENGTH_SHORT).show();
 
                 mSwipeRefreshLayout.setRefreshing(false);
-
             }
-
             @Override
             public void onFailure(Call<RawLocationsServerResponse> call, Throwable t) {
-
                 Toast.makeText(view.getContext(), "Impossible de joindre le serveur, réessayer ultérieurement", Toast.LENGTH_SHORT).show();
                 mSwipeRefreshLayout.setRefreshing(false);
-
             }
         });
-
     }
 
     private List<Location> setFilter(List<Location> pl, String query) {
-
         query = query.toLowerCase();
         final List<Location> filteredList = new ArrayList<>();
 
@@ -190,15 +170,10 @@ public class Fragment_Lieux extends Fragment implements SwipeRefreshLayout.OnRef
             final String name = model.getName().toLowerCase();
             final String type = model.getType().toLowerCase();
             final String dimension = model.getDimension().toLowerCase();
-
-            if(name.contains(query) || type.contains(query) || dimension.contains(query)) {
-                filteredList.add(model);
-            }
-
+            if(name.contains(query) || type.contains(query) || dimension.contains(query)) filteredList.add(model);
         }
 
         return filteredList;
-
     }
 
     @Override

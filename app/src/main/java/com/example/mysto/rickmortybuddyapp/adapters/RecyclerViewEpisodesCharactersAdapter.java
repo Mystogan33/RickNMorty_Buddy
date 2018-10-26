@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,24 +35,17 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
         this.mContext = mContext;
     }
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-
-        view = mInflater.inflate(R.layout.activity_episode_details_character,parent,false);
-
-        return new MyViewHolder(view);
+        return new MyViewHolder(mInflater.inflate(R.layout.activity_episode_details_character,parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
         final ImageView imageView = holder.img_character;
-
-
 
         Picasso.with(mContext.getApplicationContext())
                 .load(listCharacters.get(position).getImage())
@@ -58,10 +54,7 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
                 .error(R.drawable.no_data)
                 .into(imageView, new Callback() {
                     @Override
-                    public void onSuccess() {
-
-                    }
-
+                    public void onSuccess() { }
                     @Override
                     public void onError() {
                         Picasso.with(mContext.getApplicationContext())
@@ -70,13 +63,9 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
                                 .error(R.drawable.no_image)
                                 .into(imageView, new Callback() {
                                     @Override
-                                    public void onSuccess() {
-
-                                    }
-
+                                    public void onSuccess() { }
                                     @Override
-                                    public void onError() {
-                                    }
+                                    public void onError() { }
                                 });
                     }
                 });
@@ -114,14 +103,12 @@ public class RecyclerViewEpisodesCharactersAdapter extends RecyclerView.Adapter<
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.img)
         ImageView img_character;
-
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
-            img_character = itemView.findViewById(R.id.img);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 

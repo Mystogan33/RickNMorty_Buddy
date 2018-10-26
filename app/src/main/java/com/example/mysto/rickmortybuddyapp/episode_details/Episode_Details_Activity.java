@@ -25,29 +25,41 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class Episode_Details_Activity extends AppCompatActivity {
 
-    Episode episode_details;
-
+    @BindView(R.id.episode_details_img_fullsize)
     ImageView episode_details_img_fullsize;
+    @BindView(R.id.episode_details_img)
     ImageView episode_details_img;
 
-    private PlayerWebView webView;
+    @BindView(R.id.webView)
+    PlayerWebView webView;
 
+    @BindView(R.id.episode_details_season)
     TextView episode_details_season;
+    @BindView(R.id.episode_details_name)
     TextView episode_details_name;
+    @BindView(R.id.episode_details_air_date)
     TextView episode_details_air_date;
+    @BindView(R.id.episode_details_description)
     TextView episode_details_description;
 
+    @BindView(R.id.episode_details_toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.episode_details_recyclerview)
     RecyclerView recyclerView;
+
+    Episode episode_details;
+
     RecyclerViewEpisodesCharactersAdapter adapter;
     List<String> listURLCharacters;
     List<Character> listCharacters;
-
-    Toolbar toolbar;
 
     Bundle extras;
 
@@ -60,21 +72,6 @@ public class Episode_Details_Activity extends AppCompatActivity {
     public Episode_Details_Activity() {
         gson = new Gson();
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-    }
-
-    public void findViews() {
-
-        episode_details_img_fullsize = findViewById(R.id.episode_details_img_fullsize);
-        episode_details_img = findViewById(R.id.episode_details_img);
-        episode_details_season = findViewById(R.id.episode_details_season);
-        episode_details_name = findViewById(R.id.episode_details_name);
-        episode_details_air_date = findViewById(R.id.episode_details_air_date);
-        episode_details_description = findViewById(R.id.episode_details_description);
-        recyclerView = findViewById(R.id.episode_details_recyclerview);
-        toolbar = findViewById(R.id.episode_details_toolbar);
-        webView = findViewById(R.id.webView);
-        webView.load("x62qgh0");
-
     }
 
     public void initActionBar() {
@@ -155,13 +152,15 @@ public class Episode_Details_Activity extends AppCompatActivity {
 
         extras = getIntent().getExtras();
 
-        this.findViews();
+        ButterKnife.bind(this);
         this.initActionBar();
 
         listCharacters = new ArrayList<>();
         adapter = new RecyclerViewEpisodesCharactersAdapter(listCharacters, this);
         recyclerView.setLayoutManager(new GridLayoutManager(this,5));
         recyclerView.setAdapter(adapter);
+
+        webView.load("x62qgh0");
 
         if(extras != null) {
 

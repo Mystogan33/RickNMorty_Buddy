@@ -23,6 +23,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -30,18 +32,22 @@ public class Location_Details_Activity extends AppCompatActivity {
 
     Location location_details;
 
+    @BindView(R.id.location_details_img_fullsize)
     ImageView location_details_img_fullsize;
-
+    @BindView(R.id.location_details_name)
     TextView location_details_name;
+    @BindView(R.id.location_details_dimension)
     TextView location_details_dimension;
+    @BindView(R.id.location_details_type)
     TextView location_details_type;
+    @BindView(R.id.location_details_recyclerview)
+    RecyclerView recyclerView;
+    @BindView(R.id.location_details_toolbar)
+    Toolbar toolbar;
 
     Gson gson;
     GetDataService service;
 
-    Toolbar toolbar;
-
-    RecyclerView recyclerView;
     RecyclerViewEpisodesCharactersAdapter adapter;
     List<String> listURLCharacters;
     List<Character> listCharacters;
@@ -50,18 +56,8 @@ public class Location_Details_Activity extends AppCompatActivity {
     AppCompatActivity app;
 
     public Location_Details_Activity() {
-
         gson = new Gson();
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-    }
-
-    public void findViews() {
-        location_details_img_fullsize = findViewById(R.id.location_details_img_fullsize);
-        location_details_name = findViewById(R.id.location_details_name);
-        location_details_dimension = findViewById(R.id.location_details_dimension);
-        location_details_type = findViewById(R.id.location_details_type);
-        recyclerView = findViewById(R.id.location_details_recyclerview);
-        toolbar = findViewById(R.id.location_details_toolbar);
     }
 
     public void initActionBar() {
@@ -81,7 +77,6 @@ public class Location_Details_Activity extends AppCompatActivity {
 
     public void loadCharacters() {
         for(String characterUrl : listURLCharacters) {
-
             final String id = characterUrl.split("/character/")[1];
             Call<Character> call = service.getPersonnageById(Integer.valueOf(id));
 
@@ -94,9 +89,7 @@ public class Location_Details_Activity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Character> call, Throwable t) { }
             });
-
         }
-
     }
 
     public void loadImage(final String imgUrl, final ImageView imgView) {
@@ -112,7 +105,6 @@ public class Location_Details_Activity extends AppCompatActivity {
                     public void onSuccess() {
                         supportStartPostponedEnterTransition();
                     }
-
                     @Override
                     public void onError() {
                         Picasso.with(app)
@@ -124,7 +116,6 @@ public class Location_Details_Activity extends AppCompatActivity {
                                 .into(imgView, new Callback() {
                                     @Override
                                     public void onSuccess() { supportStartPostponedEnterTransition(); }
-
                                     @Override
                                     public void onError() { supportStartPostponedEnterTransition(); }
                                 });
@@ -136,10 +127,8 @@ public class Location_Details_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location__details_);
-
         extras = getIntent().getExtras();
-
-        this.findViews();
+        ButterKnife.bind(this);
         this.initActionBar();
 
         listCharacters = new ArrayList<>();
@@ -149,18 +138,12 @@ public class Location_Details_Activity extends AppCompatActivity {
 
         if(extras != null) {
             location_details = (Location) extras.getSerializable("location_details");
-
             this.setValuesToViews();
-
             listURLCharacters = location_details.getResidents();
             listCharacters = new ArrayList<>();
-
             app = this;
-
             this.loadCharacters();
-
             supportPostponeEnterTransition();
-
             this.loadImage(location_details.getImage(), location_details_img_fullsize);
         }
     }

@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import android.view.View;
 import android.widget.FrameLayout;
@@ -38,31 +40,45 @@ import java.util.List;
 
 public class Personnage_Details_Activity extends AppCompatActivity {
 
-    Character personnage_details;
-
+    @BindView(R.id.personnage_details__name)
     TextView personnage_details_name;
+    @BindView(R.id.personnage_details_status)
     TextView personnage_details_status;
+    @BindView(R.id.personnage_details_species)
     TextView personnage_details_species;
+    @BindView(R.id.personnage_details_gender)
     TextView personnage_details_gender;
+    @BindView(R.id.personnage_details_origin)
     TextView personnage_details_origin;
+    @BindView(R.id.personnage_details_last_location)
     TextView personnage_details_last_location;
-
+    @BindView(R.id.personnage_details_img)
     ImageView personnage_details_img;
+    @BindView(R.id.origin_img)
     ImageView origin_img;
+    @BindView(R.id.last_location_img)
     ImageView last_location_img;
-
+    @BindView(R.id.relayOrigin)
     RelativeLayout personnage_details_relay_origin;
+    @BindView(R.id.relayLastLocation)
     RelativeLayout personnage_details_relay_last_location;
+    @BindView(R.id.episodes_recyclerview_relay)
     RelativeLayout episodes_recyclerview_relay;
+    @BindView(R.id.relayStatus)
     LinearLayout personnage_details_relay_status;
-
+    @BindView(R.id.episodes_recyclerview)
+    RecyclerView recyclerView;
+    @BindView(R.id.cardview_episodes_of_character)
     CardView cardView;
-
-
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    RecyclerViewEpisodesAdapter adapter;
 
     Gson gson;
     SharedPreferences sharedPreferences;
+
+    Character personnage_details;
 
     List<String> listURLEpisodes;
     List<Episode> listEpisodes;
@@ -76,37 +92,11 @@ public class Personnage_Details_Activity extends AppCompatActivity {
     Location originData;
     Integer idOrigin;
 
-    RecyclerView recyclerView;
-    RecyclerViewEpisodesAdapter adapter;
-
     Bundle extras;
 
 
     public Personnage_Details_Activity() {
         gson = new Gson();
-    }
-
-    public void findViews() {
-
-        personnage_details_img = findViewById(R.id.personnage_details_img);
-        personnage_details_name = findViewById(R.id.personnage_details__name);
-        personnage_details_status = findViewById(R.id.personnage_details_status);
-        personnage_details_species = findViewById(R.id.personnage_details_species);
-        personnage_details_gender = findViewById(R.id.personnage_details_gender);
-        personnage_details_origin = findViewById(R.id.personnage_details_origin);
-        personnage_details_last_location = findViewById(R.id.personnage_details_last_location);
-        personnage_details_relay_origin = findViewById(R.id.relayOrigin);
-        personnage_details_relay_last_location = findViewById(R.id.relayLastLocation);
-        personnage_details_relay_status = findViewById(R.id.relayStatus);
-        origin_img = findViewById(R.id.origin_img);
-        last_location_img = findViewById(R.id.last_location_img);
-        cardView = findViewById(R.id.cardview_episodes_of_character);
-
-        recyclerView = findViewById(R.id.episodes_recyclerview);
-        episodes_recyclerview_relay = findViewById(R.id.episodes_recyclerview_relay);
-
-        toolbar = findViewById(R.id.toolbar);
-
     }
 
     public void setValuesToViews() {
@@ -248,7 +238,7 @@ public class Personnage_Details_Activity extends AppCompatActivity {
 
         extras = getIntent().getExtras();
 
-        this.findViews();
+        ButterKnife.bind(this);
         this.initActionBar();
 
         listEpisodesDetails = new ArrayList<>();

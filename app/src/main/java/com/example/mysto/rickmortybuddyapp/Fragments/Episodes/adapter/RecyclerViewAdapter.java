@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.core.util.Pair;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +29,6 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-
     private Fragment mContext;
     private List<Episode> listEpisodes;
 
@@ -38,13 +40,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext.getContext());
-
-        view = mInflater.inflate(R.layout.episodes_fragment_item,parent,false);
-
-        return new MyViewHolder(view);
+        return new MyViewHolder(mInflater.inflate(R.layout.episodes_fragment_item,parent,false));
     }
 
     @Override
@@ -52,7 +49,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.episode_fragment_item_name.setText(listEpisodes.get(position).getName());
         holder.episode_fragment_item_season.setText(listEpisodes.get(position).getEpisode());
-
 
         final ImageView imageView = holder.episode_fragment_item__img;
 
@@ -65,10 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .error(R.drawable.no_image)
                 .into(imageView, new Callback() {
                     @Override
-                    public void onSuccess() {
-
-                    }
-
+                    public void onSuccess() { }
                     @Override
                     public void onError() {
                         Picasso.with(mContext.getActivity())
@@ -79,13 +72,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 .error(R.drawable.no_image)
                                 .into(imageView, new Callback() {
                                     @Override
-                                    public void onSuccess() {
-
-                                    }
-
+                                    public void onSuccess() { }
                                     @Override
-                                    public void onError() {
-                                    }
+                                    public void onError() { }
                                 });
                     }
                 });
@@ -100,7 +89,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
                     Pair<View, String> p2 = Pair.create((View) holder.episode_fragment_item__img, "imageEpisode");
-
                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext.getActivity(), p2);
                     mContext.startActivity(intent, optionsCompat.toBundle());
 
@@ -117,9 +105,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return listEpisodes.size();
     }
 
-
     public void setFilter(List<Episode> list) {
-
         listEpisodes = new ArrayList<>();
         listEpisodes.addAll(list);
         notifyDataSetChanged();
@@ -127,22 +113,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.episode_fragment_item_name)
         TextView episode_fragment_item_name;
+        @BindView(R.id.episode_fragment_item_season)
         TextView episode_fragment_item_season;
+        @BindView(R.id.episode_fragment_item__img)
         ImageView episode_fragment_item__img;
-
+        @BindView(R.id.cardview_fragment_item_id)
         CardView cardView;
-
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
-            episode_fragment_item_season = itemView.findViewById(R.id.episode_fragment_item_season);
-            episode_fragment_item_name = itemView.findViewById(R.id.episode_fragment_item_name);
-            episode_fragment_item__img = itemView.findViewById(R.id.episode_fragment_item__img);
-
-            cardView = itemView.findViewById(R.id.cardview_fragment_item_id);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 }

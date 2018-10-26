@@ -10,6 +10,9 @@ import androidx.core.view.GravityCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,37 +29,43 @@ import com.example.mysto.rickmortybuddyapp.MainActivity.adapter.ViewPagerAdapter
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private DrawerLayout mDrawerLayout;
-    private NavigationView navigationView;
-    private ViewPagerAdapter mViewPagerAdapter;
-    private ImageButton home_button;
-    private ImageButton more_button;
-    private FloatingActionButton refresh_button;
+    @BindView(R.id.tablayout_id)
+    TabLayout mTabLayout;
+    @BindView(R.id.viewpager_id)
+    ViewPager mViewPager;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+    @BindView(R.id.menu_button)
+    ImageButton home_button;
+    @BindView(R.id.more_button)
+    ImageButton more_button;
+    @BindView(R.id.refresh_button)
+    FloatingActionButton refresh_button;
 
     NotificationHelperWelcomeBack mNotifier;
+    ViewPagerAdapter mViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        this.findViews();
+        ButterKnife.bind(this);
 
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                         // set item as selected to persist highlight
                         item.setChecked(true);
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
-
                         return true;
                     }
                 }
@@ -77,16 +86,10 @@ public class MainActivity extends AppCompatActivity {
 
         mTabLayout.setupWithViewPager(mViewPager);
 
-        home_button.setOnClickListener(new View.OnClickListener() {
+        /*home_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        more_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
             }
         });
 
@@ -95,19 +98,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mViewPagerAdapter.refreshAllFragments();
             }
-        });
+        });*/
 
         this.sendNotifications();
 
     }
 
+    @OnClick(R.id.menu_button)
+    public void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    @OnClick(R.id.refresh_button)
+    public void refreshAllFragments() {
+        mViewPagerAdapter.refreshAllFragments();
+    }
+
     public void sendNotifications() {
         Calendar cal = Calendar.getInstance();
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+        String date = new SimpleDateFormat("yyyy-MM-dd",Locale.FRANCE).format(cal.getTime());
         SharedPreferences sharedPreferences = this.getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("last_launch_time", null);
 
-        if(json != null) {
+        if(json == null) {
             sharedPreferences.edit()
                     .putString("last_launch_time", date)
                     .apply();
@@ -123,15 +136,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void findViews() {
-
-        mTabLayout = findViewById(R.id.tablayout_id);
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        mViewPager = findViewById(R.id.viewpager_id);
-        home_button = findViewById(R.id.menu_button);
-        more_button = findViewById(R.id.more_button);
-        refresh_button = findViewById(R.id.refresh_button);
-
-    }
 }

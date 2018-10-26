@@ -28,6 +28,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,14 +39,17 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
     View view;
     RawEpisodesServerResponse listEpisodes;
     Gson gson;
-    RecyclerView rv_episodes;
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    RecyclerViewAdapter adapter;
     GetDataService service;
+    RecyclerViewAdapter adapter;
+
+    @BindView(R.id.episodesRecyclerView)
+    RecyclerView rv_episodes;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.searchViewQuery)
     SearchView searchViewEpisodes;
 
     public Fragment_Episodes() {
-
         gson = new Gson();
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
     }
@@ -54,17 +59,11 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.episodes_fragment, container, false);
+        ButterKnife.bind(this, view);
 
-        // RecyclerView
-        rv_episodes = view.findViewById(R.id.episodesRecyclerView);
-
-        // Refresh Layout
-        mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark,android.R.color.holo_orange_dark,android.R.color.holo_blue_dark);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimaryDark);
-
-        searchViewEpisodes = view.findViewById(R.id.searchViewQuery);
 
         searchViewEpisodes.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -72,10 +71,8 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
                 if(!searchViewEpisodes.isIconified()) {
                     searchViewEpisodes.setIconified(true);
                 }
-
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String userInput) {
                 final List<Episode> filterEpisodesList = setFilter(listEpisodes.getResults(), userInput);
@@ -87,25 +84,19 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
         SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("Episodes_List", null);
 
-
         adapter = new RecyclerViewAdapter(Fragment_Episodes.this, new ArrayList<Episode>());
         rv_episodes.setLayoutManager(new GridLayoutManager(view.getContext(),3));
         rv_episodes.setAdapter(adapter);
 
         if(json != null) {
-
             listEpisodes = gson.fromJson(json, RawEpisodesServerResponse.class);
             adapter.setFilter(listEpisodes.getResults());
-
         } else {
-
             mSwipeRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
-
                     mSwipeRefreshLayout.setRefreshing(true);
                     loadRecyclerViewData();
-
                 }
             });
         }
@@ -114,37 +105,26 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
     }
 
     public void loadRecyclerViewData() {
-
         mSwipeRefreshLayout.setRefreshing(true);
-
         Call<RawEpisodesServerResponse> call = service.getAllEpisodes();
 
         call.enqueue(new Callback<RawEpisodesServerResponse>() {
             @Override
             public void onResponse(Call<RawEpisodesServerResponse> call, Response<RawEpisodesServerResponse> response) {
-
                 listEpisodes = response.body();
-
                 SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("APP_DATA", Context.MODE_PRIVATE);
                 sharedPreferences.edit()
                         .putString("Episodes_List", gson.toJson(listEpisodes))
                         .apply();
-
                 adapter.setFilter(listEpisodes.getResults());
-
                 mSwipeRefreshLayout.setRefreshing(false);
-
             }
-
             @Override
             public void onFailure(Call<RawEpisodesServerResponse> call, Throwable t) {
-
                 Toast.makeText(view.getContext(), "Impossible de joindre le serveur, réessayer ultérieurement", Toast.LENGTH_SHORT).show();
                 mSwipeRefreshLayout.setRefreshing(false);
-
             }
         });
-
     }
 
     private List<Episode> setFilter(List<Episode> pl, String query) {
@@ -155,11 +135,7 @@ public class Fragment_Episodes extends Fragment implements SwipeRefreshLayout.On
         for(Episode model : pl) {
             final String name = model.getName().toLowerCase();
             final String episode = model.getEpisode().toLowerCase();
-
-            if(name.contains(query) || episode.contains(query)) {
-                filteredList.add(model);
-            }
-
+            if(name.contains(query) || episode.contains(query)) filteredList.add(model);
         }
 
         return filteredList;

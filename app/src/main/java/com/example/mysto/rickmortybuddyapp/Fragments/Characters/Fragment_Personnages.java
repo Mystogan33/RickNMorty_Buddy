@@ -29,6 +29,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,25 +42,23 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
     RawCharactersServerResponse rawPersonnagesResponse;
     List<Character> listPersonnages;
     Gson gson;
-    RecyclerView rv_personnages;
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    RecyclerViewAdapter adapter;
-    SearchView searchViewCharacter;
-    ImageButton imageButton;
     GetDataService service;
     SharedPreferences sharedPreferences;
+    RecyclerViewAdapter adapter;
+
+    @BindView(R.id.personnagesRecyclerView)
+    RecyclerView rv_personnages;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.searchViewQuery)
+    SearchView searchViewCharacter;
+    @BindView(R.id.imageViewSearchMenu)
+    ImageButton imageButton;
 
     public Fragment_Personnages() {
 
         gson = new Gson();
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-    }
-
-    public void findViews() {
-        rv_personnages = view.findViewById(R.id.personnagesRecyclerView);
-        imageButton = view.findViewById(R.id.imageViewSearchMenu);
-        mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
-        searchViewCharacter = view.findViewById(R.id.searchViewQuery);
     }
 
     @Nullable
@@ -66,7 +67,7 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
 
         // Inflate the view
         view = inflater.inflate(R.layout.characters_fragment, container, false);
-        this.findViews();
+        ButterKnife.bind(this, view);
 
         listPersonnages = new ArrayList<>();
         adapter = new RecyclerViewAdapter(Fragment_Personnages.this, listPersonnages);
@@ -85,10 +86,8 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
                if(!searchViewCharacter.isIconified()) {
                    searchViewCharacter.setIconified(true);
                }
-
                return false;
             }
-
             @Override
             public boolean onQueryTextChange(String userInput) {
                 final List<Character> filterCharacterList = filter(rawPersonnagesResponse.getResults(), userInput);
@@ -106,7 +105,6 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
         String json = sharedPreferences.getString("Characters_List", null);
 
         if(json != null) {
-
             rawPersonnagesResponse = gson.fromJson(json, RawCharactersServerResponse.class);
             listPersonnages = rawPersonnagesResponse.getResults();
 
@@ -114,32 +112,24 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
                 @Override
                 public int compare(Character character2, Character character1)
                 {
-
                     return  character2.getName().compareTo(character1.getName());
                 }
             });
 
             adapter.setFilter(listPersonnages);
 
-
         } else {
-
-            // Launch sequence for remote data
             mSwipeRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
-
                     mSwipeRefreshLayout.setRefreshing(true);
                     loadRecyclerViewData();
-
                 }
             });
         }
 
         return view;
     }
-
-
 
     public void loadRecyclerViewData() {
 
@@ -214,7 +204,6 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
                             @Override
                             public int compare(Character character2, Character character1)
                             {
-
                                 return  character2.getName().compareTo(character1.getName());
                             }
                         });
@@ -230,10 +219,8 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
 
                 @Override
                 public void onFailure(Call<RawCharactersServerResponse> call, Throwable t) {
-
                     Toast.makeText(view.getContext(), "Impossible de joindre le serveur, réessayer ultérieurement", Toast.LENGTH_SHORT).show();
                     mSwipeRefreshLayout.setRefreshing(false);
-
                 }
             });
 
@@ -254,7 +241,6 @@ public class Fragment_Personnages extends Fragment implements SwipeRefreshLayout
             if(name.contains(query) || status.contains(query) || gender.equals(query) || origin.contains(query) || last_location.contains(query)) {
                 filteredList.add(model);
             }
-
         }
 
         return filteredList;
