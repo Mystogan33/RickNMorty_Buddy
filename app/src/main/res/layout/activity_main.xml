@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:theme="@style/AppTheme"
-    android:background="@color/tabindicatorcolor">
+    android:theme="@style/AppTheme">
 
     <FrameLayout
         android:id="@+id/content_frame"
@@ -38,14 +37,6 @@
                         android:layout_alignParentBottom="true"
                         android:src="@drawable/title"
                         android:layout_alignParentStart="true"/>
-
-                    <!--<android.support.design.widget.FloatingActionButton
-                        android:id="@+id/menu_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/ic_menu_accent_24dp"
-                        android:backgroundTint="@color/colorPrimaryDark"/>-->
                     <ImageButton
                         android:id="@+id/menu_button"
                         android:layout_width="wrap_content"
