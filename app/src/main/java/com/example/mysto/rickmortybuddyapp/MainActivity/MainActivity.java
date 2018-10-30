@@ -128,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             if(!json.equals(date)) {
                 mNotifier = new NotificationHelperWelcomeBack(this);
-                mNotifier.createNotification("Welcome Back", "Thanks to visit Rick & Morty ! Hope you get swifty. Stay connected ! ");
-
+                mNotifier.createNotification("Welcome Back", "Thanks to visit Rick & Morty ! Hope you get swifty. Stay connected !");
+                this.refreshAllFragments();
                 sharedPreferences.edit()
                         .putString("last_launch_time", date)
                         .apply();
