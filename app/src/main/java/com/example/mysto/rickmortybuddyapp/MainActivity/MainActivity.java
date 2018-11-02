@@ -82,6 +82,17 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        this.initFragments();
+        this.sendNotifications();
+
+         /*if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+            mViewPager.setPageTransformer(true, new DepthPageTransformer());
+            //mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        }*/
+
+    }
+
+    public void initFragments() {
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPagerAdapter.AddFragment(new Fragment_Personnages(), getResources().getString(R.string.tab_title_characters));
         mViewPagerAdapter.AddFragment(new Fragment_Episodes(), getResources().getString(R.string.tab_title_episodes));
@@ -91,14 +102,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setOffscreenPageLimit(2);
         //dotsIndicator.setViewPager(mViewPager);
         mTabLayout.setupWithViewPager(mViewPager);
-
-        this.sendNotifications();
-
-         /*if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
-            mViewPager.setPageTransformer(true, new DepthPageTransformer());
-            //mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        }*/
-
     }
 
     @OnClick(R.id.menu_button)
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             if(!json.equals(date)) {
                 mNotifier = new NotificationHelperWelcomeBack(this);
                 mNotifier.createNotification("Welcome Back", "Thanks to visit Rick & Morty ! Hope you get swifty. Stay connected !");
-                this.refreshAllFragments();
+                
                 sharedPreferences.edit()
                         .putString("last_launch_time", date)
                         .apply();
